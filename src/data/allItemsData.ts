@@ -47,7 +47,7 @@ export const allItemsData: TournamentInfo[] = [
             "Each match consists of 3 rounds; the winner proceeds to the next bracket.",
             "Internet stability is the responsibility of the player."
         ],
-        videoUrl: "https://www.youtube.com/embed/zviUQmGOrOs",
+        videoUrl: "https://www.youtube.com/embed/FYH9n37B7Yw",
     },
     {
         id: 2,
@@ -69,7 +69,7 @@ export const allItemsData: TournamentInfo[] = [
             "Dapatkan skor tertinggi untuk menjadi top survivor.",
             "Admin berhak atas keputusan akhir setiap duel."
         ],
-        videoUrl: "https://www.youtube.com/embed/RkQ1cbL8Nqk",
+        videoUrl: "https://www.youtube.com/embed/UwJAAy7tPhE",
         screenshots: [
             "/images/quizrush.webp",
             "/images/spacequiz.webp",
@@ -101,7 +101,7 @@ export const allItemsData: TournamentInfo[] = [
             "Bonus rounds are included for the top 10%",
             "One entry per account."
         ],
-        videoUrl: "https://www.youtube.com/embed/L1Zk9vQYtEA",
+        videoUrl: "https://www.youtube.com/embed/kfYEiTdsyas",
     },
     {
         id: 4,
@@ -122,7 +122,7 @@ export const allItemsData: TournamentInfo[] = [
             "Pattern recognition speed is the primary metric.",
             "Fair play is mandatory."
         ],
-        videoUrl: "https://www.youtube.com/embed/zHkEwT7aKss",
+        videoUrl: "https://www.youtube.com/embed/tax4e4hBBZc",
     },
     // Tournaments
     {

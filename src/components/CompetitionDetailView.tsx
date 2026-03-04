@@ -25,12 +25,24 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
     const toggleDescription = () => setIsExpanded(!isExpanded);
 
     const renderDescription = (text: string) => {
+        // Highlighting important terms for game details
+        const highlightWords = ['Nasional', 'Eksklusif', 'Gold', 'Silver', 'Bronze', 'Real-time', 'Juara', 'Tertinggi', 'Survival', 'Zombie', 'Gratis', 'Premium'];
+
+        const highlightText = (paraText: string) => {
+            let processed = paraText;
+            highlightWords.forEach(word => {
+                const regex = new RegExp(`\\b(${word})\\b`, 'gi');
+                processed = processed.replace(regex, '<span class="text-orange-gradient fw-bold">$1</span>');
+            });
+            return <span dangerouslySetInnerHTML={{ __html: processed }} />;
+        };
+
         if (!isLong || isExpanded) {
             return text.split('\n\n').map((para, i) => (
-                <p key={i} className="mb-4">{para}</p>
+                <p key={i} className="mb-4">{highlightText(para)}</p>
             ));
         }
-        return <p className="mb-0">{text.substring(0, CHAR_LIMIT)}...</p>;
+        return <p className="mb-0">{highlightText(text.substring(0, CHAR_LIMIT) + '...')}</p>;
     };
     const isTournament = tournament.type === "tournament";
     const maxQuota = 100;
@@ -41,10 +53,10 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
     return (
         <>
             <Header />
-            <main className="main-container container-fluid d-flex pt-sm-20 pt-15 px-0 position-relative">
+            <main className={`main-container container-fluid d-flex pt-0 px-0 position-relative`}>
                 <Sidebar />
-                <article className="main-content mt-lg-20 mt-10 animate-fade-in-up">
-                    <div className="container-fluid px-lg-15 px-md-10 px-6">
+                <article className={`main-content mt-0 p-0 w-100 animate-fade-in`}>
+                    <div className={isTournament ? 'container-fluid px-lg-15 px-md-10 px-6 mt-lg-20 mt-10' : 'w-100 m-0 p-0'}>
                         {isTournament && (
                             <section className="tournament-details pb-120">
                                 <Breadcrumbs />
@@ -73,7 +85,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                         <div className="video-hero-wrapper rounded-4 overflow-hidden shadow-premium-orange animate-zoom-in">
                                             <div className="ratio ratio-16x9">
                                                 <iframe
-                                                    src="https://www.youtube.com/embed/_FCYtKCGMjk"
+                                                    src="https://www.youtube.com/embed/h7MYJghRWt0"
                                                     title="Tournament Preview"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                     allowFullScreen
@@ -362,365 +374,170 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                         )}
 
                         {!isTournament && (
-                            <section className="game-details-modern pb-120 position-relative">
-                                <Breadcrumbs customCrumbs={[
-                                    { href: '/games', label: 'Games', isLast: false },
-                                    { href: `/competitions/${tournament.slug}`, label: tournament.title, isLast: true }
-                                ]} />
+                            <section className="game-details-premium position-relative w-100 pb-120" style={{ backgroundColor: '#0f0f0f', minHeight: '100vh', overflowX: 'hidden' }}>
+                                {/* HERO SECTION (70vh, Epic Style - TRULY FULL WIDTH) */}
+                                <div className="game-hero-premium position-relative animate-fade-in w-100 d-flex flex-column justify-content-end" style={{ minHeight: '75vh', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                    {/* BLURRED BACKGROUND */}
+                                    <div className="hero-bg-blur position-absolute w-100 h-100 top-0 start-0" style={{ zIndex: 0, overflow: 'hidden' }}>
+                                        <img src={tournament.image} alt={tournament.title} className="w-100 h-100 object-fit-cover" style={{ filter: 'blur(8px) brightness(0.5)', transform: 'scale(1.05)' }} />
+                                        <div className="overlay-gradient position-absolute inset-0 w-100 h-100" style={{ background: 'linear-gradient(to bottom, rgba(15,15,15,0.1) 0%, rgba(15,15,15,0.6) 50%, #0f0f0f 100%)' }}></div>
+                                    </div>
 
-                                {/* MODERN STORE-STYLE HERO SECTION */}
-                                <div className="row mt-10 mb-15">
-                                    <div className="col-12">
-                                        <div className="store-hero-banner rounded-5 overflow-hidden position-relative shadow-premium-orange animate-zoom-in">
-                                            <div className="banner-overlay"></div>
-                                            {tournament.slug === '2' ? (
-                                                <div className="quiz-bg-animation position-absolute w-100 h-100" style={{ zIndex: 0, opacity: 0.6 }}>
-                                                    <div className="glow-circle position-absolute top-0 start-0 translate-middle" style={{ width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(255, 122, 0, 0.2) 0%, transparent 70%)', filter: 'blur(40px)' }}></div>
-                                                    <div className="glow-circle position-absolute bottom-0 end-0 translate-middle" style={{ width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(255, 69, 0, 0.15) 0%, transparent 70%)', filter: 'blur(30px)' }}></div>
-                                                    <img src={tournament.image} alt={tournament.title} className="banner-bg-img" />
+                                    {/* HERO CONTENT */}
+                                    <div className="container position-relative z-2 pb-15" style={{ maxWidth: '1200px' }}>
+                                        <div className="position-absolute top-0 start-0 w-100 pt-8 z-2 d-none d-lg-block" style={{ marginTop: '-40vh' }}>
+                                            <Breadcrumbs customCrumbs={[
+                                                { href: '/games', label: 'Games', isLast: false },
+                                                { href: `/competitions/${tournament.slug}`, label: tournament.title, isLast: true }
+                                            ]} />
+                                        </div>
+
+                                        <div className="row pt-20">
+                                            <div className="col-lg-8 animate-slide-up pb-lg-5">
+                                                <div className="d-flex flex-wrap gap-3 mb-4">
+                                                    <span className="badge-premium-tag px-3 py-1">FREE GAME</span>
+                                                    <span className="badge-premium-tag px-3 py-1">{tournament.genre || 'RACING'}</span>
                                                 </div>
-                                            ) : (
-                                                <img src={tournament.image} alt={tournament.title} className="banner-bg-img" />
-                                            )}
-
-                                            <div className="banner-content p-md-15 p-8 position-relative z-2">
-                                                <h1 className="display-one fw-extrabold tcn-1 mb-2 text-uppercase tracking-tighter title-glow">
+                                                <h1 className="hero-title-massive fw-extrabold text-white mb-2 text-uppercase tracking-tighter" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', lineHeight: '1', textShadow: '0 10px 30px rgba(0,0,0,0.8)' }}>
                                                     {tournament.title}
                                                 </h1>
-                                                <div className="d-flex flex-wrap gap-3 mb-8">
-                                                    <span className="badge-store-free text-uppercase">FREE</span>
-                                                </div>
+                                                <p className="fs-three mb-8 text-light opacity-75 fw-medium tracking-widest text-uppercase" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+                                                    {tournament.subtitle || 'High Speed Challenge'}
+                                                </p>
 
-                                                <div className="play-cta-wrapper-modern mt-10 d-inline-block animate-slide-up">
-                                                    <Link href={`/play/${tournament.slug}`} className="play-now-btn-hero py-4 px-12 rounded-2 bg-orange-gradient text-white fw-extrabold text-uppercase tracking-widest transition-all hover-scale neon-orange-glow d-flex align-items-center gap-3">
-                                                        <i className="ti ti-player-play-filled fs-xl"></i> MAIN SEKARANG
+                                                <div className="d-flex flex-wrap gap-4 align-items-center mt-6">
+                                                    <Link href={`/play/${tournament.slug}`} className="btn-premium-primary py-3 px-10 rounded-3 text-white fw-extrabold text-uppercase tracking-widest d-flex align-items-center justify-content-center gap-3 transition-all text-decoration-none shadow-glow">
+                                                        <i className="ti ti-device-gamepad-2 fs-xl"></i> MAIN SEKARANG
                                                     </Link>
+                                                    <button
+                                                        onClick={() => setIsVideoModalOpen(true)}
+                                                        className="btn-premium-secondary py-3 px-8 rounded-3 text-white fw-bold text-uppercase tracking-widest d-flex align-items-center justify-content-center gap-2 transition-all"
+                                                    >
+                                                        <i className="ti ti-player-play-filled"></i> TONTON TRAILER
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="row g-15">
-                                    <div className="col-lg-8">
-                                        {/* VIDEO PREVIEW SECTION */}
-                                        <div className="row mb-15">
-                                            <div className="col-12 animate-fade-in">
-                                                <div className="section-header mb-8">
-                                                    <h3 className="tcn-1 fw-bold text-uppercase d-flex align-items-center gap-3">
-                                                        <div className="otp-dots" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--tcp-1)', boxShadow: '0 0 10px var(--tcp-1)' }}></div>
-                                                        Cuplikan Permainan
-                                                    </h3>
-                                                </div>
-                                                <div
-                                                    className="video-preview-modern rounded-4 overflow-hidden shadow-glow-subtle position-relative"
-                                                >
+                                {/* MAIN CONTENT 2-COLUMN LAYOUT (Steam Style) */}
+                                <div className="container mt-15" style={{ maxWidth: '1200px' }}>
+                                    <div className="row g-8">
+
+                                        {/* KOLOM KIRI (70%) */}
+                                        <div className="col-lg-8">
+
+                                            {/* VIDEO PREVIEW INLINE */}
+                                            {tournament.videoUrl && (
+                                                <div className="video-player-container mb-15 rounded-5 overflow-hidden animate-slide-up bg-black" style={{ border: 'none', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)' }}>
                                                     <div className="ratio ratio-16x9">
                                                         <iframe
-                                                            src={`${tournament.videoUrl}`}
-                                                            title="Game Trailer"
+                                                            src={tournament.videoUrl}
+                                                            title={`${tournament.title} Trailer`}
                                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                             allowFullScreen
                                                             style={{ border: 'none' }}
                                                         ></iframe>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        {/* DESCRIPTION SECTION */}
-                                        <div className="description-modern mb-15 animate-slide-up position-relative">
-                                            <h2 className="tcn-1 fw-extrabold mb-6 text-uppercase d-flex align-items-center gap-3">
-                                                <span className="otp-dots" style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--tcp-1)', boxShadow: '0 0 12px var(--tcp-1)' }}></span>
-                                                Tentang Game
-                                            </h2>
-                                            <div className="tcn-6 fs-lg line-height-comfortable max-w-readable glass-content-layer p-8 rounded-4 mb-10 overflow-hidden position-relative" style={{ background: 'rgba(15, 15, 15, 0.8)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                                                <div className="glow-accent-top" style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '200px', height: '100px', background: 'radial-gradient(ellipse at center, rgba(255, 122, 0, 0.15) 0%, transparent 70%)', filter: 'blur(30px)' }}></div>
-                                                {renderDescription(tournament.description)}
-                                            </div>
-
-                                            {/* FEATURES GRID */}
-                                            <div className="features-grid-modern row g-6">
-                                                {tournament.features?.map((feature, index) => (
-                                                    <div key={index} className="col-md-6">
-                                                        <div className="feature-card-glass-premium p-6 rounded-4 h-100 d-flex gap-5 transition-all hover-lift" style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 122, 0, 0.1)', backdropFilter: 'blur(10px)' }}>
-                                                            <div className="feature-icon-wrapper rounded-3 d-center text-orange-gradient" style={{ width: '60px', height: '60px', background: 'rgba(255, 122, 0, 0.1)', border: '1px solid rgba(255, 122, 0, 0.2)', flexShrink: 0 }}>
-                                                                <i className={`${feature.icon} fs-two`}></i>
-                                                            </div>
-                                                            <div>
-                                                                <h4 className="tcn-1 fw-bold mb-1">{feature.title}</h4>
-                                                                <p className="tcn-6 fs-sm mb-0 opacity-75">{feature.description}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        {/* SCREENSHOTS SECTION */}
-                                        {tournament.screenshots && tournament.screenshots.length > 0 && (
-                                            <div className="screenshots-section-modern mb-15 animate-slide-up">
-                                                <div className="section-header mb-8">
-                                                    <h3 className="tcn-1 fw-bold text-uppercase d-flex align-items-center gap-3">
-                                                        <div className="otp-dots" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--tcp-1)', boxShadow: '0 0 10px var(--tcp-1)' }}></div>
-                                                        Screenshot Permainan
-                                                    </h3>
-                                                </div>
-                                                <div className="screenshot-slider d-flex gap-6 overflow-auto pb-6 custom-scrollbar" style={{ scrollSnapType: 'x mandatory' }}>
-                                                    {tournament.screenshots.map((ss, index) => (
-                                                        <div key={index} className="screenshot-item rounded-4 overflow-hidden border border-secondary border-opacity-10 transition-all hover-zoom-light" style={{ flex: '0 0 300px', scrollSnapAlign: 'start' }}>
-                                                            <img src={ss} alt={`Screenshot ${index + 1}`} className="w-100 h-100 object-fit-cover h-180" />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* RIGHT SIDEBAR: RATING & SOCIAL */}
-                                    <div className="col-lg-4 animate-slide-right">
-                                        <div className="sticky-top" style={{ top: '120px' }}>
-                                            <div className="rating-sidebar-card p-8 rounded-5 mb-8 shadow-glow-subtle" style={{ background: 'rgba(15, 15, 15, 0.8)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                                                <h4 className="tcn-1 fw-bold mb-6 d-flex align-items-center gap-2">
-                                                    <div className="otp-dots" style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--tcp-1)', boxShadow: '0 0 8px var(--tcp-1)' }}></div>
-                                                    Rating Komunitas
-                                                </h4>
-                                                <div className="d-flex align-items-end gap-3 mb-6">
-                                                    <h1 className="display-three fw-extrabold tcn-1 m-0" style={{ lineHeight: 1 }}>{tournament.rating}</h1>
-                                                    <span className="tcn-6 fs-four pb-1">/ 5</span>
-                                                </div>
-
-                                                <div className="rating-stats-bars mb-8">
-                                                    {[5, 4, 3, 2, 1].map((star) => (
-                                                        <div key={star} className="d-flex align-items-center gap-3 mb-2">
-                                                            <span className="tcn-6 fs-xs fw-bold" style={{ width: '12px' }}>{star}</span>
-                                                            <div className="flex-grow-1 bg-dark rounded-pill overflow-hidden" style={{ height: '6px' }}>
-                                                                <div
-                                                                    className="bg-orange-gradient h-100 rounded-pill"
-                                                                    style={{ width: star === 5 ? '85%' : star === 4 ? '10%' : '5%', opacity: 0.8 }}
-                                                                ></div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-
-                                                <div className="rating-input-wrapper mb-6 position-relative">
-                                                    <textarea
-                                                        className="rating-input w-100 p-4 rounded-3 bgn-4 tcn-1 fs-sm"
-                                                        placeholder="Tulis pendapatmu..."
-                                                        rows={2}
-                                                        style={{ border: '1px solid rgba(255, 255, 255, 0.1)', background: 'rgba(0,0,0,0.2)' }}
-                                                    ></textarea>
-                                                </div>
-
-                                                <button className="w-100 py-3 rounded-2 bg-orange-gradient text-white fw-bold text-uppercase tracking-widest transition-all hover-scale neon-orange-glow border-0">
-                                                    Kirim Rating
-                                                </button>
-                                            </div>
-
-                                            <div className="rating-sidebar-card p-8 rounded-5" style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                                                <h5 className="tcn-1 fw-bold mb-6">Informasi Tambahan</h5>
-                                                <div className="d-grid gap-4">
-                                                    <div className="d-flex justify-content-between">
-                                                        <span className="tcn-6 fs-sm">Penerbit</span>
-                                                        <span className="tcn-1 fs-sm fw-bold">Gameforsmart.com</span>
-                                                    </div>
-                                                    <div className="d-flex justify-content-between">
-                                                        <span className="tcn-6 fs-sm">Versi</span>
-                                                        <span className="tcn-1 fs-sm fw-bold">v1.2.4 (Terbaru)</span>
-                                                    </div>
-                                                    <div className="d-flex justify-content-between">
-                                                        <span className="tcn-6 fs-sm">Genre</span>
-                                                        <span className="tcn-1 fs-sm fw-bold">{tournament.genre}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </section>
-                        )}
-
-                        {!isTournament && (
-                            <section className="game-details pb-120">
-                                <Breadcrumbs />
-
-                                {/* 1. GAME HEADER */}
-                                <div className="row g-6 align-items-center mb-10 mt-6">
-                                    <div className="col-xl-4 col-lg-5 col-md-5 mb-4 mb-md-0">
-                                        <div className="game-header-poster d-flex align-items-center justify-content-center rounded-4 overflow-hidden h-100 shadow-premium-orange border border-secondary border-opacity-25">
-                                            <img
-                                                src={tournament.image}
-                                                alt={tournament.title}
-                                                className="w-100 h-100 object-fit-cover"
-                                                style={{ maxHeight: '320px' }}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xl-8 col-lg-7 col-md-7">
-                                        <div className="d-flex flex-column gap-3">
-                                            <span className="text-uppercase tcn-6 fw-bold fs-xs tracking-widest">
-                                                Game Detail
-                                            </span>
-
-                                            <h1 className="tcn-1 fw-extrabold display-four mb-1 title-glow">
-                                                {tournament.title}
-                                            </h1>
-                                            {tournament.subtitle && (
-                                                <p className="tcn-6 fs-four mb-2">
-                                                    {tournament.subtitle}
-                                                </p>
                                             )}
 
-                                            <div className="d-flex flex-wrap align-items-center gap-3 mb-2">
-                                                <span className="badge rounded-pill px-3 py-1 bg-orange-gradient text-uppercase fw-bold fs-xs">
-                                                    {tournament.genre}
-                                                </span>
-                                                <span className="badge rounded-pill px-3 py-1 bgn-3 tcn-1 fs-xs d-flex align-items-center gap-1">
-                                                    <i className="ti ti-device-gamepad-2"></i>
-                                                    {tournament.platform}
-                                                </span>
-                                                <span className="badge rounded-pill px-3 py-1 bgn-3 tcn-1 fs-xs d-flex align-items-center gap-1">
-                                                    <i className="ti ti-users"></i>
-                                                    {tournament.players}+ Pemain
-                                                </span>
-                                                <span className="badge rounded-pill px-3 py-1 bgn-3 tcn-1 fs-xs d-flex align-items-center gap-1">
-                                                    <i className="ti ti-star text-warning"></i>
-                                                    {tournament.rating} / 5
-                                                </span>
-                                            </div>
-
-                                            <div className="d-flex flex-wrap align-items-center gap-3 mt-2">
-                                                <button
-                                                    className="btn btn-lg bg-orange-gradient text-white fw-bold rounded-pill px-5 py-2 play-now-btn-hero d-flex align-items-center gap-2"
-                                                    onClick={() => router.push(tournament.href || '#')}
-                                                >
-                                                    <i className="ti ti-player-play-filled"></i>
-                                                    Main Sekarang
-                                                </button>
-                                                <span className="tcn-6 fs-sm d-flex align-items-center gap-2">
-                                                    <i className="ti ti-shield-check text-success"></i>
-                                                    Konten ramah pelajar
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* 2 & 3. VIDEO PREVIEW + DESKRIPSI GAME */}
-                                <div className="row g-10">
-                                    <div className="col-lg-8 d-flex flex-column gap-8">
-                                        {/* Video Preview */}
-                                        <div className="content-card-premium rounded-4 p-sm-8 p-5 shadow-premium-orange bg-dark-gradient">
-                                            <div className="d-flex justify-content-between align-items-center mb-4">
-                                                <h3 className="tcn-1 fw-bold d-flex align-items-center gap-2 mb-0">
-                                                    <span className="otp-dots-small"></span>
-                                                    Cuplikan Permainan
+                                            {/* TENTANG GAME */}
+                                            <div className="about-game-section animate-slide-up" style={{ marginBottom: '80px', paddingTop: '20px' }}>
+                                                <h3 className="text-uppercase fw-extrabold text-white mb-6 pb-4 border-bottom border-light border-opacity-10" style={{ letterSpacing: '2px' }}>
+                                                    Tentang Game Ini
                                                 </h3>
-                                                {tournament.videoUrl && (
-                                                    <span className="tcn-6 fs-xs text-uppercase tracking-widest">
-                                                        Official Trailer
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="ratio ratio-16x9 rounded-3 overflow-hidden border border-secondary border-opacity-25">
-                                                <iframe
-                                                    width="100%"
-                                                    height="400"
-                                                    src={tournament.videoUrl || 'https://www.youtube.com/embed/RkQ1cbL8Nqk'}
-                                                    title={`${tournament.title} Trailer`}
-                                                    frameBorder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    allowFullScreen
-                                                ></iframe>
-                                            </div>
-                                        </div>
-
-                                        {/* Deskripsi Game */}
-                                        <div className="content-card-premium rounded-4 p-sm-8 p-5 bg-dark-gradient shadow-glow-subtle">
-                                            <h3 className="tcn-1 fw-bold mb-4 d-flex align-items-center gap-2">
-                                                <span className="otp-dots-small"></span>
-                                                Tentang Game
-                                            </h3>
-                                            <div className="tcn-6 fs-md line-height-comfortable">
-                                                {renderDescription(tournament.description)}
+                                                <div className="fs-md text-light opacity-80 description-text description-highlighted" style={{ lineHeight: '1.8' }}>
+                                                    {renderDescription(tournament.description)}
+                                                </div>
                                             </div>
 
-                                            {/* Fitur Utama */}
+                                            {/* FITUR UTAMA CARD GRID */}
                                             {tournament.features && tournament.features.length > 0 && (
-                                                <>
-                                                    <h4 className="tcn-1 fw-bold mt-6 mb-3 d-flex align-items-center gap-2">
-                                                        <i className="ti ti-stars text-orange-gradient"></i>
+                                                <div className="features-section animate-slide-up" style={{ marginBottom: '80px' }}>
+                                                    <h3 className="text-uppercase fw-extrabold text-white mb-8 pb-4 border-bottom border-light border-opacity-10" style={{ letterSpacing: '2px' }}>
                                                         Fitur Utama
-                                                    </h4>
-                                                    <ul className="list-unstyled d-grid gap-3">
+                                                    </h3>
+                                                    <div className="row g-6">
                                                         {tournament.features.map((feature, index) => (
-                                                            <li key={index} className="d-flex align-items-start gap-3">
-                                                                <div className="feature-bullet-icon d-center rounded-circle">
-                                                                    <i className={feature.icon}></i>
+                                                            <div key={index} className="col-md-4 col-sm-6">
+                                                                <div className="premium-feature-card h-100 p-8 rounded-4 text-center transition-all bg-card-dark" style={{ background: '#1a1a1a', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                                                                    <div className="feature-icon mb-5 d-inline-flex justify-content-center align-items-center text-orange-gradient transition-all">
+                                                                        <i className={`${feature.icon} fs-one`}></i>
+                                                                    </div>
+                                                                    <h5 className="fw-bold text-white mb-4 tracking-wide">{feature.title}</h5>
+                                                                    <p className="fs-sm text-light opacity-60 mb-0 line-height-comfortable" style={{ lineHeight: '1.6' }}>{feature.description}</p>
                                                                 </div>
-                                                                <div>
-                                                                    <p className="tcn-1 fw-semibold mb-1">{feature.title}</p>
-                                                                    <p className="tcn-6 fs-sm mb-0 opacity-75">{feature.description}</p>
-                                                                </div>
-                                                            </li>
+                                                            </div>
                                                         ))}
-                                                    </ul>
-                                                </>
-                                            )}
-
-                                            {/* Cara Bermain */}
-                                            {tournament.rules && tournament.rules.length > 0 && (
-                                                <>
-                                                    <h4 className="tcn-1 fw-bold mt-6 mb-3 d-flex align-items-center gap-2">
-                                                        <i className="ti ti-controller text-orange-gradient"></i>
-                                                        Cara Bermain
-                                                    </h4>
-                                                    <ul className="list-unstyled d-grid gap-2">
-                                                        {tournament.rules.map((rule, index) => (
-                                                            <li key={index} className="d-flex align-items-start gap-2">
-                                                                <span className="bullet-soft-dot mt-1"></span>
-                                                                <span className="tcn-6 fs-sm">{rule}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </>
+                                                    </div>
+                                                </div>
                                             )}
                                         </div>
-                                    </div>
 
-                                    {/* 4. INFO BOX / RATING SEDERHANA */}
-                                    <div className="col-lg-4">
-                                        <div className="game-info-card rounded-4 p-6 shadow-glow-subtle mb-6">
-                                            <h4 className="tcn-1 fw-bold mb-4">Ringkasan Game</h4>
-                                            <div className="d-grid gap-3">
-                                                <div className="d-flex justify-content-between">
-                                                    <span className="tcn-6 fs-sm">Genre</span>
-                                                    <span className="tcn-1 fs-sm fw-bold">{tournament.genre}</span>
-                                                </div>
-                                                <div className="d-flex justify-content-between">
-                                                    <span className="tcn-6 fs-sm">Platform</span>
-                                                    <span className="tcn-1 fs-sm fw-bold">{tournament.platform}</span>
-                                                </div>
-                                                <div className="d-flex justify-content-between">
-                                                    <span className="tcn-6 fs-sm">Rating</span>
-                                                    <span className="tcn-1 fs-sm fw-bold">
-                                                        {tournament.rating} / 5
-                                                    </span>
-                                                </div>
-                                                <div className="d-flex justify-content-between">
-                                                    <span className="tcn-6 fs-sm">Pemain</span>
-                                                    <span className="tcn-1 fs-sm fw-bold">{tournament.players}+ pemain</span>
+                                        {/* KOLOM KANAN (30%) */}
+                                        <div className="col-lg-4">
+                                            <div className="sticky-sidebar animate-slide-right" style={{ top: '100px', position: 'sticky' }}>
+
+                                                {/* GAME SUMMARY CARD */}
+                                                <div className="premium-summary-card p-6 rounded-4" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', marginBottom: '80px' }}>
+
+                                                    {/* GAME POSTER */}
+                                                    <div className="rounded-3 overflow-hidden mb-6 position-relative shadow-glow-subtle border border-light border-opacity-10">
+                                                        <img src={tournament.image} alt={tournament.title} className="w-100 d-block object-fit-cover" style={{ minHeight: '180px' }} />
+                                                    </div>
+
+                                                    {/* RATING */}
+                                                    <div className="rating-container mb-8 pb-6 border-bottom border-light border-opacity-10">
+                                                        <div className="d-flex justify-content-between align-items-end mb-4">
+                                                            <div>
+                                                                <h6 className="text-uppercase text-light opacity-50 fs-xs fw-extrabold tracking-widest mb-1">Rating Komunitas</h6>
+                                                                <span className="text-success fw-bold fs-md">Sangat Positif</span>
+                                                            </div>
+                                                            <div className="text-end">
+                                                                <span className="display-five fw-extrabold text-white" style={{ lineHeight: '1' }}>{tournament.rating || '4.8'}</span>
+                                                                <span className="fs-sm text-light opacity-50 fw-bold"> / 5</span>
+                                                            </div>
+                                                        </div>
+                                                        {/* Progress Bar Horizontal */}
+                                                        <div className="progress rounded-pill bg-dark mb-2" style={{ height: '8px' }}>
+                                                            <div className="progress-bar bg-orange-gradient rounded-pill transition-all" role="progressbar" style={{ width: `${(parseFloat(String(tournament.rating || 4.8)) / 5) * 100}%` }} aria-valuenow={parseFloat(String(tournament.rating || 4.8))} aria-valuemin={0} aria-valuemax={5}></div>
+                                                        </div>
+                                                        <div className="text-end mt-2"><span className="fs-xs text-light opacity-40">Berdasarkan ulasan pemain</span></div>
+                                                    </div>
+
+                                                    {/* GAME INFO */}
+                                                    <div className="game-info-list mb-8 d-grid gap-4">
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <span className="text-light opacity-50 fs-sm fw-medium">Developer</span>
+                                                            <span className="text-white fw-bold fs-sm">Gameforsmart</span>
+                                                        </div>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <span className="text-light opacity-50 fs-sm fw-medium">Publisher</span>
+                                                            <span className="text-white fw-bold fs-sm">Gameforsmart</span>
+                                                        </div>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <span className="text-light opacity-50 fs-sm fw-medium">Genre</span>
+                                                            <span className="text-white fw-bold fs-sm">{tournament.genre || 'Action, Arcade'}</span>
+                                                        </div>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <span className="text-light opacity-50 fs-sm fw-medium">Platform</span>
+                                                            <span className="text-white fw-bold fs-sm">{tournament.platform || 'Mobile & Web'}</span>
+                                                        </div>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <span className="text-light opacity-50 fs-sm fw-medium">Release Date</span>
+                                                            <span className="text-white fw-bold fs-sm">20 Feb 2026</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* MAIN GRATIS CTA */}
+                                                    <Link href={`/play/${tournament.slug}`} className="btn-premium-cta w-100 py-3 rounded-2 text-white fw-extrabold text-uppercase tracking-widest d-center gap-2 transition-all text-decoration-none shadow-glow">
+                                                        MAIN GRATIS <i className="ti ti-arrow-right"></i>
+                                                    </Link>
+
                                                 </div>
                                             </div>
-                                            <button
-                                                className="w-100 mt-5 py-2 rounded-pill bg-orange-gradient text-white fw-bold text-uppercase tracking-widest hover-scale border-0"
-                                                onClick={() => router.push(tournament.href || '#')}
-                                            >
-                                                Main Sekarang
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -761,38 +578,19 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
             )}
 
             <style jsx>{`
-                .animate-fade-in-up {
-                    animation: fadeInUp 1s ease-out forwards;
-                }
-                .animate-slide-up {
-                    animation: fadeInUp 0.8s ease-out 0.3s forwards;
-                }
-                .animate-zoom-in {
-                    animation: zoomIn 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-                }
-                .animate-fade-in {
-                    animation: fadeIn 0.4s ease-out forwards;
-                }
-                .d-center {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+                .animate-slide-up { animation: fadeInUp 0.8s ease-out forwards; }
+                .animate-slide-right { animation: slideRight 0.8s ease-out forwards; }
+                .animate-zoom-in { animation: zoomIn 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+                .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+                .d-center { display: flex; align-items: center; justify-content: center; }
 
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(40px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes zoomIn {
-                    from { transform: scale(0.95); opacity: 0; }
-                    to { transform: scale(1); opacity: 1; }
-                }
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
+                @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+                @keyframes slideRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+                @keyframes zoomIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
                 .tracking-tighter { letter-spacing: -0.05em; }
+                .tracking-wide { letter-spacing: 0.05em; }
                 .tracking-widest { letter-spacing: 0.2em; }
                 
                 .text-orange-gradient {
@@ -804,161 +602,63 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     background: linear-gradient(90deg, #ff7a00, #ff4500);
                 }
 
-                .premium-title {
-                    font-size: 4rem;
-                    line-height: 1;
-                    background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    text-shadow: 0 10px 20px rgba(0,0,0,0.5);
-                }
-
-                .shadow-premium-orange {
-                    box-shadow: 0 30px 60px rgba(255, 122, 0, 0.1), 0 0 20px rgba(255, 122, 0, 0.05);
-                }
-
-                .glass-content-layer {
-                    background: rgba(15, 15, 15, 0.8);
-                    backdrop-filter: blur(20px);
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                }
-
-                /* GAME DETAIL LAYOUT */
-                .bg-dark-gradient {
-                    background: radial-gradient(circle at top left, rgba(255, 122, 0, 0.12), transparent 55%), #050608;
-                }
-
-                .otp-dots-small {
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 50%;
-                    background-color: var(--tcp-1);
-                    box-shadow: 0 0 10px var(--tcp-1);
-                    display: inline-block;
-                }
-
-                .feature-bullet-icon {
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 999px;
-                    background: rgba(255, 255, 255, 0.04);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                }
-
-                .bullet-soft-dot {
-                    width: 6px;
-                    height: 6px;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.4);
-                }
-
-                .game-info-card {
-                    background: rgba(10, 10, 10, 0.96);
-                    border: 1px solid rgba(255, 255, 255, 0.04);
-                }
-
-                .store-hero-banner {
-                    height: 550px;
-                    background: #0f0f0f;
-                    border: 1px solid rgba(255, 122, 0, 0.1);
-                }
-                .banner-bg-img {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    opacity: 0.3;
-                    transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-                }
-                .store-hero-banner:hover .banner-bg-img {
-                    transform: scale(1.08);
-                }
-                .banner-overlay {
-                    position: absolute;
-                    inset: 0;
-                    background: linear-gradient(0deg, #0f0f0f 0%, rgba(15, 15, 15, 0.2) 50%, transparent 100%);
-                    z-index: 1;
-                }
-
-                .badge-store-free {
-                    padding: 6px 16px;
-                    background: rgba(255, 122, 0, 0.1);
-                    border: 1px solid rgba(255, 122, 0, 0.4);
+                .badge-premium-tag {
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
                     border-radius: 4px;
-                    font-size: 13px;
+                    font-size: 11px;
                     font-weight: 800;
-                    color: #ff7a00;
+                    color: #fff;
                     letter-spacing: 2px;
-                    box-shadow: 0 0 15px rgba(255, 122, 0, 0.2);
+                    text-transform: uppercase;
+                    backdrop-filter: blur(4px);
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
                 }
 
-                .title-glow {
-                    text-shadow: 0 0 40px rgba(255, 122, 0, 0.4);
-                }
-
-                .play-now-btn-hero {
+                .btn-premium-primary, .btn-premium-cta {
+                    background: linear-gradient(90deg, #ff7a00, #ff4500);
                     border: none;
-                    cursor: pointer;
-                    box-shadow: 0 10px 30px rgba(255, 122, 0, 0.3);
+                    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+                }
+                .btn-premium-primary:hover, .btn-premium-cta:hover {
+                    box-shadow: 0 0 25px rgba(255, 69, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+                    transform: translateY(-2px);
+                    color: #fff;
+                }
+                .btn-premium-secondary {
+                    background: transparent;
+                    border: 1px solid rgba(255, 255, 255, 0.4);
+                }
+                .btn-premium-secondary:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    border-color: #fff;
+                    transform: translateY(-2px);
+                    color: #fff;
                 }
 
-                .neon-orange-glow {
-                    box-shadow: 0 0 25px rgba(255, 70, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
-                }
-                .neon-orange-glow:hover {
-                    box-shadow: 0 0 45px rgba(255, 70, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
-                }
-
-                .video-preview-modern {
-                    background: #000;
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                    transition: all 0.4s ease;
-                }
-                .video-preview-modern:hover {
-                    border-color: rgba(255, 122, 0, 0.4);
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(255, 122, 0, 0.2);
-                }
-                .play-btn-circle {
-                    width: 90px;
-                    height: 90px;
-                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                }
-                .video-preview-modern:hover .play-btn-circle {
-                    transform: scale(1.15);
-                    box-shadow: 0 0 40px rgba(255, 122, 0, 0.6);
-                }
-
-                .feature-card-glass-premium {
+                .premium-feature-card {
                     transition: all 0.3s ease;
                 }
-                .feature-card-glass-premium:hover {
-                    background: rgba(255, 122, 0, 0.08) !important;
-                    border-color: rgba(255, 122, 0, 0.3) !important;
-                    transform: translateY(-8px);
+                .premium-feature-card:hover {
+                    transform: translateY(-5px);
+                    border-color: rgba(255, 140, 0, 0.4) !important;
+                    box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 30px rgba(255, 140, 0, 0.15) !important;
+                }
+                .premium-feature-card:hover .feature-icon {
+                    transform: scale(1.15);
+                    text-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
                 }
 
-                .screenshot-item {
-                    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+                .description-highlighted strong {
+                    color: #ff8c00;
+                    font-weight: 700;
+                    text-shadow: 0 0 10px rgba(255,140,0,0.2);
                 }
-                .screenshot-item:hover {
-                    transform: scale(1.05);
-                    border-color: rgba(255, 122, 0, 0.4) !important;
-                    z-index: 2;
+                .description-text p {
+                    margin-bottom: 24px;
                 }
-
-                .custom-scrollbar::-webkit-scrollbar {
-                    height: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: rgba(255, 255, 255, 0.02);
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: rgba(255, 122, 0, 0.3);
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: #ff7a00;
+                .description-text p:last-child {
+                    margin-bottom: 0;
                 }
 
                 .video-modal-overlay {
@@ -978,29 +678,36 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     box-shadow: 0 0 50px rgba(255, 122, 0, 0.2);
                 }
 
-                .shadow-orange-intense {
-                    box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 50px rgba(255, 122, 0, 0.2);
+                .btn-show-hide {
+                    background: rgba(255, 140, 0, 0.1);
+                    border: 1px solid rgba(255, 140, 0, 0.3);
+                    color: #ff8c00;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px;
+                    transition: all 0.4s ease;
+                    cursor: pointer;
+                    backdrop-filter: blur(12px);
+                }
+                .btn-show-hide:hover {
+                    background: #ff8c00;
+                    color: #fff;
+                    transform: translateY(-3px) scale(1.02);
+                    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4);
                 }
 
-                .hover-scale {
-                    transition: transform 0.3s ease;
-                }
-                .hover-scale:hover {
-                    transform: scale(1.05);
-                }
-
-                .h-180 { height: 180px; }
-
-                @media (max-width: 768px) {
-                    .premium-title { font-size: 2.2rem; }
-                    .display-one { font-size: 2.8rem; }
-                    .store-hero-banner { height: auto; min-height: 400px; }
-                    .banner-content { padding: 2rem !important; }
-                    .play-now-btn-hero { width: 100%; justify-content: center; }
-                    .play-btn-circle { width: 60px; height: 60px; }
-                    .play-btn-circle i { font-size: 2rem !important; }
+                @media (max-width: 991px) {
+                    .hero-title-massive { font-size: 3.5rem !important; }
+                    .game-hero-premium { min-height: 50vh !important; }
+                    .btn-premium-primary, .btn-premium-secondary { width: 100%; justify-content: center; }
+                    .col-lg-4 { margin-top: 40px; }
                 }
 
+                /* GLASS PRIZE CARDS (for tournament part) */
                 .glass-prize-card {
                     background: rgba(255, 255, 255, 0.03);
                     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -1024,176 +731,8 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     border-color: #e89e5a !important;
                     box-shadow: 0 15px 40px rgba(205, 127, 50, 0.3), inset 0 0 30px rgba(205, 127, 50, 0.1) !important;
                 }
-                .hover-float {
-                    transition: transform 0.4s ease;
-                }
-                .glass-prize-card:hover .hover-float {
-                    transform: translateY(-8px) scale(1.1);
-                }
-
-                .store-hero-banner {
-                    height: 500px;
-                    background: #0b1117;
-                }
-                .banner-bg-img {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    opacity: 0.4;
-                    transition: transform 0.8s ease;
-                }
-                .store-hero-banner:hover .banner-bg-img {
-                    transform: scale(1.05);
-                }
-                .banner-overlay {
-                    position: absolute;
-                    inset: 0;
-                    background: linear-gradient(0deg, #0b1117 0%, rgba(11, 17, 23, 0.4) 50%, transparent 100%);
-                    z-index: 1;
-                }
-
-                .badge-store {
-                    padding: 4px 12px;
-                    background: rgba(255, 140, 0, 0.1);
-                    border: 1px solid rgba(255, 140, 0, 0.3);
-                    border-radius: 6px;
-                    font-size: 12px;
-                    font-weight: 800;
-                    color: #ff8c00;
-                    letter-spacing: 1px;
-                }
-
-                .title-glow {
-                    text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
-                }
-
-                .play-cta-wrapper {
-                    background: rgba(255, 255, 255, 0.05);
-                    backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                }
-                .play-cta-inner {
-                    background: rgba(0, 0, 0, 0.3);
-                }
-
-                .neon-orange-glow {
-                    box-shadow: 0 0 20px rgba(255, 140, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
-                }
-                .neon-orange-glow:hover {
-                    box-shadow: 0 0 40px rgba(255, 140, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
-                }
-
-                .video-modern-wrapper {
-                    background: #000;
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                }
-
-                .orange-dot {
-                    width: 10px;
-                    height: 10px;
-                    background: #ff8c00;
-                    border-radius: 50%;
-                    display: inline-block;
-                }
-
-                .feature-card-glass {
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                    backdrop-filter: blur(10px);
-                }
-                .feature-card-glass:hover {
-                    background: rgba(255, 140, 0, 0.05);
-                    border-color: rgba(255, 140, 0, 0.2);
-                }
-
-                .rating-sidebar-card {
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                    backdrop-filter: blur(5px);
-                }
-                .rating-input {
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    outline: none;
-                    resize: none;
-                }
-                .rating-input:focus {
-                    border-color: #ff8c00;
-                }
-
-                .text-orange-glow {
-                    color: #ff8c00;
-                    text-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
-                }
-
-                .float-mascot {
-                    animation: float 6s ease-in-out infinite;
-                }
-
-                @keyframes float {
-                    0%, 100% { transform: translateY(0) rotate(0); }
-                    50% { transform: translateY(-20px) rotate(2deg); }
-                }
-
-                .btn-show-hide {
-                    background: rgba(255, 140, 0, 0.1);
-                    border: 1px solid rgba(255, 140, 0, 0.3);
-                    color: #ff8c00;
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 20px;
-                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                    cursor: pointer;
-                    backdrop-filter: blur(12px);
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                }
-                .btn-show-hide:hover {
-                    background: #ff8c00;
-                    color: #fff;
-                    transform: translateY(-3px) scale(1.02);
-                    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4);
-                    border-color: #ff8c00;
-                }
-                .btn-show-hide:active {
-                    transform: translateY(0) scale(0.98);
-                }
-
-                .btn-back-floating {
-                    position: absolute;
-                    z-index: 100;
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 50%;
-                    background: rgba(255, 140, 0, 0.1);
-                    backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 140, 0, 0.3);
-                    color: #ff8c00;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.3s ease;
-                }
-                .btn-back-floating:hover {
-                    background: #ff8c00;
-                    border-color: #ff8c00;
-                    box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
-                    transform: scale(1.1);
-                }
-
-                .shadow-orange-subtle {
-                    box-shadow: 0 0 20px rgba(255, 172, 5, 0.15);
-                    border: 1px solid rgba(255, 172, 5, 0.2);
-                }
-
-                @media (max-width: 991px) {
-                    .premium-title { font-size: 2.5rem; }
-                    .display-one { font-size: 3rem; }
-                    .store-hero-banner { height: auto; }
-                }
+                .hover-float { transition: transform 0.4s ease; }
+                .glass-prize-card:hover .hover-float { transform: translateY(-8px) scale(1.1); }
             `}</style>
         </>
     );
