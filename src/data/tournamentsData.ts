@@ -1,7 +1,7 @@
 export const tournamentsData = [
     {
         id: 21,
-        title: "Lomba Cerdas Cermat – Malangraya",
+        title: "Lomba Cerdas Cermat Online – Malang Raya",
         type: "SD, SMP, SMK, SMA",
         image: "/assets/img/malang-raya-banner-v2.png",
         description: "Kompetisi Cerdas Cermat tingkat Malang Raya bagi siswa SD hingga SMK.\n\n• Penyisihan: April – Mei | Final: Juni\n• Biaya: Rp 25.000/player | Hadiah: Rp 5.000.000\n\nSegera daftarkan dirimu sekarang!",
@@ -16,13 +16,14 @@ export const tournamentsData = [
         teams: "100 Player",
         slug: "malang-raya",
         href: "/competitions/malang-raya",
-        finalRound: "Juni"
+        finalRound: "Juni",
+        category: "tournament"
     },
     {
         id: 22,
-        title: "Lomba Cerdas Cermat – Jawa Timur",
+        title: "Lomba Cerdas Cermat Online – Jawa Timur",
         type: "SD, SMP, SMK, SMA",
-        image: "/assets/img/lomba-cerdas-cermat-jawatimur.jpg",
+        image: "/assets/img/malang-raya-banner-v2.png",
         description: "Kompetisi Cerdas Cermat tingkat Jawa Timur yang mempertemukan sekolah terbaik antar wilayah. Tunjukkan keunggulan intelektual sekolahmu!\n\n• Penyisihan: Juli | Final: Agustus\n• Biaya: Rp 25.000/player | Hadiah: Rp 10.000.000\n\nAmankan kursimu sekarang!",
         practiceAttempts: 3,
         competitionAttempts: 1,
@@ -35,13 +36,14 @@ export const tournamentsData = [
         teams: "100 Player",
         slug: "jawa-timur",
         href: "/competitions/jawa-timur",
-        finalRound: "Agustus"
+        finalRound: "Agustus",
+        category: "tournament"
     },
     {
         id: 23,
-        title: "Lomba Cerdas Cermat – Nasional",
+        title: "Lomba Cerdas Cermat Online – Nasional",
         type: "SD, SMP, SMK, SMA",
-        image: "/assets/img/lomba-cerdas-cermat-nasional.jpg",
+        image: "/assets/img/malang-raya-banner-v2.png",
         description: "Kompetisi prestisius tingkat Nasional yang menghadirkan elite pelajar terbaik dari seluruh Indonesia. Ajang eksklusif bagi calon pemimpin bangsa.\n\n• Penyisihan: Agustus – September | Final: Oktober\n• Biaya: Rp 50.000/player | Hadiah: Rp 15Jt – Rp 20Jt\n\nUkir prestasi nasional dan rebut hadiah utama!",
         practiceAttempts: 3,
         competitionAttempts: 1,
@@ -54,6 +56,7 @@ export const tournamentsData = [
         teams: "200 Player",
         slug: "nasional",
         href: "/competitions/nasional",
-        finalRound: "Oktober"
+        finalRound: "Oktober",
+        category: "tournament"
     },
 ];

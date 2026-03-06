@@ -13,6 +13,13 @@ import ConnectWalletModal from "@/components/ConnectWalletModal";
 import UserAccountPopup from "@/components/UserAccountPopup";
 
 const inter = Inter({ subsets: ["latin"] });
+import { Space_Grotesk } from "next/font/google";
+
+const spaceGrotesk = Space_Grotesk({
+    subsets: ["latin"],
+    weight: ['300', '400', '500', '600', '700'],
+    variable: '--font-space-grotesk'
+});
 
 export const metadata: Metadata = {
     title: "GameForSmart - Belajar Coding Interaktif",
@@ -30,8 +37,9 @@ export default function RootLayout({
         <html lang="en">
             <head>
                 <link rel="shortcut icon" href="/assets/img/gameforsmartlogo.png" type="image/x-icon" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
             </head>
-            <body className={inter.className}>
+            <body className={`${inter.className} ${spaceGrotesk.variable}`}>
                 <SearchProvider>
                     <Preloader />
                     <div className="cursor"></div>

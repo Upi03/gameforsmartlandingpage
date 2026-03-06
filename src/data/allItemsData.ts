@@ -22,8 +22,16 @@ export interface TournamentInfo {
     competitionAttempts?: number;
     finalRound?: string;
     videoUrl?: string;
+    gameplayVideoUrl?: string;
     screenshots?: string[];
     features?: { icon: string; title: string; description: string }[];
+    developer?: string;
+    publisher?: string;
+    releaseDate?: string;
+    languages?: string;
+    ratingScore?: string;
+    recommendedPercent?: string;
+    category?: string;
 }
 
 export const allItemsData: TournamentInfo[] = [
@@ -48,18 +56,19 @@ export const allItemsData: TournamentInfo[] = [
             "Internet stability is the responsibility of the player."
         ],
         videoUrl: "https://www.youtube.com/embed/FYH9n37B7Yw",
+        gameplayVideoUrl: "https://www.youtube.com/embed/kL7r4v4pW0E",
     },
     {
         id: 2,
         type: "game",
-        title: "Quiz Rush",
+        title: "QUIZ RUSH",
         subtitle: "Brain Blitz",
         image: "/images/quizrush.webp",
         players: "8k",
-        platform: "Web",
+        platform: "Dekstop, Moblie",
         rating: "4.9",
-        genre: "Action-Trivia",
-        description: "Siapkan dirimu untuk tantangan quiz paling menegangkan di tengah kepungan zombie! Quiz Rush: Zombie Edition adalah ajang adu kecerdasan real-time di mana kecepatan dan ketepatan adalah satu-satunya cara untuk bertahan hidup. Jawab pertanyaan dengan cepat sebelum para zombie mendekat dan buktikan bahwa kamulah penyintas paling pintar di dunia.",
+        genre: "Action Trivia",
+        description: "Escape the swarm by solving lightning-fast puzzles. Every second counts in this high-stakes survival trivia experience.",
         status: "Action",
         slug: "2",
         href: "/competitions/2",
@@ -70,17 +79,23 @@ export const allItemsData: TournamentInfo[] = [
             "Admin berhak atas keputusan akhir setiap duel."
         ],
         videoUrl: "https://www.youtube.com/embed/UwJAAy7tPhE",
+        gameplayVideoUrl: "https://www.youtube.com/embed/6iB2M_23U6U",
         screenshots: [
             "/images/quizrush.webp",
             "/images/spacequiz.webp",
             "/images/memoryquiz.webp"
         ],
         features: [
-            { icon: "ti ti-biohazard", title: "Zombie Escape 60 Detik", description: "Jawab cepat atau tertangkap! Selesaikan tantangan dalam waktu terbatas." },
-            { icon: "ti ti-skull", title: "Survival Score Challenge", description: "Kumpulkan poin sebanyak mungkin dengan jawaban yang tepat." },
-            { icon: "ti ti-world", title: "Global Survivor Leaderboard", description: "Bandingkan peringkatmu dengan penyintas lain di seluruh dunia." },
-            { icon: "ti ti-swords", title: "Zombie Horde Duel", description: "Tantang pemain lain dalam duel otak di tengah invasi zombie." }
-        ]
+            { icon: "timer", title: "ESCAPE", description: "Jawab cepat atau tertangkap! Selesaikan tantangan dalam waktu terbatas." },
+            { icon: "trophy", title: "SURVIVAL", description: "Kumpulkan poin sebanyak mungkin dengan jawaban yang tepat." },
+            { icon: "groups", title: "GLOBAL MULTIPLAYER", description: "Bandingkan peringkatmu dengan penyintas lain di seluruh dunia." }
+        ],
+        developer: "Gameforsmart Tea,",
+        publisher: "PT. Universal Big Data",
+        releaseDate: "OCT 24, 2023",
+        languages: "English, Indonesian, Arab",
+        ratingScore: "4.9",
+        recommendedPercent: "82%"
     },
     {
         id: 3,
@@ -102,6 +117,7 @@ export const allItemsData: TournamentInfo[] = [
             "One entry per account."
         ],
         videoUrl: "https://www.youtube.com/embed/kfYEiTdsyas",
+        gameplayVideoUrl: "https://www.youtube.com/embed/6_rW97xG4_Y",
     },
     {
         id: 4,
@@ -123,6 +139,7 @@ export const allItemsData: TournamentInfo[] = [
             "Fair play is mandatory."
         ],
         videoUrl: "https://www.youtube.com/embed/tax4e4hBBZc",
+        gameplayVideoUrl: "https://www.youtube.com/embed/YpXk5E_8_Hk",
     },
     // Tournaments
     {
@@ -244,7 +261,7 @@ export const allItemsData: TournamentInfo[] = [
     {
         id: 21,
         type: "tournament",
-        title: "Lomba Cerdas Cermat – Malangraya",
+        title: "Lomba Cerdas Cermat Online – Malang Raya",
         subtitle: "Edisi Khusus Jawa Timur",
         image: "/assets/img/malang-raya-banner-v2.png",
         prizeMoney: "Rp 5.000.000",
@@ -260,6 +277,7 @@ export const allItemsData: TournamentInfo[] = [
         slug: "malang-raya",
         href: "/competitions/malang-raya",
         finalRound: "Juni",
+        category: "tournament",
         rules: [
             "Terbuka untuk siswa SD, SMP, SMA Sederajat.",
             "Pendaftaran melalui website resmi Gameforsmart.com.",
@@ -274,9 +292,9 @@ export const allItemsData: TournamentInfo[] = [
     {
         id: 22,
         type: "tournament",
-        title: "Lomba Cerdas Cermat – Jawa Timur",
+        title: "Lomba Cerdas Cermat Online – Jawa Timur",
         subtitle: "Tingkat Provinsi",
-        image: "/assets/img/lomba-cerdas-cermat-jawatimur.jpg",
+        image: "/assets/img/lomba-cerdas-cermat-jawatimur-v2.png",
         prizeMoney: "Rp 10.000.000",
         ticketFee: "Rp 25.000",
         date: "Juli",
@@ -290,6 +308,7 @@ export const allItemsData: TournamentInfo[] = [
         slug: "jawa-timur",
         href: "/competitions/jawa-timur",
         finalRound: "Agustus",
+        category: "tournament",
         rules: [
             "Terbuka untuk seluruh sekolah di wilayah Jawa Timur.",
             "Setiap sekolah dapat mengirimkan lebih dari satu wakil.",
@@ -304,9 +323,9 @@ export const allItemsData: TournamentInfo[] = [
     {
         id: 23,
         type: "tournament",
-        title: "Lomba Cerdas Cermat – Nasional",
+        title: "Lomba Cerdas Cermat Online – Nasional",
         subtitle: "Kejuaraan Indonesia Bersinar",
-        image: "/assets/img/lomba-cerdas-cermat-nasional.jpg",
+        image: "/assets/img/lomba-cerdas-cermat-nasional-v2.png",
         prizeMoney: "Rp 15.000.000 - Rp 20.000.000",
         ticketFee: "Rp 50.000",
         date: "Agustus – September",

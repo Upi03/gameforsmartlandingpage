@@ -2501,7 +2501,8 @@ ul li {
 }
 
 .main-container .main-content {
-  width: calc(100% - 160px);
+  margin-left: 80px;
+  width: calc(100% - 80px);
 }
 
 @media (max-width: 1750px) {

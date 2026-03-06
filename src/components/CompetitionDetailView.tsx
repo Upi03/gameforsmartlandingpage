@@ -17,6 +17,21 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
     const [isExpanded, setIsExpanded] = useState(false);
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
     const [isPlayInline, setIsPlayInline] = useState(false);
+    const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+
+    const heroMedia = [
+        { type: 'image', url: tournament.image, title: tournament.title },
+        ...(tournament.videoUrl ? [{ type: 'video', url: tournament.videoUrl, title: 'Official Trailer' }] : []),
+        ...(tournament.gameplayVideoUrl ? [{ type: 'video', url: tournament.gameplayVideoUrl, title: 'Gameplay Preview' }] : [])
+    ];
+
+    const nextMedia = () => {
+        setCurrentMediaIndex((prev) => (prev + 1) % heroMedia.length);
+    };
+
+    const prevMedia = () => {
+        setCurrentMediaIndex((prev) => (prev - 1 + heroMedia.length) % heroMedia.length);
+    };
 
     // Limits for truncation
     const CHAR_LIMIT = 200;
@@ -44,7 +59,9 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
         }
         return <p className="mb-0">{highlightText(text.substring(0, CHAR_LIMIT) + '...')}</p>;
     };
-    const isTournament = tournament.type === "tournament";
+    const isTournament = tournament.type === "tournament" ||
+        (tournament as any).category === "tournament" ||
+        tournament.title.includes("Lomba Cerdas Cermat");
     const maxQuota = 100;
     const currentRegistered = 64;
     const progressPercent = (currentRegistered / maxQuota) * 100;
@@ -55,227 +72,205 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
             <Header />
             <main className={`main-container container-fluid d-flex pt-0 px-0 position-relative`}>
                 <Sidebar />
-                <article className={`main-content mt-0 p-0 w-100 animate-fade-in`}>
-                    <div className={isTournament ? 'container-fluid px-lg-15 px-md-10 px-6 mt-lg-20 mt-10' : 'w-100 m-0 p-0'}>
+                <article className="main-content mt-0 p-0 flex-grow-1 animate-fade-in" style={{ minWidth: 0 }}>
+                    <div className={isTournament ? 'container-fluid px-lg-15 px-md-10 px-6 mt-lg-20 mt-10' : 'w-100 m-0 p-0 overflow-x-hidden'}>
                         {isTournament && (
-                            <section className="tournament-details pb-120">
-                                <Breadcrumbs />
+                            <section className="tournament-details-modern font-display bg-[#221710] text-[#f8f7f5] min-h-screen pt-[120px] pb-20" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                <div className="max-w-none mx-auto px-2 lg:px-4">
+                                    <Breadcrumbs />
 
-                                {/* PREMIUM HERO SECTION (TOURNAMENT) */}
-                                <div className="row mb-12">
-                                    <div className="col-12 text-center mb-12 position-relative animate-fade-in-up">
-                                        <div className="hero-glow-bg position-absolute top-50 start-50 translate-middle w-100 h-100" style={{ pointerEvents: 'none', zIndex: -1 }}>
-                                            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '150%', background: 'radial-gradient(circle, rgba(255, 140, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%)', filter: 'blur(50px)' }}></div>
-                                        </div>
-                                        <button onClick={() => router.back()} className="btn-back-floating shadow-btn d-none d-md-flex" style={{ left: '20px', top: '50%', transform: 'translateY(-50%)', zIndex: 10 }}>
-                                            <i className="ti ti-arrow-left fs-xl"></i>
-                                        </button>
-                                        <h1 className="premium-title text-uppercase fw-extrabold display-two mb-4 tracking-tighter position-relative z-1" style={{ textShadow: '0 0 40px rgba(255, 140, 0, 0.3)' }}>
-                                            {tournament.title.includes(' - ') ? (
-                                                <>
-                                                    {tournament.title.split(' - ')[0]} - <span className="text-orange-gradient">{tournament.title.split(' - ')[1]}</span>
-                                                </>
-                                            ) : tournament.title}
-                                        </h1>
-                                        <p className="tcn-6 fs-four max-w-2xl mx-auto position-relative z-1">
-                                            Ajang Kompetisi Bergengsi dengan Hadiah Puluhan Juta Rupiah
-                                        </p>
-                                    </div>
-                                    <div className="col-12 px-xl-20">
-                                        <div className="video-hero-wrapper rounded-4 overflow-hidden shadow-premium-orange animate-zoom-in">
-                                            <div className="ratio ratio-16x9">
-                                                <iframe
-                                                    src="https://www.youtube.com/embed/h7MYJghRWt0"
-                                                    title="Tournament Preview"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowFullScreen
-                                                    style={{ border: 'none' }}
-                                                ></iframe>
+                                    {/* PREMIUM HERO SECTION (TOURNAMENT) */}
+                                    <div className="row mb-12">
+                                        <div className="col-12 text-center mb-12 position-relative animate-fade-in-up">
+                                            <div className="hero-glow-bg position-absolute top-50 start-50 translate-middle w-100 h-100" style={{ pointerEvents: 'none', zIndex: -1 }}>
+                                                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '150%', background: 'radial-gradient(circle, rgba(255, 140, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%)', filter: 'blur(50px)' }}></div>
                                             </div>
+                                            <button onClick={() => router.back()} className="text-[#f8f7f5] hover:text-[#f26c0d] transition-colors focus:outline-none !rounded-full p-2 hover:bg-white/5 d-none d-md-flex" style={{ left: '20px', top: '50%', transform: 'translateY(-50%)', zIndex: 10 }}>
+                                                <i className="ti ti-arrow-left fs-xl"></i>
+                                            </button>
+                                            <h1 className="premium-title text-uppercase fw-extrabold display-two mb-4 tracking-tighter position-relative z-1" style={{ textShadow: '0 0 40px rgba(255, 140, 0, 0.3)' }}>
+                                                {tournament.title.includes(' - ') ? (
+                                                    <>
+                                                        {tournament.title.split(' - ')[0]} - <span className="text-orange-gradient">{tournament.title.split(' - ')[1]}</span>
+                                                    </>
+                                                ) : tournament.title}
+                                            </h1>
+                                            <p className="tcn-6 fs-four max-w-2xl mx-auto position-relative z-1">
+                                                Ajang Kompetisi Bergengsi dengan Hadiah Puluhan Juta Rupiah
+                                            </p>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div className="row g-10">
-                                    {/* LEFT CONTENT: Description, Highlight Box & Rules */}
-                                    <div className="col-lg-8 animate-slide-up">
-                                        {/* DESKRIPSI COMPETITION VISUAL */}
-                                        <div className="content-card-premium mb-8 p-sm-10 p-6 position-relative border" style={{ background: 'linear-gradient(145deg, rgba(20,20,20,0.95), rgba(10,10,10,0.9))', borderColor: 'rgba(255,140,0,0.3)', boxShadow: '0 0 20px rgba(255,140,0,0.05)' }}>
-                                            <h3 className="premium-section-title mb-8 d-flex align-items-center gap-3">
-                                                <i className="ti ti-target text-orange-glow fs-two"></i>
-                                                Deskripsi Competition
-                                            </h3>
-
-                                            <div className="row g-4 mb-8">
-                                                <div className="col-md-6">
-                                                    <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
-                                                        <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
-                                                            <i className="ti ti-bulb fs-2xl"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="tcn-1 fw-bold fs-md mb-2">Tujuan Kompetisi</h5>
-                                                            <p className="tcn-6 fs-sm mb-0">Menguji kemampuan akademik, mental juara, dan ketepatan siswa/i secara real-time.</p>
-                                                        </div>
-                                                    </div>
+                                        <div className="col-12 px-xl-20">
+                                            <div className="video-hero-wrapper rounded-4 overflow-hidden shadow-premium-orange animate-zoom-in">
+                                                <div className="ratio ratio-16x9">
+                                                    <iframe
+                                                        src="https://www.youtube.com/embed/h7MYJghRWt0"
+                                                        title="Tournament Preview"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                        style={{ border: 'none' }}
+                                                    ></iframe>
                                                 </div>
-                                                <div className="col-md-6">
-                                                    <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
-                                                        <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
-                                                            <i className="ti ti-trophy fs-2xl"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="tcn-1 fw-bold fs-md mb-2">Tingkat Kompetisi</h5>
-                                                            <p className="tcn-6 fs-sm mb-0">Persaingan skala besar antar siswa-siswi terbaik.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
-                                                        <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
-                                                            <i className="ti ti-rocket fs-2xl"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="tcn-1 fw-bold fs-md mb-2">Manfaat Peserta</h5>
-                                                            <p className="tcn-6 fs-sm mb-0">Sertifikat nasional & relasi komunitas eksklusif.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
-                                                        <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
-                                                            <i className="ti ti-ticket fs-2xl"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h5 className="tcn-1 fw-bold fs-md mb-2">Biaya Daftar</h5>
-                                                            <p className="tcp-1 fw-bold fs-md mb-0">{tournament.ticketFee || 'Gratis'}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="tcn-6 fs-lg premium-description pt-6 border-top border-secondary border-opacity-10 position-relative">
-                                                {renderDescription(tournament.description)}
-                                                {isLong && (
-                                                    <button
-                                                        onClick={toggleDescription}
-                                                        className="btn-show-hide mt-4 d-flex align-items-center gap-2"
-                                                    >
-                                                        {isExpanded ? (
-                                                            <i className="ti ti-chevron-up"></i>
-                                                        ) : (
-                                                            <i className="ti ti-chevron-down"></i>
-                                                        )}
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </div>
-
-
-                                        <div className="content-card-premium mb-10 p-sm-10 p-6">
-                                            <h3 className="premium-section-title mb-8">Syarat & Ketentuan</h3>
-                                            <div className="rules-grid">
-                                                {tournament.rules?.map((rule, index) => (
-                                                    <div key={index} className="rule-item d-flex align-items-center gap-4 p-4 rounded-3 mb-3 transition-all">
-                                                        <div className="icon-circle-check bg-orange-gradient">
-                                                            <i className="ti ti-check fs-xl"></i>
-                                                        </div>
-                                                        <span className="tcn-1 fs-lg fw-medium">{rule}</span>
-                                                    </div>
-                                                ))}
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* RIGHT CONTENT: Premium Info Card */}
-                                    <div className="col-lg-4">
-                                        <div className="sticky-info-card" style={{ top: '120px' }}>
-                                            <div className="premium-info-card p-8 rounded-4 shadow-orange-intense">
-                                                <div className="status-badge-area d-flex justify-content-between align-items-center mb-8">
-                                                    <span className="premium-status-pill text-uppercase">Registration Open</span>
-                                                    <div className="live-dot-wrapper d-flex align-items-center gap-2">
-                                                        <span className="live-dot"></span>
-                                                        <span className="tcn-6 fs-xs fw-bold text-uppercase">Online</span>
-                                                    </div>
-                                                </div>
+                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mt-8">
 
-                                                <div className="prize-main-area mb-8">
-                                                    <span className="tcn-6 fs-sm text-uppercase tracking-widest d-block mb-1">Total Hadiah</span>
-                                                    <h1 className="display-five fw-extrabold text-orange-gradient m-0">
-                                                        {tournament.prizeMoney} <span className="fs-two">+ Grand Prize</span>
-                                                    </h1>
-                                                </div>
+                                        {/* LEFT CONTENT (70%) */}
+                                        <div className="lg:col-span-2 flex flex-col gap-8 animate-slide-up">
+                                            {/* DESKRIPSI COMPETITION VISUAL */}
+                                            <div className="content-card-premium mb-8 p-sm-10 p-6 position-relative border" style={{ background: 'linear-gradient(145deg, #2d1e15, #221710)', borderColor: '#3d2a1d', boxShadow: '0 0 20px rgba(242,108,13,0.05)' }}>
+                                                <h3 className="premium-section-title mb-8 d-flex align-items-center gap-3">
+                                                    <i className="ti ti-target text-orange-glow fs-two"></i>
+                                                    Deskripsi Competition
+                                                </h3>
 
-                                                <div className="premium-divider mb-6"></div>
-
-                                                <div className="features-list d-grid gap-6 mb-10">
-                                                    <div className="d-flex align-items-center gap-4 mb-6">
-                                                        <div className="icon-circle bgn-3 tcn-1">
-                                                            <i className="ti ti-calendar fs-2xl"></i>
-                                                        </div>
-                                                        <div>
-                                                            <label className="d-block tcn-6 fs-xs text-uppercase fw-bold">Babak Penyisihan</label>
-                                                            <span className="tcn-1 fw-bold fs-four">{tournament.date}</span>
-                                                        </div>
-                                                    </div>
-
-                                                    {tournament.finalRound && (
-                                                        <div className="d-flex align-items-center gap-4 mb-6">
-                                                            <div className="icon-circle bgn-3" style={{ border: '1px solid rgba(255, 172, 5, 0.4)' }}>
-                                                                <i className="ti ti-trophy fs-2xl text-orange-glow"></i>
+                                                <div className="row g-4 mb-8">
+                                                    <div className="col-md-6">
+                                                        <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
+                                                            <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
+                                                                <i className="ti ti-bulb fs-2xl"></i>
                                                             </div>
                                                             <div>
-                                                                <label className="d-block tcn-6 fs-xs text-uppercase fw-bold">Babak Final</label>
-                                                                <span className="tcn-1 fw-bold fs-four text-orange-glow">{tournament.finalRound}</span>
+                                                                <h5 className="tcn-1 fw-bold fs-md mb-2">Tujuan Kompetisi</h5>
+                                                                <p className="tcn-6 fs-sm mb-0">Menguji kemampuan akademik, mental juara, dan ketepatan siswa/i secara real-time.</p>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
+                                                            <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
+                                                                <i className="ti ti-trophy fs-2xl"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h5 className="tcn-1 fw-bold fs-md mb-2">Tingkat Kompetisi</h5>
+                                                                <p className="tcn-6 fs-sm mb-0">Persaingan skala besar antar siswa-siswi terbaik.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
+                                                            <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
+                                                                <i className="ti ti-rocket fs-2xl"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h5 className="tcn-1 fw-bold fs-md mb-2">Manfaat Peserta</h5>
+                                                                <p className="tcn-6 fs-sm mb-0">Sertifikat nasional & relasi komunitas eksklusif.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="d-flex align-items-start gap-3 p-4 rounded-4 h-100" style={{ background: 'rgba(255,140,0,0.05)', border: '1px solid rgba(255,140,0,0.15)' }}>
+                                                            <div className="icon-circle bg-orange-gradient text-white mt-1" style={{ width: '48px', height: '48px', flexShrink: 0, boxShadow: '0 0 15px rgba(255,140,0,0.2)' }}>
+                                                                <i className="ti ti-ticket fs-2xl"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h5 className="tcn-1 fw-bold fs-md mb-2">Biaya Daftar</h5>
+                                                                <p className="tcp-1 fw-bold fs-md mb-0">{tournament.ticketFee || 'Gratis'}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="tcn-6 fs-lg premium-description pt-6 border-top border-secondary border-opacity-10 position-relative">
+                                                    {renderDescription(tournament.description)}
+                                                    {isLong && (
+                                                        <button
+                                                            onClick={toggleDescription}
+                                                            className="btn-show-hide mt-4 d-flex align-items-center gap-2"
+                                                        >
+                                                            {isExpanded ? (
+                                                                <i className="ti ti-chevron-up"></i>
+                                                            ) : (
+                                                                <i className="ti ti-chevron-down"></i>
+                                                            )}
+                                                        </button>
                                                     )}
+                                                </div>
+                                            </div>
 
-                                                    <div className="d-flex align-items-center gap-4 mb-6">
-                                                        <div className="icon-circle bgn-3 tcn-1">
-                                                            <i className="ti ti-ticket fs-2xl"></i>
+
+                                            <div className="content-card-premium mb-10 p-sm-10 p-6 rounded-xl border border-[#3d2a1d]" style={{ background: '#2d1e15' }}>
+                                                <h3 className="premium-section-title mb-8 font-bold uppercase tracking-tight text-white">Syarat & Ketentuan</h3>
+                                                <div className="rules-grid space-y-3">
+                                                    {tournament.rules?.map((rule, index) => (
+                                                        <div key={index} className="rule-item d-flex align-items-center gap-4 p-4 rounded-xl border border-[#3d2a1d] transition-all hover:bg-[#3d2a1d]/30" style={{ background: '#221710' }}>
+                                                            <div className="icon-circle-check bg-[#f26c0d] flex items-center justify-center rounded-full w-8 h-8">
+                                                                <i className="ti ti-check fs-xl text-white"></i>
+                                                            </div>
+                                                            <span className="text-[#f8f7f5] fs-lg fw-medium">{rule}</span>
                                                         </div>
-                                                        <div>
-                                                            <label className="d-block tcn-6 fs-xs text-uppercase fw-bold">Biaya Pendaftaran</label>
-                                                            <span className="tcn-1 fw-bold fs-four text-orange-gradient">{tournament.ticketFee || 'Gratis'}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* RIGHT SIDEBAR (30%) */}
+                                        <div className="lg:col-span-1">
+                                            <div className="sticky top-[180px] flex flex-col gap-6">
+                                                <div className="bg-[#1a1a1a] border border-[#333] rounded-xl overflow-hidden shadow-lg">
+                                                    <div className="bg-[#f26c0d] p-4 flex items-center justify-between">
+                                                        <span className="text-xs font-bold text-white uppercase tracking-wider">Registration Open</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="w-2 h-2 rounded-full bg-[#f26c0d]"></span>
+                                                            <span className="text-[10px] font-bold text-white/80 uppercase">Online</span>
                                                         </div>
                                                     </div>
 
-                                                    <div className="d-flex align-items-center gap-4 mb-10">
-                                                        <div className="icon-circle bgn-3 tcn-1">
-                                                            <i className="ti ti-users fs-2xl"></i>
+                                                    <div className="p-8">
+                                                        <div className="mb-8">
+                                                            <span className="text-slate-500 text-[10px] uppercase tracking-widest font-bold d-block mb-2">Total Prize Pool</span>
+                                                            <h2 className="text-3xl lg:text-4xl font-bold text-[#f26c0d] tracking-tighter m-0">
+                                                                {tournament.prizeMoney}
+                                                            </h2>
+                                                            <span className="text-[10px] text-white/40 uppercase font-bold mt-1 d-block">+ Grand Prize Awards</span>
                                                         </div>
-                                                        <div>
-                                                            <label className="d-block tcn-6 fs-xs text-uppercase fw-bold">Total Kuota</label>
-                                                            <span className="tcn-1 fw-bold fs-four">{tournament.teams}</span>
+
+                                                        <div className="flex flex-col gap-0 border-t border-white/5">
+                                                            {[
+                                                                { label: "Qualifiers", value: tournament.date, icon: "calendar_month" },
+                                                                { label: "Final Round", value: tournament.finalRound, icon: "trophy", highlight: true },
+                                                                { label: "Entry Fee", value: tournament.ticketFee || 'Gratis', icon: "payments" },
+                                                                { label: "Max Quota", value: tournament.teams, icon: "group" }
+                                                            ].map((item, idx, arr) => (
+                                                                <div key={idx} className={`flex justify-between items-center py-4 ${idx !== arr.length - 1 ? 'border-b border-white/5' : ''}`}>
+                                                                    <div className="flex items-center gap-3">
+                                                                        <span className="material-symbols-outlined text-slate-500 text-lg">{item.icon}</span>
+                                                                        <span className="text-slate-500 text-[11px] uppercase tracking-wider font-bold">{item.label}</span>
+                                                                    </div>
+                                                                    <span className={`font-bold text-xs text-right ${item.highlight ? 'text-[#f26c0d]' : 'text-slate-200'}`}>
+                                                                        {item.value || "N/A"}
+                                                                    </span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+                                                        <div className="mt-8 pt-6 border-t border-white/5">
+                                                            <div className="flex justify-between items-end mb-3">
+                                                                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Slots Reserved</span>
+                                                                <span className="font-bold text-white text-xs">{progressPercent}% Full</span>
+                                                            </div>
+                                                            <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-[#333]">
+                                                                <div className="bg-[#f26c0d] h-full rounded-full" style={{ width: `${progressPercent}%` }}></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="mt-10">
+                                                            {isFull ? (
+                                                                <button className="w-100 py-4 !rounded-full font-bold text-slate-500 bg-white/5 border border-white/10 opacity-50 cursor-not-allowed uppercase text-xs tracking-[0.1em] transition-all">
+                                                                    Max Quota Reached
+                                                                </button>
+                                                            ) : (
+                                                                <Link
+                                                                    href={`/competitions/${tournament.slug}/register`}
+                                                                    className="w-100 py-4 !rounded-full bg-[#f26c0d] hover:bg-[#ff7a00] text-white font-bold text-center no-underline uppercase text-xs tracking-wider transition-all block shadow-lg shadow-[#f26c0d]/20"
+                                                                >
+                                                                    Register Now <i className="ti ti-chevron-right ms-2"></i>
+                                                                </Link>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div className="quota-logic mb-10">
-                                                    <div className="d-flex justify-content-between align-items-end mb-3">
-                                                        <span className="tcn-6 fs-xs text-uppercase fw-bold">Kapasitas Terisi</span>
-                                                        <span className="tcn-1 fw-bold fs-five">{progressPercent}%</span>
-                                                    </div>
-                                                    <div className="premium-progress-bar">
-                                                        <div className="progress-fill shadow-glow-orange" style={{ width: `${progressPercent}%` }}></div>
-                                                    </div>
-                                                </div>
-
-                                                {isFull ? (
-                                                    <button
-                                                        className="premium-cta-btn w-100 py-2 rounded-pill text-uppercase fw-bold tracking-widest transition-all d-flex justify-content-center align-items-center btn-disabled"
-                                                        disabled
-                                                    >
-                                                        Kuota Penuh
-                                                    </button>
-                                                ) : (
-                                                    <Link
-                                                        href={`/competitions/${tournament.slug}/register`}
-                                                        className="premium-cta-btn w-100 py-2 rounded-pill text-uppercase fw-bold tracking-widest transition-all d-flex justify-content-center align-items-center bg-orange-gradient hover-lift shadow-btn text-white text-decoration-none"
-                                                    >
-                                                        Daftar <i className="ti ti-chevron-right ms-2 animate-bounce-right"></i>
-                                                    </Link>
-                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -290,9 +285,9 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                         <div className="title-underline mx-auto mt-4" style={{ width: '80px', height: '4px', background: '#ff8c00', borderRadius: '2px' }}></div>
                                     </div>
                                     <div className="col-12">
-                                        <div className="timeline-horizontal-premium p-10 rounded-4 border border-secondary border-opacity-10 position-relative overflow-hidden" style={{ background: 'rgba(20,20,20,0.8)' }}>
-                                            <div className="timeline-line position-absolute top-50 start-0 w-100" style={{ height: '4px', background: 'rgba(255,255,255,0.05)', transform: 'translateY(-50%)', zIndex: 0 }}></div>
-                                            <div className="timeline-line-active position-absolute top-50 start-0" style={{ height: '4px', width: '50%', background: 'linear-gradient(90deg, #ff8c00, #ff4500)', transform: 'translateY(-50%)', zIndex: 1, boxShadow: '0 0 15px rgba(255,140,0,0.5)' }}></div>
+                                        <div className="timeline-horizontal-premium p-10 rounded-xl border border-[#3d2a1d] position-relative overflow-hidden" style={{ background: '#221710' }}>
+                                            <div className="timeline-line position-absolute top-50 start-0 w-100" style={{ height: '4px', background: '#3d2a1d', transform: 'translateY(-50%)', zIndex: 0 }}></div>
+                                            <div className="timeline-line-active position-absolute top-50 start-0" style={{ height: '4px', width: '50%', background: '#f26c0d', transform: 'translateY(-50%)', zIndex: 1, boxShadow: '0 0 15px rgba(242,108,13,0.5)' }}></div>
 
                                             <div className="row position-relative z-2 text-center">
                                                 <div className="col-4">
@@ -336,35 +331,35 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                         <div className="row g-6 justify-content-center">
                                             {/* Juara 1 */}
                                             <div className="col-xl-4 col-md-6">
-                                                <div className="glass-prize-card prize-gold text-center transition-all p-10 h-100 rounded-5" style={{ background: 'linear-gradient(180deg, rgba(255,140,0,0.1) 0%, rgba(20,20,20,0.8) 100%)', border: '1px solid rgba(255,140,0,0.3)', boxShadow: '0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,140,0,0.05)' }}>
+                                                <div className="glass-prize-card prize-gold text-center transition-all p-10 h-100 rounded-xl border border-[#3d2a1d]" style={{ background: 'linear-gradient(180deg, rgba(242,108,13,0.1) 0%, #2d1e15 100%)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
                                                     <div className="prize-visual mb-6 position-relative z-1">
-                                                        <i className="ti ti-trophy fs-display-one text-orange-glow d-inline-block hover-float" style={{ filter: 'drop-shadow(0 0 20px rgba(255,140,0,0.6))' }}></i>
+                                                        <i className="ti ti-trophy fs-display-one text-[#f26c0d] d-inline-block hover-float" style={{ filter: 'drop-shadow(0 0 20px rgba(242,108,13,0.6))' }}></i>
                                                     </div>
-                                                    <h4 className="fw-extrabold mb-2 text-uppercase tracking-widest text-warning">{tournament.prizes?.[0]?.place || 'JUARA 1'}</h4>
-                                                    <h2 className="display-five fw-extrabold text-orange-gradient mb-4">{tournament.prizes?.[0]?.amount || 'Rp 7.500.000'}</h2>
-                                                    <p className="tcn-6 fs-md mb-0">{tournament.prizes?.[0]?.reward || 'Trofi Eksklusif & Sertifikat Nasional Gold'}</p>
+                                                    <h4 className="fw-extrabold mb-2 text-uppercase tracking-widest text-[#f26c0d]">{tournament.prizes?.[0]?.place || 'JUARA 1'}</h4>
+                                                    <h2 className="display-five fw-extrabold text-white mb-4">{tournament.prizes?.[0]?.amount || 'Rp 7.500.000'}</h2>
+                                                    <p className="text-[#94a3b8] fs-md mb-0">{tournament.prizes?.[0]?.reward || 'Trofi Eksklusif & Sertifikat Nasional Gold'}</p>
                                                 </div>
                                             </div>
                                             {/* Juara 2 */}
                                             <div className="col-xl-4 col-md-6 mt-xl-10">
-                                                <div className="glass-prize-card prize-silver text-center transition-all p-10 h-100 rounded-5" style={{ background: 'linear-gradient(180deg, rgba(200,200,200,0.05) 0%, rgba(20,20,20,0.8) 100%)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+                                                <div className="glass-prize-card prize-silver text-center transition-all p-10 h-100 rounded-xl border border-[#3d2a1d]" style={{ background: 'linear-gradient(180deg, rgba(148,163,184,0.05) 0%, #2d1e15 100%)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
                                                     <div className="prize-visual mb-6 position-relative z-1">
-                                                        <i className="ti ti-medal fs-display-two tcn-1 d-inline-block hover-float" style={{ filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))' }}></i>
+                                                        <i className="ti ti-medal fs-display-two text-[#94a3b8] d-inline-block hover-float" style={{ filter: 'drop-shadow(0 0 20px rgba(148,163,184,0.3))' }}></i>
                                                     </div>
-                                                    <h4 className="tcn-1 fw-extrabold mb-2 text-uppercase tracking-widest text-secondary">{tournament.prizes?.[1]?.place || 'JUARA 2'}</h4>
-                                                    <h2 className="display-six fw-extrabold tcn-1 mb-4">{tournament.prizes?.[1]?.amount || 'Rp 5.000.000'}</h2>
-                                                    <p className="tcn-6 fs-md mb-0">{tournament.prizes?.[1]?.reward || 'Medali Perak & Sertifikat Nasional Silver'}</p>
+                                                    <h4 className="text-[#94a3b8] fw-extrabold mb-2 text-uppercase tracking-widest">{tournament.prizes?.[1]?.place || 'JUARA 2'}</h4>
+                                                    <h2 className="display-six fw-extrabold text-white mb-4">{tournament.prizes?.[1]?.amount || 'Rp 5.000.000'}</h2>
+                                                    <p className="text-[#94a3b8] fs-md mb-0">{tournament.prizes?.[1]?.reward || 'Medali Perak & Sertifikat Nasional Silver'}</p>
                                                 </div>
                                             </div>
                                             {/* Juara 3 */}
                                             <div className="col-xl-4 col-md-6 mt-xl-14">
-                                                <div className="glass-prize-card prize-bronze text-center transition-all p-10 h-100 rounded-5" style={{ background: 'linear-gradient(180deg, rgba(205,127,50,0.05) 0%, rgba(20,20,20,0.8) 100%)', border: '1px solid rgba(205,127,50,0.2)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+                                                <div className="glass-prize-card prize-bronze text-center transition-all p-10 h-100 rounded-xl border border-[#3d2a1d]" style={{ background: 'linear-gradient(180deg, rgba(205,127,50,0.05) 0%, #2d1e15 100%)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
                                                     <div className="prize-visual mb-6 position-relative z-1">
                                                         <i className="ti ti-medal fs-display-two d-inline-block hover-float" style={{ color: '#cd7f32', filter: 'drop-shadow(0 0 20px rgba(205,127,50,0.3))' }}></i>
                                                     </div>
                                                     <h4 className="fw-extrabold mb-2 text-uppercase tracking-widest" style={{ color: '#cd7f32' }}>{tournament.prizes?.[2]?.place || 'JUARA 3'}</h4>
-                                                    <h2 className="display-six fw-extrabold mb-4" style={{ color: '#e89e5a' }}>{tournament.prizes?.[2]?.amount || 'Rp 2.500.000'}</h2>
-                                                    <p className="tcn-6 fs-md mb-0">{tournament.prizes?.[2]?.reward || 'Medali Perunggu & Sertifikat Nasional Bronze'}</p>
+                                                    <h2 className="display-six fw-extrabold mb-4 text-white" style={{ color: '#e89e5a' }}>{tournament.prizes?.[2]?.amount || 'Rp 2.500.000'}</h2>
+                                                    <p className="text-[#94a3b8] fs-md mb-0">{tournament.prizes?.[2]?.reward || 'Medali Perunggu & Sertifikat Nasional Bronze'}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -374,172 +369,228 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                         )}
 
                         {!isTournament && (
-                            <section className="game-details-premium position-relative w-100 pb-120" style={{ backgroundColor: '#0f0f0f', minHeight: '100vh', overflowX: 'hidden' }}>
-                                {/* HERO SECTION (70vh, Epic Style - TRULY FULL WIDTH) */}
-                                <div className="game-hero-premium position-relative animate-fade-in w-100 d-flex flex-column justify-content-end" style={{ minHeight: '75vh', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                    {/* BLURRED BACKGROUND */}
-                                    <div className="hero-bg-blur position-absolute w-100 h-100 top-0 start-0" style={{ zIndex: 0, overflow: 'hidden' }}>
-                                        <img src={tournament.image} alt={tournament.title} className="w-100 h-100 object-fit-cover" style={{ filter: 'blur(8px) brightness(0.5)', transform: 'scale(1.05)' }} />
-                                        <div className="overlay-gradient position-absolute inset-0 w-100 h-100" style={{ background: 'linear-gradient(to bottom, rgba(15,15,15,0.1) 0%, rgba(15,15,15,0.6) 50%, #0f0f0f 100%)' }}></div>
+                            <section className="font-display bg-[#221710] text-[#f8f7f5] min-h-screen flex flex-col" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+
+                                {/* 1. Exact Header from code.html - Offset for main header */}
+                                <header className="sticky top-[75px] lg:top-[90px] z-[60] flex items-center bg-[#221710] border-b border-[#3d2a1d] p-4 justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <h1 className="text-lg font-bold leading-tight tracking-tight uppercase truncate max-w-[250px] lg:max-w-none">
+                                            {tournament.title}
+                                        </h1>
                                     </div>
-
-                                    {/* HERO CONTENT */}
-                                    <div className="container position-relative z-2 pb-15" style={{ maxWidth: '1200px' }}>
-                                        <div className="position-absolute top-0 start-0 w-100 pt-8 z-2 d-none d-lg-block" style={{ marginTop: '-40vh' }}>
-                                            <Breadcrumbs customCrumbs={[
-                                                { href: '/games', label: 'Games', isLast: false },
-                                                { href: `/competitions/${tournament.slug}`, label: tournament.title, isLast: true }
-                                            ]} />
-                                        </div>
-
-                                        <div className="row pt-20">
-                                            <div className="col-lg-8 animate-slide-up pb-lg-5">
-                                                <div className="d-flex flex-wrap gap-3 mb-4">
-                                                    <span className="badge-premium-tag px-3 py-1">FREE GAME</span>
-                                                    <span className="badge-premium-tag px-3 py-1">{tournament.genre || 'RACING'}</span>
-                                                </div>
-                                                <h1 className="hero-title-massive fw-extrabold text-white mb-2 text-uppercase tracking-tighter" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', lineHeight: '1', textShadow: '0 10px 30px rgba(0,0,0,0.8)' }}>
-                                                    {tournament.title}
-                                                </h1>
-                                                <p className="fs-three mb-8 text-light opacity-75 fw-medium tracking-widest text-uppercase" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
-                                                    {tournament.subtitle || 'High Speed Challenge'}
-                                                </p>
-
-                                                <div className="d-flex flex-wrap gap-4 align-items-center mt-6">
-                                                    <Link href={`/play/${tournament.slug}`} className="btn-premium-primary py-3 px-10 rounded-3 text-white fw-extrabold text-uppercase tracking-widest d-flex align-items-center justify-content-center gap-3 transition-all text-decoration-none shadow-glow">
-                                                        <i className="ti ti-device-gamepad-2 fs-xl"></i> MAIN SEKARANG
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => setIsVideoModalOpen(true)}
-                                                        className="btn-premium-secondary py-3 px-8 rounded-3 text-white fw-bold text-uppercase tracking-widest d-flex align-items-center justify-content-center gap-2 transition-all"
-                                                    >
-                                                        <i className="ti ti-player-play-filled"></i> TONTON TRAILER
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div className="flex items-center gap-3">
                                     </div>
-                                </div>
+                                </header>
 
-                                {/* MAIN CONTENT 2-COLUMN LAYOUT (Steam Style) */}
-                                <div className="container mt-15" style={{ maxWidth: '1200px' }}>
-                                    <div className="row g-8">
+                                {/* Main Content Scrollable */}
+                                <div className="flex-1 overflow-y-auto">
 
-                                        {/* KOLOM KIRI (70%) */}
-                                        <div className="col-lg-8">
+                                    {/* 2. Hero Section - Multimedia Carousel */}
+                                    <section className="relative">
+                                        <div className="w-full aspect-video md:aspect-[21/9] bg-[#111] relative group overflow-hidden">
 
-                                            {/* VIDEO PREVIEW INLINE */}
-                                            {tournament.videoUrl && (
-                                                <div className="video-player-container mb-15 rounded-5 overflow-hidden animate-slide-up bg-black" style={{ border: 'none', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)' }}>
-                                                    <div className="ratio ratio-16x9">
-                                                        <iframe
-                                                            src={tournament.videoUrl}
-                                                            title={`${tournament.title} Trailer`}
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowFullScreen
-                                                            style={{ border: 'none' }}
-                                                        ></iframe>
-                                                    </div>
-                                                </div>
-                                            )}
+                                            {/* Media Slider Container */}
+                                            <div
+                                                className="w-full h-full flex transition-transform duration-700 ease-in-out"
+                                                style={{ transform: `translateX(-${currentMediaIndex * 100}%)` }}
+                                            >
+                                                {heroMedia.map((media, idx) => (
+                                                    <div key={idx} className="w-full h-full flex-shrink-0 relative">
+                                                        {/* Media Type Label */}
+                                                        <div className="absolute top-6 left-6 z-40">
+                                                            <span className="px-4 py-1.5 bg-[#f26c0d] text-white text-[10px] font-bold rounded-full uppercase tracking-[0.2em] shadow-lg border border-white/20">
+                                                                {media.title}
+                                                            </span>
+                                                        </div>
 
-                                            {/* TENTANG GAME */}
-                                            <div className="about-game-section animate-slide-up" style={{ marginBottom: '80px', paddingTop: '20px' }}>
-                                                <h3 className="text-uppercase fw-extrabold text-white mb-6 pb-4 border-bottom border-light border-opacity-10" style={{ letterSpacing: '2px' }}>
-                                                    Tentang Game Ini
-                                                </h3>
-                                                <div className="fs-md text-light opacity-80 description-text description-highlighted" style={{ lineHeight: '1.8' }}>
-                                                    {renderDescription(tournament.description)}
-                                                </div>
-                                            </div>
-
-                                            {/* FITUR UTAMA CARD GRID */}
-                                            {tournament.features && tournament.features.length > 0 && (
-                                                <div className="features-section animate-slide-up" style={{ marginBottom: '80px' }}>
-                                                    <h3 className="text-uppercase fw-extrabold text-white mb-8 pb-4 border-bottom border-light border-opacity-10" style={{ letterSpacing: '2px' }}>
-                                                        Fitur Utama
-                                                    </h3>
-                                                    <div className="row g-6">
-                                                        {tournament.features.map((feature, index) => (
-                                                            <div key={index} className="col-md-4 col-sm-6">
-                                                                <div className="premium-feature-card h-100 p-8 rounded-4 text-center transition-all bg-card-dark" style={{ background: '#1a1a1a', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                                                                    <div className="feature-icon mb-5 d-inline-flex justify-content-center align-items-center text-orange-gradient transition-all">
-                                                                        <i className={`${feature.icon} fs-one`}></i>
+                                                        {media.type === 'video' && currentMediaIndex === idx ? (
+                                                            <div className="w-full h-full">
+                                                                <iframe
+                                                                    src={`${media.url}?autoplay=0&mute=1&controls=1&rel=0`}
+                                                                    className="w-full h-full border-none"
+                                                                    title={media.title}
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowFullScreen
+                                                                ></iframe>
+                                                                {/* Transparent overlay to allow clicking navigation buttons without iframe interference */}
+                                                                <div className="absolute inset-0 pointer-events-none z-10"></div>
+                                                            </div>
+                                                        ) : (
+                                                            <div
+                                                                className="w-full h-full bg-cover bg-center"
+                                                                style={{
+                                                                    backgroundImage: `linear-gradient(to bottom, rgba(34,23,16,0) 0%, rgba(34,23,16,0.8) 100%), url('${media.url}')`
+                                                                }}
+                                                            >
+                                                                {/* Only show play button for games, not tournaments */}
+                                                                {idx === 0 && !isTournament && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center">
+                                                                        <button
+                                                                            onClick={() => setIsVideoModalOpen(true)}
+                                                                            className="bg-[#f26c0d] p-4 !rounded-full shadow-lg shadow-[#f26c0d]/40 hover:scale-110 transition-transform focus:outline-none"
+                                                                        >
+                                                                            <span className="material-symbols-outlined text-4xl text-white block leading-none">play_arrow</span>
+                                                                        </button>
                                                                     </div>
-                                                                    <h5 className="fw-bold text-white mb-4 tracking-wide">{feature.title}</h5>
-                                                                    <p className="fs-sm text-light opacity-60 mb-0 line-height-comfortable" style={{ lineHeight: '1.6' }}>{feature.description}</p>
-                                                                </div>
+                                                                )}
                                                             </div>
-                                                        ))}
+                                                        )}
                                                     </div>
-                                                </div>
-                                            )}
+                                                ))}
+                                            </div>
+
+                                            {/* Navigation Overlay - Always Visible */}
+                                            <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between items-center z-30 pointer-events-none">
+                                                <button
+                                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); prevMedia(); }}
+                                                    className="w-12 h-12 !rounded-full bg-[#f26c0d] hover:bg-[#ff7a00] text-white flex items-center justify-center transition-all shadow-lg pointer-events-auto border-2 border-white/20"
+                                                >
+                                                    <span className="material-symbols-outlined font-bold">chevron_left</span>
+                                                </button>
+                                                <button
+                                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); nextMedia(); }}
+                                                    className="w-12 h-12 !rounded-full bg-[#f26c0d] hover:bg-[#ff7a00] text-white flex items-center justify-center transition-all shadow-lg pointer-events-auto border-2 border-white/20"
+                                                >
+                                                    <span className="material-symbols-outlined font-bold">chevron_right</span>
+                                                </button>
+                                            </div>
+
+                                            {/* Indicator Dots */}
+                                            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+                                                {heroMedia.map((_, idx) => (
+                                                    <button
+                                                        key={idx}
+                                                        onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(idx); }}
+                                                        className={`h-1 !rounded-full transition-all duration-300 ${idx === currentMediaIndex ? 'w-8 bg-[#f26c0d]' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                                                        aria-label={`Go to slide ${idx + 1}`}
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
 
-                                        {/* KOLOM KANAN (30%) */}
-                                        <div className="col-lg-4">
-                                            <div className="sticky-sidebar animate-slide-right" style={{ top: '100px', position: 'sticky' }}>
+                                        <div className="px-4 -mt-12 relative z-10 space-y-4 max-w-none mx-auto">
+                                            <div className="flex gap-3">
+                                                <span className="px-3 py-1 bg-[#f26c0d] text-white text-xs font-bold rounded-full uppercase tracking-wider">Free Game</span>
+                                                <span className="px-3 py-1 bg-[#2d1e15] border border-[#3d2a1d] text-slate-100 text-xs font-bold rounded-full uppercase tracking-wider">{tournament.genre || 'Action-Trivia'}</span>
+                                            </div>
 
-                                                {/* GAME SUMMARY CARD */}
-                                                <div className="premium-summary-card p-6 rounded-4" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', marginBottom: '80px' }}>
-
-                                                    {/* GAME POSTER */}
-                                                    <div className="rounded-3 overflow-hidden mb-6 position-relative shadow-glow-subtle border border-light border-opacity-10">
-                                                        <img src={tournament.image} alt={tournament.title} className="w-100 d-block object-fit-cover" style={{ minHeight: '180px' }} />
+                                            <div className="space-y-6">
+                                                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4">
+                                                    <div className="flex-1">
+                                                        <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter text-white">
+                                                            {tournament.title.split(':').map((part, i, arr) => (
+                                                                <React.Fragment key={i}>
+                                                                    {part.trim()}
+                                                                    {i < arr.length - 1 && <br />}
+                                                                </React.Fragment>
+                                                            ))}
+                                                        </h2>
+                                                        <p className="text-[#94a3b8] mt-4 max-w-xl text-lg leading-relaxed font-medium">
+                                                            {tournament.description || "Escape the swarm by solving lightning-fast puzzles. Every second counts in this high-stakes survival trivia experience."}
+                                                        </p>
                                                     </div>
-
-                                                    {/* RATING */}
-                                                    <div className="rating-container mb-8 pb-6 border-bottom border-light border-opacity-10">
-                                                        <div className="d-flex justify-content-between align-items-end mb-4">
-                                                            <div>
-                                                                <h6 className="text-uppercase text-light opacity-50 fs-xs fw-extrabold tracking-widest mb-1">Rating Komunitas</h6>
-                                                                <span className="text-success fw-bold fs-md">Sangat Positif</span>
-                                                            </div>
-                                                            <div className="text-end">
-                                                                <span className="display-five fw-extrabold text-white" style={{ lineHeight: '1' }}>{tournament.rating || '4.8'}</span>
-                                                                <span className="fs-sm text-light opacity-50 fw-bold"> / 5</span>
-                                                            </div>
+                                                    {!isTournament && (
+                                                        <div className="flex flex-col gap-3 w-full md:w-auto md:min-w-[240px]">
+                                                            <Link
+                                                                href={`/play/${tournament.slug}`}
+                                                                className="bg-[#f26c0d] hover:bg-[#f26c0d]/90 text-white font-bold py-4 px-10 !rounded-full transition-all flex items-center justify-center gap-2 no-underline hover:scale-105"
+                                                            >
+                                                                <span className="material-symbols-outlined">bolt</span>
+                                                                PLAY NOW
+                                                            </Link>
+                                                            <button
+                                                                onClick={() => setIsVideoModalOpen(true)}
+                                                                className="bg-[#2d1e15] hover:bg-[#3d2a1d] text-white font-bold py-4 px-10 !rounded-full border border-[#3d2a1d] transition-all flex items-center justify-center gap-2 hover:scale-105"
+                                                            >
+                                                                <span className="material-symbols-outlined">movie</span>
+                                                                WATCH TRAILER
+                                                            </button>
                                                         </div>
-                                                        {/* Progress Bar Horizontal */}
-                                                        <div className="progress rounded-pill bg-dark mb-2" style={{ height: '8px' }}>
-                                                            <div className="progress-bar bg-orange-gradient rounded-pill transition-all" role="progressbar" style={{ width: `${(parseFloat(String(tournament.rating || 4.8)) / 5) * 100}%` }} aria-valuenow={parseFloat(String(tournament.rating || 4.8))} aria-valuemin={0} aria-valuemax={5}></div>
-                                                        </div>
-                                                        <div className="text-end mt-2"><span className="fs-xs text-light opacity-40">Berdasarkan ulasan pemain</span></div>
-                                                    </div>
-
-                                                    {/* GAME INFO */}
-                                                    <div className="game-info-list mb-8 d-grid gap-4">
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Developer</span>
-                                                            <span className="text-white fw-bold fs-sm">Gameforsmart</span>
-                                                        </div>
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Publisher</span>
-                                                            <span className="text-white fw-bold fs-sm">Gameforsmart</span>
-                                                        </div>
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Genre</span>
-                                                            <span className="text-white fw-bold fs-sm">{tournament.genre || 'Action, Arcade'}</span>
-                                                        </div>
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Platform</span>
-                                                            <span className="text-white fw-bold fs-sm">{tournament.platform || 'Mobile & Web'}</span>
-                                                        </div>
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Release Date</span>
-                                                            <span className="text-white fw-bold fs-sm">20 Feb 2026</span>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* MAIN GRATIS CTA */}
-                                                    <Link href={`/play/${tournament.slug}`} className="btn-premium-cta w-100 py-3 rounded-2 text-white fw-extrabold text-uppercase tracking-widest d-center gap-2 transition-all text-decoration-none shadow-glow">
-                                                        MAIN GRATIS <i className="ti ti-arrow-right"></i>
-                                                    </Link>
-
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </section>
+
+                                    {/* 3. Stats & Info Grid from code.html */}
+                                    <section className="p-4 mt-8 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-none mx-auto">
+
+                                        {/* Left Column: Rating & Features (col-span-8) */}
+                                        <div className="md:col-span-8 space-y-6">
+
+                                            {/* Rating Card */}
+                                            <div className="bg-[#2d1e15] border border-[#3d2a1d] rounded-xl p-6">
+                                                <div className="flex items-center justify-between mb-4">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="text-4xl font-bold text-[#f26c0d]">{tournament.rating || "4.9"}</div>
+                                                        <div>
+                                                            <div className="flex text-[#f26c0d]">
+                                                                <span className="material-symbols-outlined fill-1">star</span>
+                                                                <span className="material-symbols-outlined fill-1">star</span>
+                                                                <span className="material-symbols-outlined fill-1">star</span>
+                                                                <span className="material-symbols-outlined fill-1">star</span>
+                                                                <span className="material-symbols-outlined fill-1">star</span>
+                                                            </div>
+                                                            <div className="text-xs text-[#94a3b8] uppercase tracking-widest font-bold">Community Rating</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <div className="text-xl font-bold text-white">{tournament.recommendedPercent || "82%"}</div>
+                                                        <div className="text-xs text-[#94a3b8] uppercase font-bold">Recommended</div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-full bg-[#3d2a1d] h-2 rounded-full overflow-hidden">
+                                                    <div className="bg-[#f26c0d] h-full transition-all duration-1000" style={{ width: tournament.recommendedPercent || "82%" }}></div>
+                                                </div>
+                                            </div>
+
+                                            {/* Features Grid */}
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                                {(tournament.features && tournament.features.length > 0 ? tournament.features.slice(0, 3) : [
+                                                    { icon: "timer", title: "Zombie Escape 60 Detik" },
+                                                    { icon: "trophy", title: "Survival Score Challenge" },
+                                                    { icon: "groups", title: "Global Multiplayer" }
+                                                ]).map((f: any, i: number) => (
+                                                    <div key={i} className="bg-[#2d1e15] border border-[#3d2a1d] p-4 rounded-xl flex flex-col items-center text-center gap-3">
+                                                        <div className="bg-[#f26c0d]/20 p-3 rounded-lg flex items-center justify-center">
+                                                            <span className="material-symbols-outlined text-[#f26c0d]">{f.icon}</span>
+                                                        </div>
+                                                        <h3 className="text-sm font-bold uppercase leading-tight text-white">{f.title}</h3>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Right Column: Metadata (col-span-4) */}
+                                        <div className="md:col-span-4">
+                                            <div className="bg-[#2d1e15] border border-[#3d2a1d] rounded-xl p-6 space-y-6">
+                                                <h3 className="text-lg font-bold uppercase tracking-tight border-b border-[#3d2a1d] pb-3">Game Details</h3>
+                                                <div className="space-y-4">
+                                                    {[
+                                                        { label: "Developer", value: tournament.developer || "Neon Brain Studio" },
+                                                        { label: "Publisher", value: tournament.publisher || "Global Blitz Games" },
+                                                        { label: "Genre", value: tournament.genre || "Action, Trivia, Horror", highlight: true },
+                                                        { label: "Platform", value: tournament.platform || "PC, Mobile, Console" },
+                                                        { label: "Release Date", value: tournament.releaseDate || "OCT 24, 2023" }
+                                                    ].map((item, idx, arr) => (
+                                                        <div key={idx} className={`flex justify-between items-center py-2 ${idx !== arr.length - 1 ? 'border-b border-[#3d2a1d]/30' : ''}`}>
+                                                            <span className="text-[#94a3b8] text-sm">{item.label}</span>
+                                                            <span className={`font-bold text-sm uppercase ${item.highlight ? 'text-[#f26c0d]' : 'text-white'}`}>{item.value}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <div className="bg-[#3d2a1d]/50 rounded-lg p-4 flex items-center gap-3">
+                                                    <span className="material-symbols-outlined text-[#f26c0d]">language</span>
+                                                    <div>
+                                                        <p className="text-[10px] text-[#94a3b8] uppercase font-bold">Supported Languages</p>
+                                                        <p className="text-sm font-bold">{tournament.languages || "English, Indonesian, Arab"}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
                                 </div>
                             </section>
                         )}
@@ -548,34 +599,36 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
             </main>
 
             {/* VIDEO MODAL at true root level to escape all parent transforms */}
-            {isVideoModalOpen && (
-                <div className="video-modal-overlay position-fixed inset-0 d-center animate-fade-in" style={{ width: '100vw', height: '100vh', top: 0, left: 0 }}>
-                    <button
-                        className="modal-close-btn position-absolute top-10 end-10 btn-show-hide"
-                        onClick={() => setIsVideoModalOpen(false)}
-                        style={{ zIndex: 10001 }}
-                    >
-                        <i className="ti ti-x"></i>
-                    </button>
-                    <div className="container" onClick={(e) => e.stopPropagation()}>
-                        <div className="row justify-content-center">
-                            <div className="col-lg-10">
-                                <div className="video-modal-content rounded-5 overflow-hidden shadow-orange-intense animate-zoom-in">
-                                    <div className="ratio ratio-16x9">
-                                        <iframe
-                                            src={`${tournament.videoUrl}?autoplay=1`}
-                                            title="Game Trailer"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowFullScreen
-                                            style={{ border: 'none' }}
-                                        ></iframe>
+            {
+                isVideoModalOpen && (
+                    <div className="video-modal-overlay position-fixed inset-0 d-center animate-fade-in" style={{ width: '100vw', height: '100vh', top: 0, left: 0 }}>
+                        <button
+                            className="modal-close-btn position-absolute top-10 end-10 btn-show-hide"
+                            onClick={() => setIsVideoModalOpen(false)}
+                            style={{ zIndex: 10001 }}
+                        >
+                            <i className="ti ti-x"></i>
+                        </button>
+                        <div className="container" onClick={(e) => e.stopPropagation()}>
+                            <div className="row justify-content-center">
+                                <div className="col-lg-10">
+                                    <div className="video-modal-content rounded-5 overflow-hidden shadow-orange-intense animate-zoom-in">
+                                        <div className="ratio ratio-16x9">
+                                            <iframe
+                                                src={`${tournament.videoUrl}?autoplay=1`}
+                                                title="Game Trailer"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                                style={{ border: 'none' }}
+                                            ></iframe>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             <style jsx>{`
                 .animate-slide-up { animation: fadeInUp 0.8s ease-out forwards; }
@@ -602,10 +655,22 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     background: linear-gradient(90deg, #ff7a00, #ff4500);
                 }
 
+                /* MOBILE REDESIGN STYLES */
+                .btn-icon-plain { background: none; border: none; }
+                .badge-mobile { background: #ff8c00; color: #fff; font-size: 10px; font-weight: 800; border-radius: 999px !important; border: none; letter-spacing: 0.5px; }
+                .btn-mobile-action { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: none; }
+                .btn-orange-solid { background: #f47920; box-shadow: 0 8px 24px rgba(244, 121, 32, 0.3); color: #fff !important; border-radius: 999px !important; }
+                .btn-orange-solid:active { transform: scale(0.96); background: #e65c00; }
+                .btn-dark-outline { background: #2f1d16; border-bottom: 3px solid #1a100c; color: #fff !important; border-radius: 999px !important; }
+                .btn-dark-outline:active { transform: translateY(2px); border-bottom-width: 1px; }
+                .display-five { font-family: 'Outfit', sans-serif; font-weight: 800; letter-spacing: -1px; }
+                .shadow-premium-orange { box-shadow: 0 10px 40px rgba(244, 121, 32, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1); }
+                .shadow-glow-orange { box-shadow: 0 0 15px rgba(244, 121, 32, 0.6); }
+
                 .badge-premium-tag {
                     background: rgba(255, 255, 255, 0.08);
                     border: 1px solid rgba(255, 255, 255, 0.15);
-                    border-radius: 4px;
+                    border-radius: 999px !important;
                     font-size: 11px;
                     font-weight: 800;
                     color: #fff;
@@ -619,6 +684,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     background: linear-gradient(90deg, #ff7a00, #ff4500);
                     border: none;
                     box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+                    border-radius: 999px !important;
                 }
                 .btn-premium-primary:hover, .btn-premium-cta:hover {
                     box-shadow: 0 0 25px rgba(255, 69, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
@@ -628,6 +694,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                 .btn-premium-secondary {
                     background: transparent;
                     border: 1px solid rgba(255, 255, 255, 0.4);
+                    border-radius: 999px !important;
                 }
                 .btn-premium-secondary:hover {
                     background: rgba(255, 255, 255, 0.1);
@@ -705,6 +772,32 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     .game-hero-premium { min-height: 50vh !important; }
                     .btn-premium-primary, .btn-premium-secondary { width: 100%; justify-content: center; }
                     .col-lg-4 { margin-top: 40px; }
+                }
+
+                /* Game Details Mobile Responsive Sidebar Spacing */
+                .game-details-mobile {
+                    width: 100%;
+                }
+
+                @media (max-width: 1750px) {
+                    .game-details-mobile header,
+                    .game-details-mobile > div:nth-child(2),
+                    .game-details-mobile nav {
+                        margin-left: 0 !important;
+                        width: 100% !important;
+                    }
+                }
+
+                @media (min-width: 1751px) {
+                    .game-details-mobile {
+                        margin-left: 0;
+                    }
+
+                    .game-details-mobile header,
+                    .game-details-mobile > div:nth-child(2),
+                    .game-details-mobile nav {
+                        width: calc(100vw - 80px);
+                    }
                 }
 
                 /* GLASS PRIZE CARDS (for tournament part) */

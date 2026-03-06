@@ -100,17 +100,17 @@ export default function Banner() {
                                             <div className="col-lg-6 col-md-8 col-11">
                                                 <div className="hero-content ps-lg-12 ps-6">
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
-                                                        READY • SET • PLAY
+                                                        PLAY • GAMING ARENA
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '3.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
-                                                        THE ULTIMATE <span className="tcp-1">GAMING ARENA</span>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                        PLAY <span className="tcp-1">GAMES</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
-                                                        Gabung di arena cerdas cermat dengan sensasi gaming yang seru. Tantang pengetahuanmu dan kuasai panggung turnamen!
+                                                        Discover and play a wide variety of exciting games. Experience the next level of gaming entertainment on GameForSmart.
                                                     </p>
 
                                                     <div data-swiper-parallax="-400" className="d-flex align-items-center flex-wrap gap-xl-4 gap-3 mb-1">
-                                                        <a href="/competitions" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Masuk Arena</a>
+                                                        <a href="/games" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Start Playing</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,17 +143,17 @@ export default function Banner() {
                                             <div className="col-lg-6 col-md-8 col-11">
                                                 <div className="hero-content ps-lg-12 ps-6">
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
-                                                        LEVEL UP • SKILL ONLY
+                                                        CREATE • SHARE • CHALLENGE
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '3.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
-                                                        GAIN THE <span className="tcp-1">WINNING STREAK</span>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                        CREATE <span className="tcp-1">QUIZZES</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
-                                                        Mainkan quiz layaknya pro gamer. Jawab cepat, kumpulkan combo poin, dan rebut posisi pertama di leaderboard.
+                                                        Unleash your creativity. Build your own custom quizzes, challenge your friends, and see who's the smartest!
                                                     </p>
 
                                                     <div data-swiper-parallax="-400" className="d-flex align-items-center flex-wrap gap-xl-4 gap-3 mb-1">
-                                                        <a href="/leaderboard" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Cek Leaderboard</a>
+                                                        <a href="/create-quiz" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Create Now</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -187,17 +187,17 @@ export default function Banner() {
                                             <div className="col-lg-6 col-md-8 col-11">
                                                 <div className="hero-content ps-lg-12 ps-6">
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
-                                                        SPEED RUN • NO LAG
+                                                        COMPETE • WIN • REWARD
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '3.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
-                                                        FASTEST <span className="tcp-1">REFLEX WINS</span>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                        JOIN <span className="tcp-1">COMPETITIONS</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
-                                                        Buktikan kecepatan jarimu dan ketajaman otakmu. Di mode ini, setiap detik adalah penentu kemenanganmu!
+                                                        Enter prestigious tournaments, compete with top players, and win amazing prizes and certificates.
                                                     </p>
 
                                                     <div data-swiper-parallax="-400" className="d-flex align-items-center flex-wrap gap-xl-4 gap-3 mb-1">
-                                                        <a href="/games" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Main Sekarang</a>
+                                                        <a href="/competitions" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Join Now</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,17 +230,17 @@ export default function Banner() {
                                             <div className="col-lg-6 col-md-8 col-11">
                                                 <div className="hero-content ps-lg-12 ps-6">
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
-                                                        EPIC LOOT • MVP STATUS
+                                                        ULTIMATE • GAMING • ARENA
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '3.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
-                                                        BECOME THE <span className="tcp-1">LEGENDARY CHAMPION</span>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                        GAMEFORSMART <span className="tcp-1">PLATFORM</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
-                                                        Raih trophy eksklusif, sertifikat nasional, dan total hadiah jutaan Rupiah. Inilah saatnya jadi MVP di GameForSmart!
+                                                        The all-in-one destination for gamers and quiz enthusiasts. Play, create, and compete in the ultimate arena.
                                                     </p>
 
                                                     <div data-swiper-parallax="-400" className="d-flex align-items-center flex-wrap gap-xl-4 gap-3 mb-1">
-                                                        <a href="/register" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Klaim Slotmu</a>
+                                                        <a href="/register" className="btn-half-border position-relative d-inline-block py-2.5 px-8 bgp-1 rounded-pill text-nowrap fs-six shadow-primary fw-bold transition-all hover-scale">Get Started</a>
                                                     </div>
                                                 </div>
                                             </div>

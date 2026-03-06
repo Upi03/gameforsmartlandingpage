@@ -1,0 +1,460 @@
+﻿diff --git a/src/components/CompetitionDetailView.tsx b/src/components/CompetitionDetailView.tsx
+index b6ec42e..64718df 100644
+--- a/src/components/CompetitionDetailView.tsx
++++ b/src/components/CompetitionDetailView.tsx
+@@ -374,208 +374,274 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
+                         )}
+ 
+                         {!isTournament && (
+-                            <section className="game-details-premium position-relative w-100 pb-120" style={{ backgroundColor: '#0f0f0f', minHeight: '100vh', overflowX: 'hidden' }}>
+-                                {/* HERO SECTION (70vh, Epic Style - TRULY FULL WIDTH) */}
+-                                <div className="game-hero-premium position-relative animate-fade-in w-100 d-flex flex-column justify-content-end" style={{ minHeight: '75vh', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+-                                    {/* BLURRED BACKGROUND */}
+-                                    <div className="hero-bg-blur position-absolute w-100 h-100 top-0 start-0" style={{ zIndex: 0, overflow: 'hidden' }}>
+-                                        <img src={tournament.image} alt={tournament.title} className="w-100 h-100 object-fit-cover" style={{ filter: 'blur(8px) brightness(0.5)', transform: 'scale(1.05)' }} />
+-                                        <div className="overlay-gradient position-absolute inset-0 w-100 h-100" style={{ background: 'linear-gradient(to bottom, rgba(15,15,15,0.1) 0%, rgba(15,15,15,0.6) 50%, #0f0f0f 100%)' }}></div>
+-                                    </div>
++                            <section className="game-details-mobile font-display bg-background-dark text-slate-100 min-h-screen flex flex-col pt-[160px]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
+ 
+-                                    {/* HERO CONTENT */}
+-                                    <div className="container position-relative z-2 pb-15" style={{ maxWidth: '1200px' }}>
+-                                        <div className="position-absolute top-0 start-0 w-100 pt-8 z-2 d-none d-lg-block" style={{ marginTop: '-40vh' }}>
+-                                            <Breadcrumbs customCrumbs={[
+-                                                { href: '/games', label: 'Games', isLast: false },
+-                                                { href: `/competitions/${tournament.slug}`, label: tournament.title, isLast: true }
+-                                            ]} />
+-                                        </div>
++                                {/* Fixed Page Header */}
++                                <header className="fixed top-[100px] left-0 right-0 z-[100] flex items-center bg-[#221710] border-b border-[#3a281e] p-4 lg:px-8 justify-between shadow-md">
++                                    <div className="flex items-center gap-4 lg:gap-6">
++                                        <button onClick={() => router.back()} className="text-slate-100 hover:!text-[#f26c0d] transition-colors flex items-center">
++                                            <span className="material-symbols-outlined text-xl lg:text-2xl">arrow_back</span>
++                                        </button>
++                                        <h1 className="text-sm lg:text-base font-bold leading-tight tracking-tight uppercase truncate max-w-[200px] lg:max-w-[400px]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
++                                            {tournament.title}
++                                        </h1>
++                                    </div>
++                                    <div className="flex items-center gap-4 lg:gap-6">
++                                        <button className="text-slate-100 hover:!text-[#f26c0d] transition-colors flex items-center">
++                                            <span className="material-symbols-outlined text-xl lg:text-2xl">share</span>
++                                        </button>
++                                        <button className="text-slate-100 hover:!text-[#f26c0d] transition-colors flex items-center">
++                                            <span className="material-symbols-outlined text-xl lg:text-2xl">more_vert</span>
++                                        </button>
++                                    </div>
++                                </header>
++
++                                {/* Main Wrapper - Full Width */}
++                                <div className="flex-1 overflow-y-auto custom-scrollbar pb-24">
++
++                                    {/* Hero Area - Section 1 */}
++                                    <div className="w-full relative">
++
++                                        {/* Background Banner */}
++                                        <div
++                                            className="w-full h-[40vh] min-h-[400px] bg-cover bg-center relative group"
++                                            style={{
++                                                backgroundImage: `linear-gradient(to bottom, rgba(34,23,16,0) 0%, rgba(34,23,16,0.5) 50%, rgba(34,23,16,1) 100%), url('${tournament.image}')`,
++                                            }}
++                                        >
++                                            <div className="absolute inset-0 flex items-center justify-center">
++                                                <button onClick={() => setIsVideoModalOpen(true)} className="!bg-[#f26c0d] p-4 lg:p-6 rounded-full shadow-lg shadow-[#f26c0d]/40 hover:scale-110 transition-transform">
++                                                    <span className="material-symbols-outlined text-4xl lg:text-5xl text-white block leading-none">play_arrow</span>
++                                                </button>
++                                            </div>
+ 
+-                                        <div className="row pt-20">
+-                                            <div className="col-lg-8 animate-slide-up pb-lg-5">
+-                                                <div className="d-flex flex-wrap gap-3 mb-4">
+-                                                    <span className="badge-premium-tag px-3 py-1">FREE GAME</span>
+-                                                    <span className="badge-premium-tag px-3 py-1">{tournament.genre || 'RACING'}</span>
+-                                                </div>
+-                                                <h1 className="hero-title-massive fw-extrabold text-white mb-2 text-uppercase tracking-tighter" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', lineHeight: '1', textShadow: '0 10px 30px rgba(0,0,0,0.8)' }}>
+-                                                    {tournament.title}
+-                                                </h1>
+-                                                <p className="fs-three mb-8 text-light opacity-75 fw-medium tracking-widest text-uppercase" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+-                                                    {tournament.subtitle || 'High Speed Challenge'}
+-                                                </p>
+-
+-                                                <div className="d-flex flex-wrap gap-4 align-items-center mt-6">
+-                                                    <Link href={`/play/${tournament.slug}`} className="btn-premium-primary py-3 px-10 rounded-3 text-white fw-extrabold text-uppercase tracking-widest d-flex align-items-center justify-content-center gap-3 transition-all text-decoration-none shadow-glow">
+-                                                        <i className="ti ti-device-gamepad-2 fs-xl"></i> MAIN SEKARANG
+-                                                    </Link>
+-                                                    <button
+-                                                        onClick={() => setIsVideoModalOpen(true)}
+-                                                        className="btn-premium-secondary py-3 px-8 rounded-3 text-white fw-bold text-uppercase tracking-widest d-flex align-items-center justify-content-center gap-2 transition-all"
+-                                                    >
+-                                                        <i className="ti ti-player-play-filled"></i> TONTON TRAILER
+-                                                    </button>
+-                                                </div>
++                                            {/* Hero Pagination Dots */}
++                                            <div className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-10">
++                                                <span className="w-2 h-2 rounded-full !bg-[#f26c0d] opacity-100"></span>
++                                                <span className="w-2 h-2 rounded-full bg-white opacity-20"></span>
++                                                <span className="w-2 h-2 rounded-full bg-white opacity-20"></span>
++                                                <span className="w-2 h-2 rounded-full bg-white opacity-20"></span>
+                                             </div>
+                                         </div>
+-                                    </div>
+-                                </div>
+ 
+-                                {/* MAIN CONTENT 2-COLUMN LAYOUT (Steam Style) */}
+-                                <div className="container mt-15" style={{ maxWidth: '1200px' }}>
+-                                    <div className="row g-8">
+-
+-                                        {/* KOLOM KIRI (70%) */}
+-                                        <div className="col-lg-8">
+-
+-                                            {/* VIDEO PREVIEW INLINE */}
+-                                            {tournament.videoUrl && (
+-                                                <div className="video-player-container mb-15 rounded-5 overflow-hidden animate-slide-up bg-black" style={{ border: 'none', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)' }}>
+-                                                    <div className="ratio ratio-16x9">
+-                                                        <iframe
+-                                                            src={tournament.videoUrl}
+-                                                            title={`${tournament.title} Trailer`}
+-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+-                                                            allowFullScreen
+-                                                            style={{ border: 'none' }}
+-                                                        ></iframe>
++                                        {/* Content Grid Container */}
++                                        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 relative -mt-32 lg:-mt-40 z-20">
++
++                                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
++
++                                                {/* Left Column (Main Content) */}
++                                                <div className="lg:col-span-8 flex flex-col gap-8">
++
++                                                    {/* Title & Badges */}
++                                                    <div>
++                                                        <div className="flex gap-2 mb-4">
++                                                            <span className="px-3 py-1 !bg-[#f26c0d] text-white text-[10px] lg:text-xs font-bold rounded uppercase tracking-wider">Free Game</span>
++                                                            <span className="px-3 py-1 bg-card-dark border border-border-dark text-slate-100 text-[10px] lg:text-xs font-bold rounded uppercase tracking-wider">Action-Trivia</span>
++                                                        </div>
++
++                                                        <h1 className="text-4xl lg:text-[64px] font-bold uppercase tracking-tighter text-white leading-[1.1] mb-4" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
++                                                            {tournament.title.includes(':') ? (
++                                                                <>
++                                                                    {tournament.title.split(':')[0]}:<br />{tournament.title.split(':')[1]}
++                                                                </>
++                                                            ) : tournament.title}
++                                                        </h1>
++
++                                                        <p className="text-slate-300 text-sm lg:text-base max-w-xl leading-relaxed">
++                                                            {tournament.description || "Escape the swarm by solving lightning-fast puzzles. Every second counts in this high-stakes survival trivia experience."}
++                                                        </p>
+                                                     </div>
+-                                                </div>
+-                                            )}
+-
+-                                            {/* TENTANG GAME */}
+-                                            <div className="about-game-section animate-slide-up" style={{ marginBottom: '80px', paddingTop: '20px' }}>
+-                                                <h3 className="text-uppercase fw-extrabold text-white mb-6 pb-4 border-bottom border-light border-opacity-10" style={{ letterSpacing: '2px' }}>
+-                                                    Tentang Game Ini
+-                                                </h3>
+-                                                <div className="fs-md text-light opacity-80 description-text description-highlighted" style={{ lineHeight: '1.8' }}>
+-                                                    {renderDescription(tournament.description)}
+-                                                </div>
+-                                            </div>
+ 
+-                                            {/* FITUR UTAMA CARD GRID */}
+-                                            {tournament.features && tournament.features.length > 0 && (
+-                                                <div className="features-section animate-slide-up" style={{ marginBottom: '80px' }}>
+-                                                    <h3 className="text-uppercase fw-extrabold text-white mb-8 pb-4 border-bottom border-light border-opacity-10" style={{ letterSpacing: '2px' }}>
+-                                                        Fitur Utama
+-                                                    </h3>
+-                                                    <div className="row g-6">
+-                                                        {tournament.features.map((feature, index) => (
+-                                                            <div key={index} className="col-md-4 col-sm-6">
+-                                                                <div className="premium-feature-card h-100 p-8 rounded-4 text-center transition-all bg-card-dark" style={{ background: '#1a1a1a', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
+-                                                                    <div className="feature-icon mb-5 d-inline-flex justify-content-center align-items-center text-orange-gradient transition-all">
+-                                                                        <i className={`${feature.icon} fs-one`}></i>
++                                                    {/* Rating Card */}
++                                                    <div className="bg-[#2a1d15] border border-border-dark rounded-xl p-6 lg:p-8 shadow-2xl">
++                                                        <div className="flex items-center justify-between mb-6">
++                                                            <div className="flex items-center gap-4 lg:gap-6">
++                                                                <div className="text-4xl lg:text-5xl font-bold !text-[#f26c0d]">{tournament.ratingScore || "4.9"}</div>
++                                                                <div className="flex flex-col gap-1">
++                                                                    <div className="flex !text-[#f26c0d]">
++                                                                        {[...Array(5)].map((_, i) => (
++                                                                            <span key={i} className="material-symbols-outlined text-xl lg:text-2xl fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
++                                                                        ))}
+                                                                     </div>
+-                                                                    <h5 className="fw-bold text-white mb-4 tracking-wide">{feature.title}</h5>
+-                                                                    <p className="fs-sm text-light opacity-60 mb-0 line-height-comfortable" style={{ lineHeight: '1.6' }}>{feature.description}</p>
++                                                                    <div className="text-[10px] lg:text-xs text-slate-400 uppercase tracking-widest font-bold">Community Rating</div>
+                                                                 </div>
+                                                             </div>
+-                                                        ))}
++                                                            <div className="text-right flex flex-col gap-1">
++                                                                <div className="text-xl lg:text-2xl font-bold text-white">{tournament.recommendedPercent || "82%"}</div>
++                                                                <div className="text-[10px] lg:text-xs text-slate-400 uppercase font-bold tracking-widest">Recommended</div>
++                                                            </div>
++                                                        </div>
++                                                        <div className="w-full bg-[#1a110c] border border-[#3a281e] h-2 lg:h-3 rounded-full overflow-hidden">
++                                                            <div className="!bg-[#f26c0d] h-full shadow-[0_0_10px_#f26c0d]" style={{ width: tournament.recommendedPercent || "82%" }}></div>
++                                                        </div>
+                                                     </div>
+-                                                </div>
+-                                            )}
+-                                        </div>
+ 
+-                                        {/* KOLOM KANAN (30%) */}
+-                                        <div className="col-lg-4">
+-                                            <div className="sticky-sidebar animate-slide-right" style={{ top: '100px', position: 'sticky' }}>
++                                                    {/* 3 Features Grid */}
++                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
++                                                        {tournament.features?.slice(0, 3).map((f, i) => (
++                                                            <div key={i} className="bg-[#2a1d15] border border-border-dark p-6 rounded-xl flex flex-col items-center justify-center text-center gap-4 transition-transform hover:-translate-y-1">
++                                                                <i className={`${f.icon} !text-[#f26c0d] text-2xl lg:text-4xl drop-shadow-[0_0_8px_rgba(242,108,13,0.5)]`}></i>
++                                                                <h3 className="text-xs font-bold text-white uppercase leading-snug tracking-wider">{f.title}</h3>
++                                                            </div>
++                                                        ))}
++                                                        {(!tournament.features || tournament.features.length === 0) && (
++                                                            <>
++                                                                <div className="bg-[#2a1d15] border border-border-dark p-6 rounded-xl flex flex-col items-center justify-center text-center gap-4 transition-transform hover:-translate-y-1">
++                                                                    <span className="material-symbols-outlined !text-[#f26c0d] text-2xl lg:text-4xl drop-shadow-[0_0_8px_rgba(242,108,13,0.5)]">timer</span>
++                                                                    <h3 className="text-xs font-bold text-white uppercase leading-snug tracking-wider">Zombie Escape 60 Detik</h3>
++                                                                </div>
++                                                                <div className="bg-[#2a1d15] border border-border-dark p-6 rounded-xl flex flex-col items-center justify-center text-center gap-4 transition-transform hover:-translate-y-1">
++                                                                    <span className="material-symbols-outlined !text-[#f26c0d] text-2xl lg:text-4xl drop-shadow-[0_0_8px_rgba(242,108,13,0.5)]">trophy</span>
++                                                                    <h3 className="text-xs font-bold text-white uppercase leading-snug tracking-wider">Survival Score Challenge</h3>
++                                                                </div>
++                                                                <div className="bg-[#2a1d15] border border-border-dark p-6 rounded-xl flex flex-col items-center justify-center text-center gap-4 transition-transform hover:-translate-y-1">
++                                                                    <span className="material-symbols-outlined !text-[#f26c0d] text-2xl lg:text-4xl drop-shadow-[0_0_8px_rgba(242,108,13,0.5)]">group</span>
++                                                                    <h3 className="text-xs font-bold text-white uppercase leading-snug tracking-wider">Global Multiplayer</h3>
++                                                                </div>
++                                                            </>
++                                                        )}
++                                                    </div>
+ 
+-                                                {/* GAME SUMMARY CARD */}
+-                                                <div className="premium-summary-card p-6 rounded-4" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', marginBottom: '80px' }}>
++                                                </div>
+ 
+-                                                    {/* GAME POSTER */}
+-                                                    <div className="rounded-3 overflow-hidden mb-6 position-relative shadow-glow-subtle border border-light border-opacity-10">
+-                                                        <img src={tournament.image} alt={tournament.title} className="w-100 d-block object-fit-cover" style={{ minHeight: '180px' }} />
++                                                {/* Right Column (Action & Details) */}
++                                                <div className="lg:col-span-4 flex flex-col gap-8 pt-4 lg:pt-[140px]">
++
++                                                    {/* Action Buttons */}
++                                                    <div className="flex flex-col gap-4">
++                                                        <Link href={`/play/${tournament.slug}`} className="!bg-[#f26c0d] hover:brightness-110 text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-3 no-underline text-sm lg:text-base uppercase tracking-wider shadow-lg shadow-[#f26c0d]/20 hover:-translate-y-1">
++                                                            <span className="material-symbols-outlined text-xl">bolt</span>
++                                                            PLAY NOW
++                                                        </Link>
++                                                        <button onClick={() => setIsVideoModalOpen(true)} className="bg-transparent hover:bg-white/5 text-white font-bold py-4 px-6 rounded-xl border border-white/20 transition-all flex items-center justify-center gap-3 text-sm lg:text-base uppercase tracking-wider hover:-translate-y-1">
++                                                            <span className="material-symbols-outlined text-xl">movie</span>
++                                                            WATCH TRAILER
++                                                        </button>
+                                                     </div>
+ 
+-                                                    {/* RATING */}
+-                                                    <div className="rating-container mb-8 pb-6 border-bottom border-light border-opacity-10">
+-                                                        <div className="d-flex justify-content-between align-items-end mb-4">
+-                                                            <div>
+-                                                                <h6 className="text-uppercase text-light opacity-50 fs-xs fw-extrabold tracking-widest mb-1">Rating Komunitas</h6>
+-                                                                <span className="text-success fw-bold fs-md">Sangat Positif</span>
++                                                    {/* Game Details Card */}
++                                                    <div className="bg-[#2a1d15] border border-border-dark rounded-xl p-8">
++                                                        <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Game Details</h3>
++
++                                                        <div className="space-y-5">
++                                                            <div className="flex justify-between items-center bg-[#221710]/50 p-2 rounded">
++                                                                <span className="text-slate-400 text-xs uppercase tracking-wider font-medium">Developer</span>
++                                                                <span className="font-bold text-xs text-white text-right w-1/2">{tournament.developer}</span>
+                                                             </div>
+-                                                            <div className="text-end">
+-                                                                <span className="display-five fw-extrabold text-white" style={{ lineHeight: '1' }}>{tournament.rating || '4.8'}</span>
+-                                                                <span className="fs-sm text-light opacity-50 fw-bold"> / 5</span>
++                                                            <div className="flex justify-between items-center bg-[#221710]/50 p-2 rounded">
++                                                                <span className="text-slate-400 text-xs uppercase tracking-wider font-medium">Publisher</span>
++                                                                <span className="font-bold text-xs text-white text-right w-1/2">{tournament.publisher}</span>
++                                                            </div>
++                                                            <div className="flex justify-between items-center bg-[#221710]/50 p-2 rounded">
++                                                                <span className="text-slate-400 text-xs uppercase tracking-wider font-medium">Genre</span>
++                                                                <span className="font-bold text-xs !text-[#f26c0d] text-right w-1/2">{tournament.genre}</span>
++                                                            </div>
++                                                            <div className="flex justify-between items-center bg-[#221710]/50 p-2 rounded">
++                                                                <span className="text-slate-400 text-xs uppercase tracking-wider font-medium">Platform</span>
++                                                                <span className="font-bold text-xs text-white text-right w-1/2">{tournament.platform}</span>
++                                                            </div>
++                                                            <div className="flex justify-between items-center bg-[#221710]/50 p-2 rounded">
++                                                                <span className="text-slate-400 text-xs uppercase tracking-wider font-medium">Release Date</span>
++                                                                <span className="font-bold text-xs text-white uppercase text-right w-1/2">{tournament.releaseDate}</span>
+                                                             </div>
+                                                         </div>
+-                                                        {/* Progress Bar Horizontal */}
+-                                                        <div className="progress rounded-pill bg-dark mb-2" style={{ height: '8px' }}>
+-                                                            <div className="progress-bar bg-orange-gradient rounded-pill transition-all" role="progressbar" style={{ width: `${(parseFloat(String(tournament.rating || 4.8)) / 5) * 100}%` }} aria-valuenow={parseFloat(String(tournament.rating || 4.8))} aria-valuemin={0} aria-valuemax={5}></div>
+-                                                        </div>
+-                                                        <div className="text-end mt-2"><span className="fs-xs text-light opacity-40">Berdasarkan ulasan pemain</span></div>
+-                                                    </div>
+ 
+-                                                    {/* GAME INFO */}
+-                                                    <div className="game-info-list mb-8 d-grid gap-4">
+-                                                        <div className="d-flex justify-content-between align-items-center">
+-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Developer</span>
+-                                                            <span className="text-white fw-bold fs-sm">Gameforsmart</span>
+-                                                        </div>
+-                                                        <div className="d-flex justify-content-between align-items-center">
+-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Publisher</span>
+-                                                            <span className="text-white fw-bold fs-sm">Gameforsmart</span>
+-                                                        </div>
+-                                                        <div className="d-flex justify-content-between align-items-center">
+-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Genre</span>
+-                                                            <span className="text-white fw-bold fs-sm">{tournament.genre || 'Action, Arcade'}</span>
+-                                                        </div>
+-                                                        <div className="d-flex justify-content-between align-items-center">
+-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Platform</span>
+-                                                            <span className="text-white fw-bold fs-sm">{tournament.platform || 'Mobile & Web'}</span>
+-                                                        </div>
+-                                                        <div className="d-flex justify-content-between align-items-center">
+-                                                            <span className="text-light opacity-50 fs-sm fw-medium">Release Date</span>
+-                                                            <span className="text-white fw-bold fs-sm">20 Feb 2026</span>
++                                                        <div className="mt-8 pt-6 border-t border-border-dark/50">
++                                                            <div className="bg-[#1a110c] border border-border-dark rounded-xl p-4 flex items-start gap-4">
++                                                                <span className="material-symbols-outlined !text-[#f26c0d] text-2xl mt-1">language</span>
++                                                                <div className="flex flex-col gap-1">
++                                                                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest leading-none">Supported Languages</p>
++                                                                    <p className="text-xs font-bold text-white leading-tight">{tournament.languages}</p>
++                                                                </div>
++                                                            </div>
+                                                         </div>
+                                                     </div>
+ 
+-                                                    {/* MAIN GRATIS CTA */}
+-                                                    <Link href={`/play/${tournament.slug}`} className="btn-premium-cta w-100 py-3 rounded-2 text-white fw-extrabold text-uppercase tracking-widest d-center gap-2 transition-all text-decoration-none shadow-glow">
+-                                                        MAIN GRATIS <i className="ti ti-arrow-right"></i>
+-                                                    </Link>
++                                                </div>
++
++                                            </div>
+ 
++                                            {/* Section 2 (Gameplay Preview) */}
++                                            <div className="mt-16 lg:mt-24 w-full">
++                                                <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-4 border-[#f26c0d] pl-4">Gameplay Preview</h3>
++                                                <div className="relative w-full aspect-video rounded-xl overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)] cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
++                                                    <img
++                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
++                                                        src="/images/quizrush.webp"
++                                                        alt="Gameplay Preview"
++                                                    />
++                                                    <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent flex flex-col justify-end p-8 lg:p-12">
++                                                        <p className="!text-[#f26c0d] font-bold text-[10px] lg:text-xs uppercase tracking-[0.3em] mb-2 drop-shadow-md">Official Trailer</p>
++                                                        <h4 className="text-2xl lg:text-4xl font-bold text-white uppercase italic drop-shadow-lg">Stay Human. Stay Smart.</h4>
++                                                    </div>
++                                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 transition-opacity">
++                                                        <span className="material-symbols-outlined text-6xl lg:text-8xl text-white/90 hover:!text-[#f26c0d] transition-colors filter drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">play_circle</span>
++                                                    </div>
+                                                 </div>
+                                             </div>
++
+                                         </div>
+                                     </div>
+                                 </div>
++
++                                {/* Bottom Navigation Bar */}
++                                <nav className="fixed bottom-0 left-0 right-0 bg-[#221710] border-t border-[#3a281e] px-2 py-3 z-[100]">
++
++                                    <div className="flex items-center justify-around max-w-lg mx-auto">
++                                        <Link href="/" className="flex flex-col items-center" style={{ color: '#f26c0d' }}>
++                                            <span className="material-symbols-outlined fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>home</span>
++                                        </Link>
++                                        <Link href="/tournaments" className="flex flex-col items-center text-slate-500 hover:text-primary transition-colors">
++                                            <span className="material-symbols-outlined">trophy</span>
++                                        </Link>
++                                        <Link href="/play" className="flex flex-col items-center text-slate-100 p-3 rounded-full -mt-10 shadow-xl border-4 border-background-dark transition-transform hover:scale-110" style={{ backgroundColor: '#f26c0d' }}>
++                                            <span className="material-symbols-outlined fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>sports_esports</span>
++                                        </Link>
++                                        <Link href="/social" className="flex flex-col items-center text-slate-500 hover:text-primary transition-colors">
++                                            <span className="material-symbols-outlined">group</span>
++                                        </Link>
++                                        <Link href="/info" className="flex flex-col items-center text-slate-500 hover:text-primary transition-colors">
++                                            <span className="material-symbols-outlined">info</span>
++                                        </Link>
++                                    </div>
++                                </nav>
+                             </section>
+                         )}
+                     </div>
+                 </article>
+-            </main>
++            </main >
+ 
+             {/* VIDEO MODAL at true root level to escape all parent transforms */}
+-            {isVideoModalOpen && (
+-                <div className="video-modal-overlay position-fixed inset-0 d-center animate-fade-in" style={{ width: '100vw', height: '100vh', top: 0, left: 0 }}>
+-                    <button
+-                        className="modal-close-btn position-absolute top-10 end-10 btn-show-hide"
+-                        onClick={() => setIsVideoModalOpen(false)}
+-                        style={{ zIndex: 10001 }}
+-                    >
+-                        <i className="ti ti-x"></i>
+-                    </button>
+-                    <div className="container" onClick={(e) => e.stopPropagation()}>
+-                        <div className="row justify-content-center">
+-                            <div className="col-lg-10">
+-                                <div className="video-modal-content rounded-5 overflow-hidden shadow-orange-intense animate-zoom-in">
+-                                    <div className="ratio ratio-16x9">
+-                                        <iframe
+-                                            src={`${tournament.videoUrl}?autoplay=1`}
+-                                            title="Game Trailer"
+-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+-                                            allowFullScreen
+-                                            style={{ border: 'none' }}
+-                                        ></iframe>
++            {
++                isVideoModalOpen && (
++                    <div className="video-modal-overlay position-fixed inset-0 d-center animate-fade-in" style={{ width: '100vw', height: '100vh', top: 0, left: 0 }}>
++                        <button
++                            className="modal-close-btn position-absolute top-10 end-10 btn-show-hide"
++                            onClick={() => setIsVideoModalOpen(false)}
++                            style={{ zIndex: 10001 }}
++                        >
++                            <i className="ti ti-x"></i>
++                        </button>
++                        <div className="container" onClick={(e) => e.stopPropagation()}>
++                            <div className="row justify-content-center">
++                                <div className="col-lg-10">
++                                    <div className="video-modal-content rounded-5 overflow-hidden shadow-orange-intense animate-zoom-in">
++                                        <div className="ratio ratio-16x9">
++                                            <iframe
++                                                src={`${tournament.videoUrl}?autoplay=1`}
++                                                title="Game Trailer"
++                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
++                                                allowFullScreen
++                                                style={{ border: 'none' }}
++                                            ></iframe>
++                                        </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+-                </div>
+-            )}
++                )
++            }
+ 
+             <style jsx>{`
+                 .animate-slide-up { animation: fadeInUp 0.8s ease-out forwards; }
+@@ -602,6 +668,18 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
+                     background: linear-gradient(90deg, #ff7a00, #ff4500);
+                 }
+ 
++                /* MOBILE REDESIGN STYLES */
++                .btn-icon-plain { background: none; border: none; }
++                .badge-mobile { background: #ff8c00; color: #fff; font-size: 10px; font-weight: 800; border-radius: 4px; border: none; letter-spacing: 0.5px; }
++                .btn-mobile-action { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: none; }
++                .btn-orange-solid { background: #f47920; box-shadow: 0 8px 24px rgba(244, 121, 32, 0.3); color: #fff !important; }
++                .btn-orange-solid:active { transform: scale(0.96); background: #e65c00; }
++                .btn-dark-outline { background: #2f1d16; border-bottom: 3px solid #1a100c; color: #fff !important; }
++                .btn-dark-outline:active { transform: translateY(2px); border-bottom-width: 1px; }
++                .display-five { font-family: 'Outfit', sans-serif; font-weight: 800; letter-spacing: -1px; }
++                .shadow-premium-orange { box-shadow: 0 10px 40px rgba(244, 121, 32, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1); }
++                .shadow-glow-orange { box-shadow: 0 0 15px rgba(244, 121, 32, 0.6); }
++
+                 .badge-premium-tag {
+                     background: rgba(255, 255, 255, 0.08);
+                     border: 1px solid rgba(255, 255, 255, 0.15);
