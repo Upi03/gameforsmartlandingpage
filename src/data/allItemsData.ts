@@ -90,7 +90,7 @@ export const allItemsData: TournamentInfo[] = [
             { icon: "trophy", title: "SURVIVAL", description: "Kumpulkan poin sebanyak mungkin dengan jawaban yang tepat." },
             { icon: "groups", title: "GLOBAL MULTIPLAYER", description: "Bandingkan peringkatmu dengan penyintas lain di seluruh dunia." }
         ],
-        developer: "Gameforsmart Tea,",
+        developer: "Gameforsmart Team",
         publisher: "PT. Universal Big Data",
         releaseDate: "OCT 24, 2023",
         languages: "English, Indonesian, Arab",
