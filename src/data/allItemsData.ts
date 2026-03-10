@@ -32,6 +32,7 @@ export interface TournamentInfo {
     ratingScore?: string;
     recommendedPercent?: string;
     category?: string;
+    playUrl?: string;
 }
 
 export const allItemsData: TournamentInfo[] = [
@@ -57,18 +58,21 @@ export const allItemsData: TournamentInfo[] = [
         ],
         videoUrl: "https://www.youtube.com/embed/FYH9n37B7Yw",
         gameplayVideoUrl: "https://www.youtube.com/embed/kL7r4v4pW0E",
+        playUrl: "https://crazy-race-next.vercel.app",
+        developer: "GAMEFORSMART TEAM",
+        publisher: "PT. UNIVERSAL BIG DATA"
     },
     {
         id: 2,
         type: "game",
         title: "QUIZ RUSH",
         subtitle: "Brain Blitz",
-        image: "/images/quizrush.webp",
+        image: "/images/quizrush_new.jpg",
         players: "8k",
         platform: "Dekstop, Moblie",
         rating: "4.9",
         genre: "Action Trivia",
-        description: "Escape the swarm by solving lightning-fast puzzles. Every second counts in this high-stakes survival trivia experience.",
+        description: "Quiz Rush: adalah evolusi terbaru dari genre trivia kompetitif. Dalam arena yang penuh adrenalin, pemain harus menjawab pertanyaan dengan kecepatan cahaya sambil menghindari ancaman lingkungan yang dinamis. Ini bukan sekadar tes pengetahuan; ini adalah pertarungan refleks dan kecerdasan murni.\n\nHadapi ribuan pertanyaan lintas kategori, mulai dari sejarah kuno hingga teknologi masa depan, semuanya dalam visual neon yang memukau dan soundtrack synthwave yang memacu jantung.",
         status: "Action",
         slug: "2",
         href: "/competitions/2",
@@ -81,21 +85,23 @@ export const allItemsData: TournamentInfo[] = [
         videoUrl: "https://www.youtube.com/embed/UwJAAy7tPhE",
         gameplayVideoUrl: "https://www.youtube.com/embed/6iB2M_23U6U",
         screenshots: [
-            "/images/quizrush.webp",
+            "/images/quizrush_new.jpg",
             "/images/spacequiz.webp",
             "/images/memoryquiz.webp"
         ],
         features: [
-            { icon: "timer", title: "ESCAPE", description: "Jawab cepat atau tertangkap! Selesaikan tantangan dalam waktu terbatas." },
-            { icon: "trophy", title: "SURVIVAL", description: "Kumpulkan poin sebanyak mungkin dengan jawaban yang tepat." },
-            { icon: "groups", title: "GLOBAL MULTIPLAYER", description: "Bandingkan peringkatmu dengan penyintas lain di seluruh dunia." }
+            { icon: "ti-ghost", title: "Zombie Escape", description: "Berlari dari kejaran gerombolan undead sambil menyelesaikan puzzle logika yang rumit." },
+            { icon: "ti-chart-bar", title: "Survival Score", description: "Kumpulkan poin dengan jawaban berturut-turut untuk mengaktifkan perisai pertahanan." },
+            { icon: "ti-world", title: "Global Leaderboard", description: "Buktikan bahwa Anda adalah yang terpintar di dunia dengan mendaki peringkat musiman." },
+            { icon: "ti-sword", title: "Zombie Horde Duel", description: "Pertarungan bos epik di mana setiap jawaban yang salah membawa zombie lebih dekat ke posisi Anda." }
         ],
-        developer: "Gameforsmart Team",
-        publisher: "PT. Universal Big Data",
         releaseDate: "OCT 24, 2023",
         languages: "English, Indonesian, Arab",
         ratingScore: "4.9",
-        recommendedPercent: "82%"
+        recommendedPercent: "82%",
+        playUrl: "https://quizrun.vercel.app",
+        developer: "GAMEFORSMART TEAM",
+        publisher: "PT. UNIVERSAL BIG DATA"
     },
     {
         id: 3,
@@ -118,6 +124,9 @@ export const allItemsData: TournamentInfo[] = [
         ],
         videoUrl: "https://www.youtube.com/embed/kfYEiTdsyas",
         gameplayVideoUrl: "https://www.youtube.com/embed/6_rW97xG4_Y",
+        playUrl: "https://spacequizv1.vercel.app",
+        developer: "GAMEFORSMART TEAM",
+        publisher: "PT. UNIVERSAL BIG DATA"
     },
     {
         id: 4,
@@ -140,6 +149,9 @@ export const allItemsData: TournamentInfo[] = [
         ],
         videoUrl: "https://www.youtube.com/embed/tax4e4hBBZc",
         gameplayVideoUrl: "https://www.youtube.com/embed/YpXk5E_8_Hk",
+        playUrl: "https://memorygame-quiz.vercel.app",
+        developer: "GAMEFORSMART TEAM",
+        publisher: "PT. UNIVERSAL BIG DATA"
     },
     // Tournaments
     {
@@ -294,7 +306,7 @@ export const allItemsData: TournamentInfo[] = [
         type: "tournament",
         title: "Lomba Cerdas Cermat Online – Jawa Timur",
         subtitle: "Tingkat Provinsi",
-        image: "/assets/img/lomba-cerdas-cermat-jawatimur-v2.png",
+        image: "/assets/img/lomba-cerdas-cermat-jawatimur-v3.jpg",
         prizeMoney: "Rp 10.000.000",
         ticketFee: "Rp 25.000",
         date: "Juli",
@@ -325,7 +337,7 @@ export const allItemsData: TournamentInfo[] = [
         type: "tournament",
         title: "Lomba Cerdas Cermat Online – Nasional",
         subtitle: "Kejuaraan Indonesia Bersinar",
-        image: "/assets/img/lomba-cerdas-cermat-nasional-v2.png",
+        image: "/assets/img/lomba-cerdas-cermat-nasional-v3.jpg",
         prizeMoney: "Rp 15.000.000 - Rp 20.000.000",
         ticketFee: "Rp 50.000",
         date: "Agustus – September",
