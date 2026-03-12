@@ -1,9 +1,11 @@
 "use client";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSidebar } from '@/context/SidebarContext';
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const { isSidebarOpen, closeSidebar } = useSidebar();
 
     const isActive = (path: string) => {
         if (path === '/home' && pathname === '/') return true;
@@ -20,7 +22,7 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
             <div className="sidebar-wrapper d-flex">
                 <div className="sidebar-menu-capsule py-xxl-20 py-sm-15 py-10 px-6">
                     <div className="d-grid gap-sm-12 gap-8 sidebar-menu-items text-center">
@@ -30,6 +32,7 @@ export default function Sidebar() {
                                     href={item.href}
                                     className={`menu-link transition-all ${isActive(item.href) ? 'active-menu' : ''}`}
                                     title={item.label}
+                                    onClick={closeSidebar}
                                 >
                                     <i className={`${item.icon.startsWith('ti') ? 'ti ' + item.icon : item.icon}`} style={{ fontSize: '36px' }}></i>
                                 </Link>

@@ -5,8 +5,11 @@ import { useSearch } from '@/context/SearchContext';
 import { gamesData } from '@/data/gamesData';
 import { tournamentsData } from '@/data/tournamentsData';
 
+import { useSidebar } from '@/context/SidebarContext';
+
 export default function Header() {
     const { searchQuery, setSearchQuery } = useSearch();
+    const { toggleSidebar, isSidebarOpen } = useSidebar();
     const router = useRouter();
 
     const handleSearchSubmit = (e: React.FormEvent) => {
@@ -29,7 +32,11 @@ export default function Header() {
             <div className="py-sm-6 py-3 mx-xxl-10 mx-md-8 mx-2">
                 <div className="d-between gap-lg-4 gap-2">
                     <div className="top-bar alt d-flex align-items-center gap-4">
-                        <button className="sidebar-toggle-btn" type="button">
+                        <button 
+                            className={`sidebar-toggle-btn ${isSidebarOpen ? 'open' : ''}`} 
+                            type="button"
+                            onClick={toggleSidebar}
+                        >
                             <span></span>
                             <span></span>
                             <span></span>

@@ -27,6 +27,7 @@ export const metadata: Metadata = {
 };
 
 import { SearchProvider } from "@/context/SearchContext";
+import { SidebarProvider } from "@/context/SidebarContext";
 
 export default function RootLayout({
     children,
@@ -41,12 +42,14 @@ export default function RootLayout({
             </head>
             <body className={`${inter.className} ${spaceGrotesk.variable}`}>
                 <SearchProvider>
-                    <Preloader />
-                    <div className="cursor"></div>
-                    <NotificationArea />
-                    <ConnectWalletModal />
-                    <UserAccountPopup />
-                    {children}
+                    <SidebarProvider>
+                        <Preloader />
+                        <div className="cursor"></div>
+                        <NotificationArea />
+                        <ConnectWalletModal />
+                        <UserAccountPopup />
+                        {children}
+                    </SidebarProvider>
                 </SearchProvider>
 
                 {/* Legacy Scripts */}
