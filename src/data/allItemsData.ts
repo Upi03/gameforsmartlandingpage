@@ -290,6 +290,7 @@ export const allItemsData: TournamentInfo[] = [
         href: "/competitions/malang-raya",
         finalRound: "Juni",
         category: "tournament",
+        videoUrl: "https://www.youtube.com/embed/_FCYtKCGMjk",
         rules: [
             "Terbuka untuk siswa SD, SMP, SMA Sederajat.",
             "Pendaftaran melalui website resmi Gameforsmart.com.",
@@ -321,6 +322,7 @@ export const allItemsData: TournamentInfo[] = [
         href: "/competitions/jawa-timur",
         finalRound: "Agustus",
         category: "tournament",
+        videoUrl: "https://www.youtube.com/embed/_FCYtKCGMjk",
         rules: [
             "Terbuka untuk seluruh sekolah di wilayah Jawa Timur.",
             "Setiap sekolah dapat mengirimkan lebih dari satu wakil.",
@@ -351,6 +353,7 @@ export const allItemsData: TournamentInfo[] = [
         slug: "nasional",
         href: "/competitions/nasional",
         finalRound: "Oktober",
+        videoUrl: "https://www.youtube.com/embed/_FCYtKCGMjk",
         rules: [
             "Competition skala Nasional dengan pengawasan ketat.",
             "Hadiah utama untuk pemenang terbaik.",

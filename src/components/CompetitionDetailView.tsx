@@ -89,7 +89,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                 <div className="video-container rounded-4 overflow-hidden shadow-lg bg-black mb-8 border border-white/5 shadow-[#ff7a00]/5">
                                                     <div className="ratio ratio-16x9">
                                                         <iframe
-                                                            src={tournament.videoUrl || "https://www.youtube.com/embed/h7MYJghRWt0"}
+                                                            src={tournament.videoUrl || "https://www.youtube.com/embed/_FCYtKCGMjk"}
                                                             title="Tournament Preview"
                                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                             allowFullScreen
@@ -151,10 +151,11 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                                 <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-4 border-bottom border-white/20 pb-3">Competition Details</h4>
                                                                 {[
                                                                     { label: "Qualifiers", value: tournament.date },
+                                                                    tournament.finalRound ? { label: "Final Round", value: tournament.finalRound } : null,
                                                                     { label: "Ticket Fee", value: tournament.ticketFee || 'Gratis' },
                                                                     { label: "Max Quota", value: tournament.teams || '100 Teams' },
-                                                                    { label: "Platform", value: "Multi-platform" }
-                                                                ].map((item, idx) => (
+                                                                    { label: "Platform", value: "Gameforsmart.com" }
+                                                                ].filter(Boolean).map((item: any, idx) => (
                                                                     <div key={idx} className="d-flex justify-content-between align-items-center py-3 border-bottom border-white/10">
                                                                         <span className="text-slate-400 text-xs font-medium">{item.label}</span>
                                                                         <span className={`font-bold text-xs uppercase text-white`}>{item.value}</span>
@@ -394,7 +395,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                     >
                         <div className="ratio ratio-16x9">
                             <iframe
-                                src={`${tournament.videoUrl}?autoplay=1`}
+                                src={`${tournament.videoUrl || "https://www.youtube.com/embed/_FCYtKCGMjk"}?autoplay=1`}
                                 title="Game Trailer"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
