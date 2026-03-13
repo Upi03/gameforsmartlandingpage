@@ -34,7 +34,7 @@ export default function Sidebar() {
                                     title={item.label}
                                     onClick={closeSidebar}
                                 >
-                                    <i className={`${item.icon.startsWith('ti') ? 'ti ' + item.icon : item.icon}`} style={{ fontSize: '36px' }}></i>
+                                    <i className={`${item.icon.startsWith('ti') ? 'ti ' + item.icon : item.icon}`}></i>
                                 </Link>
                                 {isActive(item.href) && <div className="active-neon-indicator"></div>}
                             </div>
@@ -75,6 +75,9 @@ export default function Sidebar() {
                     border: none !important;
                     background: transparent !important;
                     transition: all 0.3s ease;
+                }
+                .menu-link i {
+                    font-size: 36px;
                 }
                 .active-menu {
                     background: rgba(255, 140, 0, 0.1) !important;
@@ -117,6 +120,21 @@ export default function Sidebar() {
                         margin-left: 10px;
                         height: 90vh;
                         border-radius: 50px;
+                        padding-top: 2rem !important;
+                        padding-bottom: 2rem !important;
+                        padding-left: 12px !important;
+                        padding-right: 12px !important;
+                    }
+                    .menu-link {
+                        width: 50px !important;
+                        height: 50px !important;
+                        min-width: 50px !important;
+                    }
+                    .menu-link i {
+                        font-size: 24px !important;
+                    }
+                    .sidebar-menu-items {
+                        gap: 16px !important;
                     }
                 }
             `}</style>
