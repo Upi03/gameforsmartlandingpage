@@ -52,6 +52,8 @@ export default function Sidebar() {
                 }
                 .sidebar-wrapper {
                     pointer-events: auto;
+                    z-index: 1000;
+                    position: relative;
                 }
                 .sidebar-menu-capsule {
                     background: #1a1a1a;
@@ -61,6 +63,8 @@ export default function Sidebar() {
                     display: inline-block;
                     margin-left: 15px;
                     margin-top: 15px;
+                    z-index: 1000;
+                    position: relative;
                 }
                 .menu-link {
                     color: rgba(255, 255, 255, 0.4);
