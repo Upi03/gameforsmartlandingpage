@@ -20,6 +20,7 @@ interface TournamentCardProps {
     practiceAttempts?: number;
     competitionAttempts?: number;
     isDetailed?: boolean;
+    playUrl?: string;
 }
 
 export default function TournamentCard({
@@ -40,7 +41,8 @@ export default function TournamentCard({
     practiceAttempts,
     competitionAttempts,
     isDetailed = false,
-    link
+    link,
+    playUrl
 }: {
     id: number;
     title: string;
@@ -60,6 +62,7 @@ export default function TournamentCard({
     competitionAttempts?: number;
     isDetailed?: boolean;
     link?: string;
+    playUrl?: string;
 }) {
     const [showTooltip, setShowTooltip] = useState(false);
     const [isTruncated, setIsTruncated] = useState(false);
@@ -77,15 +80,15 @@ export default function TournamentCard({
     return (
         <div className="tournament-card p-xl-4 p-3 pb-xl-8 bgn-4">
             <div className="tournament-img mb-8 position-relative">
-                <div className="img-area overflow-hidden position-relative h-100">
-                    <img className="w-100 h-100 object-fit-cover" src={image} alt="tournament" style={status === 'Coming Soon' ? { filter: 'blur(4px) brightness(0.4)' } : {}} />
+                <Link href={link || `/competitions/${slug || id}`} className="img-area d-block overflow-hidden position-relative h-100">
+                    <img className="w-100 h-100 object-fit-cover transition-all duration-500 hover-scale" src={image} alt="tournament" style={status === 'Coming Soon' ? { filter: 'blur(4px) brightness(0.4)' } : {}} />
                     {status === 'Coming Soon' && (
                         <div className="position-absolute top-50 start-50 translate-middle text-center w-100">
                             <i className="ti ti-lock display-four tcn-1 mb-2"></i>
                             <h5 className="tcn-1 text-uppercase fw-bold">Coming Soon</h5>
                         </div>
                     )}
-                </div>
+                </Link>
                 {status === 'Popular' ? (
                     <span className="card-status position-absolute top-0 end-0 py-1 px-4 tcn-1 fs-sm fw-bold shadow-sm" style={{ backgroundColor: '#ff4d4d', borderRadius: '0 0 0 20px', zIndex: 2 }}>
                         Popular
@@ -99,8 +102,8 @@ export default function TournamentCard({
             <div className="tournament-content px-xxl-4">
                 <div className="tournament-info mb-5">
                     <div className="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-1">
-                        <Link href={link || `/competitions/${slug || id}`} className="d-block">
-                            <h4 className="tournament-title tcn-1 mb-0 fs-five">
+                        <Link href={link || `/competitions/${slug || id}`} className="d-block no-underline">
+                            <h4 className="tournament-title tcn-1 mb-0 fs-five transition-all hover:text-[#72ff00]">
                                 {title}
                             </h4>
                         </Link>
@@ -141,13 +144,13 @@ export default function TournamentCard({
                     </div>
                 ) : (
                     <div className="card-info d-flex align-items-center gap-3 flex-wrap my-5">
-                        <div className="price-money bgn-3 d-flex align-items-center gap-3 py-2 px-3 h-100" style={{ border: '1px solid rgba(114, 255, 0, 0.4)', boxShadow: '0 0 10px rgba(114, 255, 0, 0.2)' }}>
+                        <div className="platform-info bgn-3 d-flex align-items-center gap-3 py-2 px-3 h-100" style={{ border: '1px solid rgba(114, 255, 0, 0.4)', borderRadius: '12px', boxShadow: '0 0 10px rgba(114, 255, 0, 0.2)' }}>
                             <div className="d-flex align-items-center gap-2">
                                 <i className="ti ti-device-gamepad-2 fs-base tcn-1"></i>
                                 <span className="tcn-1 fs-sm">{platform}</span>
                             </div>
                         </div>
-                        <div className="ticket-fee bgn-3 d-flex align-items-center gap-1 py-2 px-3 h-100" style={{ border: '1px solid rgba(255, 193, 7, 0.4)', boxShadow: '0 0 10px rgba(255, 193, 7, 0.2)' }}>
+                        <div className="rating-info bgn-3 d-flex align-items-center gap-1 py-2 px-3 h-100" style={{ border: '1px solid rgba(255, 193, 7, 0.4)', borderRadius: '12px', boxShadow: '0 0 10px rgba(255, 193, 7, 0.2)' }}>
                             <i className="ti ti-star-filled fs-base text-warning"></i>
                             <span className="tcn-1 fs-sm">{rating}</span>
                         </div>
@@ -160,12 +163,17 @@ export default function TournamentCard({
                             <span className="fs-six">Daftar</span>
                         </Link>
                     ) : (
-                        <div className="played-count d-flex align-items-center gap-2 py-2 px-6 rounded-pill" style={{ backgroundColor: 'rgba(114, 255, 0, 0.1)', border: '1px solid #72ff00', color: '#72ff00', fontWeight: 'bold' }}>
-                            <i className="ti ti-player-play fs-six"></i>
-                            <span className="fs-six text-nowrap">Played {players === '-' ? '0' : players}</span>
-                        </div>
+                        <Link 
+                            href={playUrl || '#'} 
+                            target={playUrl ? "_blank" : "_self"}
+                            className="play-btn d-flex align-items-center gap-2 py-2 px-6 rounded-pill no-underline" 
+                            style={{ backgroundColor: 'rgba(114, 255, 0, 0.1)', border: '1px solid #72ff00', color: '#72ff00', fontWeight: 'bold' }}
+                        >
+                            <i className="ti ti-player-play-filled fs-six"></i>
+                            <span className="fs-six text-nowrap uppercase tracking-widest">Play</span>
+                        </Link>
                     )}
-                    <Link href={link || `/competitions/${slug || id}`} className="btn-detail d-flex align-items-center justify-content-center rounded-circle" style={{ width: '44px', height: '44px', border: '1px solid rgba(114, 255, 0, 0.4)', color: '#72ff00', boxShadow: '0 0 10px rgba(114, 255, 0, 0.1)' }} title="Lihat Deskripsi">
+                    <Link href={link || `/competitions/${slug || id}`} className="btn-detail d-flex align-items-center justify-content-center rounded-circle" style={{ width: '44px', height: '44px', border: '2px solid #72ff00', color: '#72ff00', boxShadow: '0 0 15px rgba(114, 255, 0, 0.3)' }} title="Lihat Deskripsi">
                         <i className="ti ti-arrow-right fs-2xl"></i>
                     </Link>
                 </div>
@@ -186,6 +194,15 @@ export default function TournamentCard({
                     pointer-events: none;
                     animation: tooltipFadeIn 0.3s ease-in-out;
                     box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+                }
+                .play-btn {
+                    transition: all 0.3s ease;
+                }
+                .play-btn:hover {
+                    background-color: #72ff00 !important;
+                    color: #000 !important;
+                    box-shadow: 0 0 20px rgba(114, 255, 0, 0.4);
+                    transform: translateY(-2px);
                 }
                 @keyframes tooltipFadeIn {
                     from { opacity: 0; transform: translateY(10px); }

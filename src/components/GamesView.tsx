@@ -15,7 +15,7 @@ export default function GamesView() {
 
     const filteredGames = activeTab === 'All'
         ? games
-        : games.filter(game => game.status === activeTab);
+        : games.filter(game => game.status === activeTab || game.genre === activeTab);
 
     return (
         <>
@@ -59,7 +59,8 @@ export default function GamesView() {
                                                 platform={game.platform}
                                                 rating={game.rating}
                                                 players={game.players}
-                                                link={`/competitions/${game.slug}`}
+                                                link={`/games/${game.slug || game.id}`}
+                                                playUrl={game.playUrl}
                                             />
                                         </div>
                                     ))}

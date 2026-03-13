@@ -32,8 +32,8 @@ export default function Header() {
             <div className="py-sm-6 py-3 mx-xxl-10 mx-md-8 mx-2">
                 <div className="d-between gap-lg-4 gap-2">
                     <div className="top-bar alt d-flex align-items-center gap-4">
-                        <button 
-                            className={`sidebar-toggle-btn ${isSidebarOpen ? 'open' : ''}`} 
+                        <button
+                            className={`sidebar-toggle-btn ${isSidebarOpen ? 'open' : ''}`}
                             type="button"
                             onClick={toggleSidebar}
                         >

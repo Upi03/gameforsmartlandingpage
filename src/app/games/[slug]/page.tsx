@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { allItemsData } from '@/data/allItemsData';
-import CompetitionDetailView from '@/components/CompetitionDetailView';
+import GameDetailView from '@/components/GameDetailView';
 import { notFound } from 'next/navigation';
 
 interface Props {
@@ -13,29 +13,13 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
         (t) => t.slug === params.slug || String(t.id) === String(params.slug)
     );
 
-    if (!item) {
+    if (!item || item.type !== 'game') {
         return {
-            title: 'Item Not Found | GameForSmart 2026',
+            title: 'Game Not Found | GameForSmart 2026',
         };
     }
 
-    const baseTitle = "GameForSmart 2026";
-    let title = "";
-
-    if (item.type === 'game') {
-        title = `${item.title} | ${baseTitle}`;
-    } else {
-        // Special mapping for tournaments
-        if (item.slug === 'malang-raya') {
-            title = `Malang Raya Competition | ${baseTitle}`;
-        } else if (item.slug === 'jawa-timur') {
-            title = `Jawa Timur Competition | ${baseTitle}`;
-        } else if (item.slug === 'nasional') {
-            title = `National Competition | ${baseTitle}`;
-        } else {
-            title = `${item.title} Competition | ${baseTitle}`;
-        }
-    }
+    const title = `${item.title} | GameForSmart 2026`;
 
     return {
         title: title,
@@ -48,21 +32,15 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     };
 }
 
-import GameDetailView from '@/components/GameDetailView';
-
 export default async function Page(props: { params: Promise<{ slug: string }> }) {
     const params = await props.params;
     const item = allItemsData.find(
         (t) => t.slug === params.slug || String(t.id) === String(params.slug)
     );
 
-    if (!item) {
+    if (!item || item.type !== 'game') {
         notFound();
     }
 
-    if (item.type === 'game') {
-        return <GameDetailView game={item} />;
-    }
-
-    return <CompetitionDetailView tournament={item} />;
+    return <GameDetailView game={item} />;
 }
