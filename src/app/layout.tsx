@@ -40,7 +40,7 @@ export default function RootLayout({
                 <link rel="shortcut icon" href="/assets/img/gameforsmartlogo.png" type="image/x-icon" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
             </head>
-            <body className={`${inter.className} ${spaceGrotesk.variable}`} suppressHydrationWarning={true}>
+            <body className={`${inter.className} ${spaceGrotesk.variable} overflow-x-hidden`} suppressHydrationWarning={true}>
                 <SearchProvider>
                     <SidebarProvider>
                         <Preloader />

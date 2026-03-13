@@ -20,9 +20,9 @@ export default function GamesView() {
     return (
         <>
             <Header />
-            <main className="main-container container-fluid d-flex pt-20 px-0 position-relative">
+            <main className="main-container container-fluid d-flex pt-20 px-0 position-relative" style={{ overflowX: 'hidden' }}>
                 <Sidebar />
-                <article className="main-content mt-10">
+                <article className="main-content mt-10 w-100">
                     <section className="tournament-section game-section pb-120">
                         <div className="tournament-wrapper alt">
                             <div className="container-fluid py-lg-15 py-sm-10 py-8 px-lg-15 px-md-10 px-6">
@@ -49,7 +49,7 @@ export default function GamesView() {
                                 </div>
                                 <div className="row gy-lg-10 gy-6 justify-content-center">
                                     {filteredGames.map((game) => (
-                                        <div key={game.id} className="col-xxl-3 col-lg-4 col-md-6 col-sm-10">
+                                        <div key={game.id} className="col-xxl-3 col-lg-4 col-md-6 col-sm-11 col-12">
                                             <TournamentCard
                                                 id={game.id}
                                                 title={game.title}
