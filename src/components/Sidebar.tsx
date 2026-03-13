@@ -119,7 +119,7 @@ export default function Sidebar() {
                     transition: all 0.3s ease;
                 }
 
-                @media (max-width: 991px) {
+                @media (max-width: 1350px) {
                     .sidebar-menu-capsule {
                         margin-left: 10px !important;
                         margin-top: 10px !important;
