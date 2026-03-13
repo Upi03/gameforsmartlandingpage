@@ -48,6 +48,10 @@ export default function Sidebar() {
                     border: none !important;
                     box-shadow: none !important;
                     z-index: 1000;
+                    pointer-events: none;
+                }
+                .sidebar-wrapper {
+                    pointer-events: auto;
                 }
                 .sidebar-menu-capsule {
                     background: #1a1a1a;
