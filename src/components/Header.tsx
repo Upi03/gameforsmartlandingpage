@@ -47,7 +47,7 @@ export default function Header() {
                         </Link>
                     </div>
                     <div className="header-btn-area d-flex align-items-center justify-content-between gap-xl-6 gap-3 w-100 position-relative">
-                        <div className="search-bar" style={{ maxWidth: '400px', width: '100%' }}>
+                        <div className="search-bar d-none d-lg-block" style={{ maxWidth: '400px', width: '100%' }}>
                             <form action="#" onSubmit={handleSearchSubmit}>
                                 <div className="input-area d-flex align-items-center gap-2">
                                     <i className="ti ti-search"></i>
