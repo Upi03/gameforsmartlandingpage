@@ -84,6 +84,114 @@ export default function Header() {
                     </div>
                 </div>
             </div>
+            <style jsx>{`
+                .header-section {
+                    transition: all 0.3s ease;
+                }
+                
+                @media (max-width: 1400px) {
+                    .header-section > div {
+                        padding-top: 0.5rem !important;
+                        padding-bottom: 0.5rem !important;
+                        margin-left: 1.5rem !important;
+                        margin-right: 1.5rem !important;
+                    }
+                    .navbar-brand {
+                        max-width: 200px !important;
+                    }
+                }
+
+                @media (max-width: 1100px) {
+                    .header-section > div {
+                        padding-top: 0.25rem !important;
+                        padding-bottom: 0.25rem !important;
+                        margin-left: 1rem !important;
+                        margin-right: 1rem !important;
+                    }
+                    .navbar-brand {
+                        max-width: 160px !important;
+                    }
+                    .search-bar {
+                        max-width: 300px !important;
+                    }
+                    .ntf-btn, .sidebar-toggle-btn {
+                        transform: scale(0.9);
+                    }
+                    .header-profile .img-area {
+                        width: 45px !important;
+                        height: 45px !important;
+                        min-width: 45px !important;
+                    }
+                }
+
+                @media (max-width: 800px) {
+                    .header-section > div {
+                        padding-top: 0.15rem !important;
+                        padding-bottom: 0.15rem !important;
+                        margin-left: 0.5rem !important;
+                        margin-right: 0.5rem !important;
+                    }
+                    .navbar-brand {
+                        max-width: 130px !important;
+                    }
+                    .search-bar {
+                        max-width: 200px !important;
+                    }
+                    .ntf-btn, .sidebar-toggle-btn {
+                        transform: scale(0.8);
+                    }
+                    .header-profile .img-area {
+                        width: 36px !important;
+                        height: 36px !important;
+                        min-width: 36px !important;
+                    }
+                    .profile-wrapper {
+                        gap: 0.5rem !important;
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    .header-section > div {
+                        padding-left: 0.5rem !important;
+                        padding-right: 0.5rem !important;
+                        margin-left: 0 !important;
+                        margin-right: 0 !important;
+                        width: 100% !important;
+                    }
+                    .navbar-brand {
+                        max-width: 120px !important;
+                    }
+                    .header-btn-area {
+                        gap: 0.25rem !important;
+                        width: auto !important;
+                    }
+                    .header-btns {
+                        gap: 0.5rem !important;
+                        width: auto !important;
+                    }
+                    .ntf-btn, .sidebar-toggle-btn {
+                        transform: scale(0.75);
+                    }
+                    .header-profile .img-area {
+                        width: 32px !important;
+                        height: 32px !important;
+                        min-width: 32px !important;
+                    }
+                    .profile-wrapper {
+                        gap: 0.25rem !important;
+                    }
+                }
+
+                /* Extreme scale/small mobile fix */
+                @media (max-width: 400px) {
+                    .navbar-brand {
+                        max-width: 100px !important;
+                    }
+                    .top-bar.alt {
+                        gap: 0.5rem !important;
+                    }
+                }
+            `}</style>
         </header>
     );
 }
