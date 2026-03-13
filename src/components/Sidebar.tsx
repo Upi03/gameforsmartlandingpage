@@ -121,13 +121,14 @@ export default function Sidebar() {
 
                 @media (max-width: 991px) {
                     .sidebar-menu-capsule {
-                        margin-left: 10px;
+                        margin-left: 0px !important;
+                        margin-top: 10px !important;
                         height: 90vh;
                         border-radius: 50px;
                         padding-top: 2rem !important;
                         padding-bottom: 2rem !important;
-                        padding-left: 12px !important;
-                        padding-right: 12px !important;
+                        padding-left: 10px !important;
+                        padding-right: 10px !important;
                     }
                     .menu-link {
                         width: 50px !important;
