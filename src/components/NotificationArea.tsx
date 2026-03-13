@@ -1,6 +1,6 @@
-export default function NotificationArea() {
+export default function NotificationArea({ isOpen }: { isOpen: boolean }) {
     return (
-        <div className="notification-area p-4" data-lenis-prevent>
+        <div className={`notification-area p-4 ${isOpen ? 'open' : ''}`} data-lenis-prevent>
             <div className="notification-card d-grid gap-lg-4 gap-2" data-tilt>
                 {[1, 2, 1, 2].map((id, idx) => (
                     <a href="#" key={idx}>

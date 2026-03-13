@@ -8,9 +8,7 @@ import "../assets/css/bootstrap.css";
 import "../assets/css/style.css";
 
 import Preloader from "@/components/Preloader";
-import NotificationArea from "@/components/NotificationArea";
 import ConnectWalletModal from "@/components/ConnectWalletModal";
-import UserAccountPopup from "@/components/UserAccountPopup";
 
 const inter = Inter({ subsets: ["latin"] });
 import { Space_Grotesk } from "next/font/google";
@@ -45,9 +43,7 @@ export default function RootLayout({
                     <SidebarProvider>
                         <Preloader />
                         <div className="cursor"></div>
-                        <NotificationArea />
                         <ConnectWalletModal />
-                        <UserAccountPopup />
                         {children}
                     </SidebarProvider>
                 </SearchProvider>

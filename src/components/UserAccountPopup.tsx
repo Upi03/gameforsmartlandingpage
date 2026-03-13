@@ -1,6 +1,6 @@
-export default function UserAccountPopup() {
+export default function UserAccountPopup({ isOpen }: { isOpen: boolean }) {
     return (
-        <div className="user-account-popup p-4">
+        <div className={`user-account-popup p-4 ${isOpen ? 'open' : ''}`}>
             <div className="account-items d-grid gap-1" data-tilt>
                 <div className="user-level-area p-3">
                     <div className="user-info d-between">

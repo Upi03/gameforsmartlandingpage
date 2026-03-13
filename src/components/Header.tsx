@@ -6,11 +6,39 @@ import { gamesData } from '@/data/gamesData';
 import { tournamentsData } from '@/data/tournamentsData';
 
 import { useSidebar } from '@/context/SidebarContext';
+import { useState, useEffect, useRef } from 'react';
+import NotificationArea from './NotificationArea';
+import UserAccountPopup from './UserAccountPopup';
 
 export default function Header() {
     const { searchQuery, setSearchQuery } = useSearch();
     const { toggleSidebar, isSidebarOpen } = useSidebar();
     const router = useRouter();
+
+    const [showNotification, setShowNotification] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
+    const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+
+    const ntfRef = useRef<HTMLDivElement>(null);
+    const profileRef = useRef<HTMLDivElement>(null);
+    const mobileSearchRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ntfRef.current && !ntfRef.current.contains(event.target as Node)) {
+                setShowNotification(false);
+            }
+            if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+                setShowProfile(false);
+            }
+            if (mobileSearchRef.current && !mobileSearchRef.current.contains(event.target as Node)) {
+                setIsMobileSearchOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,7 +75,7 @@ export default function Header() {
                         </Link>
                     </div>
                     <div className="header-btn-area d-flex align-items-center justify-content-between gap-xl-6 gap-3 w-100 position-relative">
-                        <div className="search-bar d-none d-lg-block" style={{ maxWidth: '400px', width: '100%' }}>
+                        <div className={`search-bar d-lg-block ${isMobileSearchOpen ? 'open' : 'd-none'}`} style={{ maxWidth: '400px', width: '100%' }} ref={mobileSearchRef}>
                             <form action="#" onSubmit={handleSearchSubmit}>
                                 <div className="input-area d-flex align-items-center gap-2">
                                     <i className="ti ti-search"></i>
@@ -63,15 +91,43 @@ export default function Header() {
                         </div>
 
                         <div className="header-btns d-flex align-items-center justify-content-end gap-lg-6 gap-sm-4 gap-2 w-100">
-                            <button className="search-toggle-btn toggle-btn box-style fs-2xl d-block d-lg-none">
+                            <button 
+                                className="search-toggle-btn toggle-btn box-style fs-2xl d-block d-lg-none" 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setIsMobileSearchOpen(!isMobileSearchOpen);
+                                }}
+                            >
                                 <i className="ti ti-search"></i>
                             </button>
 
 
-                            <button className="ntf-btn box-style fs-2xl">
-                                <i className="ti ti-bell-filled"></i>
-                            </button>
-                            <div className="header-profile pointer">
+                            <div className="position-relative" ref={ntfRef}>
+                                <button 
+                                    className="ntf-btn box-style fs-2xl" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setShowNotification(!showNotification);
+                                        setShowProfile(false);
+                                    }}
+                                >
+                                    <i className="ti ti-bell-filled"></i>
+                                </button>
+                                <NotificationArea isOpen={showNotification} />
+                            </div>
+
+                            <div 
+                                className="header-profile pointer position-relative" 
+                                ref={profileRef} 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setShowProfile(!showProfile);
+                                    setShowNotification(false);
+                                }}
+                            >
                                 <div className="profile-wrapper d-flex align-items-center gap-3">
                                     <div className="img-area overflow-hidden">
                                         <img className="w-100" src="/assets/img/profile.png" alt="profile" />
@@ -79,6 +135,7 @@ export default function Header() {
                                     <span className="user-name d-none d-xxl-block text-nowrap">David Malan</span>
                                     <i className="ti ti-chevron-down d-none d-xxl-block"></i>
                                 </div>
+                                <UserAccountPopup isOpen={showProfile} />
                             </div>
                         </div>
                     </div>

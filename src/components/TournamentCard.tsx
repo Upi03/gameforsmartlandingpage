@@ -164,7 +164,7 @@ export default function TournamentCard({
                         </Link>
                     ) : (
                         <Link 
-                            href={playUrl || '#'} 
+                            href={playUrl || link || `/competitions/${slug || id}`} 
                             target={playUrl ? "_blank" : "_self"}
                             className="play-btn d-flex align-items-center gap-2 py-2 px-6 rounded-pill no-underline" 
                             style={{ backgroundColor: 'rgba(114, 255, 0, 0.1)', border: '1px solid #72ff00', color: '#72ff00', fontWeight: 'bold' }}

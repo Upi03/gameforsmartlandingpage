@@ -102,7 +102,7 @@ export default function Banner() {
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
                                                         PLAY • GAMING ARENA
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
                                                         PLAY <span className="tcp-1">GAMES</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
@@ -145,7 +145,7 @@ export default function Banner() {
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
                                                         CREATE • SHARE • CHALLENGE
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
                                                         CREATE <span className="tcp-1">QUIZZES</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
@@ -189,7 +189,7 @@ export default function Banner() {
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
                                                         COMPETE • WIN • REWARD
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
                                                         JOIN <span className="tcp-1">COMPETITIONS</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
@@ -232,7 +232,7 @@ export default function Banner() {
                                                     <p data-swiper-parallax="-200" className="tcn-1 mb-lg-4 mb-3 opacity-75 fw-medium fs-six text-uppercase tracking-wider">
                                                         ULTIMATE • GAMING • ARENA
                                                     </p>
-                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ fontSize: '4.5rem', lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
+                                                    <h2 data-swiper-parallax="-300" className="hero-title tcn-1 mb-lg-5 mb-4" style={{ lineHeight: '100%', fontWeight: '900', letterSpacing: '-1.5px' }}>
                                                         GAMEFORSMART <span className="tcp-1">PLATFORM</span>
                                                     </h2>
                                                     <p data-swiper-parallax="-350" className="tcn-1 mb-lg-6 mb-5 opacity-75 fs-six" style={{ maxWidth: '600px' }}>
@@ -332,6 +332,27 @@ export default function Banner() {
                                     0% { transform: translateY(0); }
                                     50% { transform: translateY(-20px); }
                                     100% { transform: translateY(0); }
+                                }
+                                .hero-title {
+                                    font-size: 4.5rem;
+                                }
+                                @media (max-width: 1400px) {
+                                    .hero-title { font-size: 3.5rem; }
+                                }
+                                @media (max-width: 1100px) {
+                                    .hero-title { font-size: 3rem; }
+                                    .hero-content { padding-left: 2rem !important; }
+                                }
+                                @media (max-width: 768px) {
+                                    .hero-title { font-size: 2.5rem; }
+                                    .hero-content { padding-left: 1rem !important; }
+                                }
+                                @media (max-width: 480px) {
+                                    .hero-title { 
+                                        font-size: 2.2rem; 
+                                        word-break: break-word;
+                                        letter-spacing: -1px;
+                                    }
                                 }
                             `}</style>
                         </div>

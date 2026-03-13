@@ -1590,25 +1590,31 @@ ul li {
 
 .notification-area,
 .user-account-popup {
-  position: fixed;
-  top: 100px;
-  right: 0px;
+  position: absolute;
+  top: 60px;
+  right: -10px;
   z-index: 1000;
   background: rgb(var(--n3));
   max-width: 300px;
-  width: 100%;
+  width: 300px;
   max-height: 400px;
-  height: 100%;
+  height: auto;
   border: 1px solid rgb(var(--n3));
   border-radius: 12px;
-  transition: all 0.5s ease;
-  transform: translateX(100%);
+  transition: all 0.3s ease-in-out;
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
   overflow-y: auto;
+  pointer-events: none;
 }
 
 .notification-area.open,
 .user-account-popup.open {
-  transform: translateX(0);
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .notification-area::-webkit-scrollbar,
