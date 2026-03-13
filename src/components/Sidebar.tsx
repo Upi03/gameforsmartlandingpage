@@ -121,7 +121,7 @@ export default function Sidebar() {
 
                 @media (max-width: 991px) {
                     .sidebar-menu-capsule {
-                        margin-left: 0px !important;
+                        margin-left: 10px !important;
                         margin-top: 10px !important;
                         height: 90vh;
                         border-radius: 50px;
