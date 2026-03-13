@@ -109,14 +109,6 @@ export default function Sidebar() {
                 }
 
                 @media (max-width: 991px) {
-                    .sidebar {
-                        position: fixed;
-                        left: -100px;
-                        transition: left 0.3s ease;
-                    }
-                    .sidebar.open {
-                        left: 0;
-                    }
                     .sidebar-menu-capsule {
                         margin-left: 10px;
                         height: 90vh;

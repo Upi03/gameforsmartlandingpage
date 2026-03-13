@@ -128,10 +128,10 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
 
                         {/* CONTENT GRID SECTION */}
                         <section className="container-fluid px-lg-15 px-md-10 px-6 py-16">
-                            <div className="row g-8 lg:g-12">
+                            <div className="row gy-8">
                                 
                                 {/* LEFT COLUMN: MEDIA & INFO */}
-                                <div className="col-lg-8 animate-slide-up">
+                                <div className="col-12 col-lg-8 animate-slide-up">
                                     {/* Video/Media Card */}
                                     <div className="group relative rounded-5 overflow-hidden shadow-2xl bg-black mb-12 border border-white/5 cursor-pointer shadow-[#f26c0d]/10" onClick={() => setIsVideoModalOpen(true)}>
                                         <div className="ratio ratio-16x9">
@@ -300,7 +300,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                 </div>
 
                                 {/* RIGHT COLUMN: STICKY REGISTRATION CARD */}
-                                <div className="col-lg-4 animate-slide-right">
+                                <div className="col-12 col-lg-4 animate-slide-right">
                                     <div className="sticky-top" style={{ top: '140px' }}>
                                         <div className="bg-[#1a1c24] border border-white/10 rounded-5 overflow-hidden shadow-2xl glass-morphism relative">
                                             <div className="absolute top-0 right-0 w-40 h-40 bg-[#22c55e]/5 rounded-full blur-3xl pointer-events-none"></div>

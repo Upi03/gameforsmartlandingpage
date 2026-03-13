@@ -31,119 +31,104 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                 <article className="main-content mt-0 p-0 flex-grow-1 animate-fade-in" style={{ minWidth: 0 }}>
                     <div className="w-100 m-0 p-0 overflow-x-hidden">
                         
-                        {/* REDESIGNED HERO SECTION */}
-                        <section className="container-fluid px-lg-15 px-md-10 px-6 py-20 mt-20">
-                            <div className="row g-12 align-items-center">
-                                {/* LEFT: POSTER COLUMN */}
-                                <div className="col-lg-5 col-xl-4 animate-slide-up">
-                                    <div className="relative group overflow-hidden rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 aspect-[4/5]">
-                                        <img
-                                            src={game.image}
-                                            alt={game.title}
-                                            className="w-100 h-100 object-fit-cover transition-transform duration-700 group-hover:scale-110"
-                                        />
-                                        
-                                        {/* Play Now Overlay (Hover) */}
-                                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <Link 
-                                                href={game.playUrl || '#'} 
-                                                target="_blank"
-                                                className="w-20 h-20 rounded-full bg-orange-gradient flex items-center justify-center text-white shadow-[0_0_30px_rgba(242,108,13,0.5)] hover:scale-110 active:scale-95 transition-all animate-pulse"
-                                            >
-                                                <i className="ti ti-player-play-filled fs-1"></i>
-                                            </Link>
+                        {/* REDESIGNED FULL-WIDTH HERO SECTION */}
+                        <section className="relative w-full h-[550px] md:h-[650px] overflow-hidden bg-black mt-20">
+                            <img
+                                src={game.image}
+                                alt={game.title}
+                                className="w-100 h-100 object-fit-cover opacity-60 transition-transform duration-1000 hover:scale-110"
+                                style={{ objectPosition: 'center 30%' }}
+                            />
+                            
+                            {/* Gradient overlays */}
+                            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#080a0f] via-[#080a0f]/80 to-transparent z-10"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#080a0f]/80 via-[#080a0f]/30 to-transparent z-10"></div>
+
+                            {/* Hero Content Overlay */}
+                            <div className="absolute inset-0 z-20 container-fluid px-lg-15 px-md-10 px-6 pb-20 d-flex flex-column justify-content-end">
+                                <div className="animate-slide-up max-w-[900px]">
+                                    <Breadcrumbs />
+                                    
+                                    <div className="d-flex align-items-center gap-3 mb-6 mt-6">
+                                        <span className="bg-[#22c55e] text-white text-[10px] font-black px-4 py-1.5 rounded-pill uppercase tracking-[0.2em] shadow-lg shadow-[#22c55e]/30">
+                                            {game.genre}
+                                        </span>
+                                    </div>
+                                    
+                                    <h1 className="display-three text-white fw-black text-uppercase tracking-tighter m-0 drop-shadow-2xl mb-4 leading-[0.9]">
+                                        {game.title}
+                                    </h1>
+                                    <p className="text-slate-300 fs-lg max-w-[600px] font-medium opacity-90 mb-8 drop-shadow-md">
+                                        {game.subtitle || "Experience the next generation of competitive gaming excellence."}
+                                    </p>
+
+                                    {/* STATS ROW */}
+                                    <div className="d-flex flex-wrap align-items-center gap-8 mb-10">
+                                        {/* Platform */}
+                                        <div className="d-flex align-items-center gap-3">
+                                            <div className="w-12 h-12 rounded-circle bg-white/10 backdrop-blur-md border border-white/20 d-flex align-items-center justify-content-center text-white shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+                                                <i className="ti ti-device-desktop fs-4"></i>
+                                            </div>
+                                            <div className="d-flex flex-column">
+                                                <span className="text-slate-400 text-[10px] fw-bold text-uppercase tracking-widest drop-shadow-md">Platform</span>
+                                                <span className="text-white fs-6 fw-bold drop-shadow-md">{game.platform}</span>
+                                            </div>
                                         </div>
 
-                                        {/* Category Badge (Hover pojok) */}
-                                        <div className="absolute top-6 right-6 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
-                                            <span className="bg-[#22c55e] text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
-                                                {game.genre}
-                                            </span>
+                                        {/* Rating */}
+                                        <div className="d-flex align-items-center gap-3">
+                                            <div className="w-12 h-12 rounded-circle bg-[#ffcc00]/20 backdrop-blur-md border border-[#ffcc00]/30 d-flex align-items-center justify-content-center text-[#ffcc00] shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+                                                <i className="ti ti-star-filled fs-4"></i>
+                                            </div>
+                                            <div className="d-flex flex-column">
+                                                <span className="text-slate-400 text-[10px] fw-bold text-uppercase tracking-widest drop-shadow-md">Rating</span>
+                                                <span className="text-white fs-6 fw-bold drop-shadow-md">{game.ratingScore || game.rating} / 5.0</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Players */}
+                                        <div className="d-flex align-items-center gap-3">
+                                            <div className="w-12 h-12 rounded-circle bg-[#22c55e]/20 backdrop-blur-md border border-[#22c55e]/30 d-flex align-items-center justify-content-center text-[#22c55e] shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+                                                <i className="ti ti-users fs-4"></i>
+                                            </div>
+                                            <div className="d-flex flex-column">
+                                                <span className="text-slate-400 text-[10px] fw-bold text-uppercase tracking-widest drop-shadow-md">Played</span>
+                                                <span className="text-white fs-6 fw-bold drop-shadow-md">{game.players} Users</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                {/* RIGHT: INFO COLUMN */}
-                                <div className="col-lg-7 col-xl-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                                    <div className="flex flex-column gap-6">
-                                        <div>
-                                            <Breadcrumbs />
-                                            <h1 className="display-four text-white font-black uppercase tracking-tighter mt-4 leading-tight">
-                                                {game.title}
-                                            </h1>
-                                            <p className="text-slate-400 fs-lg max-w-[600px] font-medium opacity-80 mt-2">
-                                                {game.subtitle || "Experience the next generation of competitive gaming excellence."}
-                                            </p>
-                                        </div>
-
-                                        {/* STATS ROW */}
-                                        <div className="flex flex-wrap items-center gap-8 py-6 border-y border-white/5">
-                                            {/* Platform */}
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60">
-                                                    <i className="ti ti-device-desktop fs-4"></i>
-                                                </div>
-                                                <div className="flex flex-column">
-                                                    <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Platform</span>
-                                                    <span className="text-white text-sm font-bold">{game.platform}</span>
-                                                </div>
-                                            </div>
-
-                                            {/* Rating */}
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-[#ffcc00]/10 border border-[#ffcc00]/20 flex items-center justify-center text-[#ffcc00]">
-                                                    <i className="ti ti-star-filled fs-4"></i>
-                                                </div>
-                                                <div className="flex flex-column">
-                                                    <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Rating</span>
-                                                    <span className="text-white text-sm font-bold">{game.ratingScore || game.rating} / 5.0</span>
-                                                </div>
-                                            </div>
-
-                                            {/* Players */}
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-[#22c55e]/10 border border-[#22c55e]/20 flex items-center justify-center text-[#22c55e]">
-                                                    <i className="ti ti-users fs-4"></i>
-                                                </div>
-                                                <div className="flex flex-column">
-                                                    <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Played</span>
-                                                    <span className="text-white text-sm font-bold">{game.players} Users</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* ACTIONS */}
-                                        <div className="flex flex-wrap items-center gap-6 mt-4">
-                                            <Link 
-                                                href={game.playUrl || '#'} 
-                                                target="_blank"
-                                                className="bg-orange-gradient px-12 py-5 rounded-full text-white font-black uppercase tracking-[0.2em] no-underline shadow-[0_15px_30px_rgba(242,108,13,0.3)] hover:scale-105 active:scale-95 transition-all text-sm flex items-center gap-3 group"
-                                            >
-                                                Start Game
-                                                <i className="ti ti-player-play-filled group-hover:translate-x-1 transition-transform"></i>
-                                            </Link>
-                                            
-                                            <button 
-                                                onClick={() => {
-                                                    const detailSection = document.getElementById('details-section');
-                                                    detailSection?.scrollIntoView({ behavior: 'smooth' });
-                                                }}
-                                                className="bg-white/5 border border-white/10 px-10 py-5 rounded-full text-white font-black uppercase tracking-[0.2em] hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all text-sm flex items-center gap-2"
-                                            >
-                                                Details
-                                                <i className="ti ti-arrow-right"></i>
-                                            </button>
-                                        </div>
+                                    {/* ACTIONS */}
+                                    <div className="d-flex flex-wrap align-items-center gap-5">
+                                        <Link 
+                                            href={game.playUrl || '#'} 
+                                            target="_blank"
+                                            className="bg-orange-gradient px-10 py-4 rounded-pill text-white fw-black text-uppercase tracking-[0.2em] text-decoration-none shadow-[0_15px_30px_rgba(242,108,13,0.3)] hover:scale-105 active:scale-95 transition-all text-sm d-flex align-items-center gap-3 group border-0"
+                                        >
+                                            <i className="ti ti-player-play-filled fs-4"></i>
+                                            Start Game
+                                        </Link>
+                                        
+                                        <button 
+                                            onClick={() => {
+                                                const detailSection = document.getElementById('details-section');
+                                                detailSection?.scrollIntoView({ behavior: 'smooth' });
+                                            }}
+                                            className="bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-pill text-white fw-black text-uppercase tracking-[0.2em] hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all text-sm d-flex align-items-center gap-3"
+                                        >
+                                            Details
+                                            <i className="ti ti-arrow-down fs-4"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
                         <div id="details-section" className="container-fluid px-lg-15 px-md-10 px-6 py-10">
-                            <div className="row g-12">
+                            <div className="row gy-8">
                                 
                                 {/* LEFT COLUMN: DESCRIPTION & FEATURES */}
-                                <div className="col-lg-7">
+                                <div className="col-12 col-lg-7">
                                     {/* SCREENSHOTS GALLERY */}
                                     <div className="mb-12">
                                         <h3 className="fs-three text-white font-black uppercase tracking-tighter mb-8 flex items-center gap-4 px-2">
@@ -206,7 +191,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                 </div>
 
                                 {/* RIGHT COLUMN: STATS & INFO */}
-                                <div className="col-lg-5">
+                                <div className="col-12 col-lg-5">
                                     <div className="sticky-top" style={{ top: '120px' }}>
                                         {/* DETAIL INFO CARD */}
                                         <div className="bg-[#111319] border border-white/10 rounded-[32px] p-10 shadow-2xl overflow-hidden relative mb-8">
