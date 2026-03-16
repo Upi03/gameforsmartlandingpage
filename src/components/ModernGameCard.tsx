@@ -31,10 +31,10 @@ export default function ModernGameCard({
     const playDirectUrl = playUrl || `/play/${slug || id}`;
 
     return (
-        <div className="modern-game-card group relative flex flex-col h-full bg-[#111319] rounded-[20px] overflow-hidden border border-white/5 transition-all duration-500 hover:scale-[1.03] hover:border-[#f26c0d]/30 shadow-xl hover:shadow-[0_10px_40px_rgba(242,108,13,0.15)] animate-slide-up">
+        <div className="modern-game-card group relative flex flex-col h-full bg-[#111319] rounded-[16px] overflow-hidden border border-white/5 transition-all duration-500 hover:scale-[1.03] hover:border-[#22c55e]/30 shadow-xl hover:shadow-[0_10px_40px_rgba(34,197,94,0.15)] animate-slide-up">
             
             {/* Poster Image (Full/Utuh) */}
-            <div className="relative aspect-[10/14] overflow-hidden">
+            <div className="relative aspect-[4/5] overflow-hidden">
                 <img 
                     src={image} 
                     alt={title} 
@@ -51,7 +51,7 @@ export default function ModernGameCard({
 
                 {/* Badge Category (Atas Card) */}
                 <div className="absolute top-4 left-4 z-20">
-                    <span className="bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.2)]">
+                    <span className={`bg-transparent border ${type.toLowerCase() === 'action' ? 'border-[#ef4444] text-[#ef4444]' : type.toLowerCase() === 'arcade' ? 'border-[#f26c0d] text-[#f26c0d]' : type.toLowerCase() === 'educational' ? 'border-[#3b82f6] text-[#3b82f6]' : 'border-[#22c55e] text-[#22c55e]'} px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest backdrop-blur-md bg-black/40`}>
                         {type}
                     </span>
                 </div>
@@ -62,9 +62,9 @@ export default function ModernGameCard({
                         <Link 
                             href={playDirectUrl}
                             target={playUrl ? "_blank" : "_self"}
-                            className="play-now-btn bg-orange-gradient px-8 py-3 rounded-full text-white font-black uppercase tracking-widest flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-110 no-underline shadow-[0_0_25px_rgba(242,108,13,0.5)]"
+                            className="play-now-btn bg-[#22c55e] px-8 py-3 rounded-full text-white font-black uppercase tracking-[0.15em] text-[11px] flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-110 no-underline shadow-[0_0_30px_rgba(34,197,94,0.6)]"
                         >
-                            <i className="ti ti-player-play-filled"></i>
+                            <i className="ti ti-player-play-filled text-sm"></i>
                             <span>Play Now</span>
                         </Link>
                     </div>
@@ -72,56 +72,51 @@ export default function ModernGameCard({
             </div>
 
             {/* Information Section */}
-            <div className="p-5 flex flex-col flex-grow relative">
-                <h3 className="text-white font-bold text-lg mb-3 tracking-tight group-hover:text-[#f26c0d] transition-colors line-clamp-1">
+            <div className="p-4 flex flex-col flex-grow relative bg-[#111319]">
+                <h3 className="text-white font-bold text-xl mb-1 tracking-tight group-hover:text-[#22c55e] transition-colors line-clamp-1">
                     {title}
                 </h3>
                 
                 {/* Bottom Bar: Rating & Platform */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5 text-slate-400">
-                             <i className={`ti ${platform.toLowerCase().includes('mob') ? 'ti-device-mobile' : 'ti-world'} text-sm`}></i>
-                             <span className="text-[10px] uppercase font-bold tracking-widest">{platform}</span>
+                             <i className={`ti ${platform.toLowerCase().includes('mob') ? 'ti-device-mobile' : 'ti-device-desktop'} text-[12px]`}></i>
+                             <span className="text-[9px] uppercase font-bold tracking-[0.15em]">{platform}</span>
                         </div>
-                        <div className="w-[1px] h-3 bg-white/10"></div>
-                        <div className="flex items-center gap-1.5">
-                            <i className="ti ti-star-filled text-[#ffcc00] text-xs"></i>
+                        <div className="flex items-center gap-1.5 pl-3 border-l border-white/10">
+                            <i className="ti ti-star-filled text-[#ffcc00] text-[10px]"></i>
                             <span className="text-white text-[11px] font-bold">{rating}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer Interaction: Played Stats & Details Button */}
-                <div className="mt-auto flex items-center justify-between">
+                <div className="mt-auto flex items-center justify-between gap-3 pt-1">
                     <Link 
                         href={playDirectUrl}
                         target={playUrl ? "_blank" : "_self"}
-                        className="flex items-center gap-2 py-2 px-6 rounded-full no-underline transition-all hover:scale-105 active:scale-95" 
-                        style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', border: '1px solid #22c55e', color: '#22c55e', fontWeight: 'bold' }}
+                        className="flex-1 flex justify-center items-center gap-2 py-2.5 px-4 rounded-full no-underline transition-all hover:scale-[1.02] active:scale-95 bg-[#22c55e]/10 border border-[#22c55e]/30 hover:border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e] hover:text-white group/btn" 
                     >
-                        <i className="ti ti-player-play-filled text-[10px]"></i>
-                        <span className="text-[11px] font-black uppercase tracking-widest">
+                        <i className="ti ti-player-play-filled text-[10px] group-hover/btn:scale-110 transition-transform"></i>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">
                             Play Now
                         </span>
                     </Link>
 
                     <Link 
                         href={detailUrl}
-                        className="details-btn flex items-center gap-1 text-white/50 hover:text-[#f26c0d] transition-colors no-underline text-[10px] font-black uppercase tracking-widest"
+                        className="details-btn flex items-center gap-1.5 text-white/70 hover:text-white transition-colors no-underline text-[10px] font-bold uppercase tracking-widest shrink-0"
                     >
                         <span>Details</span>
-                        <i className="ti ti-arrow-right text-sm"></i>
+                        <i className="ti ti-arrow-right text-[12px]"></i>
                     </Link>
                 </div>
             </div>
 
             <style jsx>{`
-                .bg-orange-gradient {
-                    background: linear-gradient(135deg, #f26c0d 0%, #F6471C 100%);
-                }
                 .play-now-btn:hover {
-                    box-shadow: 0 0 40px rgba(242, 108, 13, 0.7);
+                    box-shadow: 0 0 40px rgba(34, 197, 94, 0.7);
                 }
                 .details-btn:hover i {
                     transform: translateX(3px);
