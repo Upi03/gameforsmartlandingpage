@@ -301,7 +301,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
 
                                 {/* RIGHT COLUMN: STICKY REGISTRATION CARD */}
                                 <div className="col-12 col-lg-4 animate-slide-right">
-                                    <div className="sticky-top" style={{ top: '140px' }}>
+                                    <div className="sticky-top" style={{ top: '140px', zIndex: 10 }}>
                                         <div className="bg-[#1a1c24] border border-white/10 rounded-5 overflow-hidden shadow-2xl glass-morphism relative">
                                             <div className="absolute top-0 right-0 w-40 h-40 bg-[#22c55e]/5 rounded-full blur-3xl pointer-events-none"></div>
                                             <div className="bg-[#22c55e] p-5 text-center shadow-[0_5px_20px_rgba(34,197,94,0.4)]">

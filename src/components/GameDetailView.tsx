@@ -192,7 +192,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
 
                                 {/* RIGHT COLUMN: STATS & INFO */}
                                 <div className="col-12 col-lg-5">
-                                    <div className="sticky-top" style={{ top: '120px' }}>
+                                    <div className="sticky-top" style={{ top: '120px', zIndex: 10 }}>
                                         {/* DETAIL INFO CARD */}
                                         <div className="bg-[#111319] border border-white/10 rounded-[32px] p-10 shadow-2xl overflow-hidden relative mb-8">
                                             <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#22c55e]/5 rounded-full blur-[100px] pointer-events-none"></div>
