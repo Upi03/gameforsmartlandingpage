@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import React from 'react';
 
 interface ModernGameCardProps {
     id: number;
@@ -31,98 +32,143 @@ export default function ModernGameCard({
     const playDirectUrl = playUrl || `/play/${slug || id}`;
 
     return (
-        <div className="modern-game-card group relative flex flex-col h-full bg-[#111319] rounded-[16px] overflow-hidden border border-white/5 transition-all duration-500 hover:scale-[1.03] hover:border-[#22c55e]/30 shadow-xl hover:shadow-[0_10px_40px_rgba(34,197,94,0.15)] animate-slide-up">
-            
-            {/* Poster Image (Full/Utuh) */}
-            <div className="relative aspect-[4/5] overflow-hidden">
+        <div className="modern-game-card bgn-4 position-relative overflow-hidden flex-column d-flex h-100">
+            {/* Poster Area */}
+            <div className="poster-container position-relative overflow-hidden aspect-poster">
                 <img 
                     src={image} 
                     alt={title} 
-                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isComingSoon ? 'blur-md opacity-40' : ''}`}
+                    className="poster-img w-100 h-100 object-fit-cover transition-all"
                 />
                 
-                {/* Coming Soon Overlay */}
-                {isComingSoon && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-black/40 backdrop-blur-sm">
-                        <i className="ti ti-lock-filled text-white/50 text-2xl mb-2"></i>
-                        <span className="text-white/60 font-black uppercase tracking-[0.2em] text-[10px]">Coming Soon</span>
-                    </div>
-                )}
-
-                {/* Badge Category (Atas Card) */}
-                <div className="absolute top-4 left-4 z-20">
-                    <span className={`bg-transparent border ${type.toLowerCase() === 'action' ? 'border-[#ef4444] text-[#ef4444]' : type.toLowerCase() === 'arcade' ? 'border-[#f26c0d] text-[#f26c0d]' : type.toLowerCase() === 'educational' ? 'border-[#3b82f6] text-[#3b82f6]' : 'border-[#22c55e] text-[#22c55e]'} px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest backdrop-blur-md bg-black/40`}>
+                {/* Badge Overlay (Glass Morphism) */}
+                <div className="badge-overlay position-absolute top-0 start-0 p-4 w-100 d-flex flex-column gap-2 align-items-start z-1">
+                    <span className="genre-badge glass-morphism py-1 px-3 rounded-pill fw-bold fs-xs tcn-1 uppercase tracking-widest">
                         {type}
                     </span>
+                    {isComingSoon && (
+                        <span className="status-badge py-1 px-3 rounded-pill fw-bold fs-xs text-uppercase d-flex align-items-center gap-2 bg-black/40 border border-white/20 text-white/60">
+                            <i className="ti ti-lock-filled fs-xs"></i>
+                            Locked
+                        </span>
+                    )}
                 </div>
 
-                {/* Play Now Interaction (Overlay on Hover) */}
-                {!isComingSoon && (
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-30 bg-black/50 backdrop-blur-[2px]">
+                {/* Hover Overlay with Sliding Button */}
+                <div className="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-2">
+                    {!isComingSoon ? (
                         <Link 
                             href={playDirectUrl}
                             target={playUrl ? "_blank" : "_self"}
-                            className="play-now-btn bg-[#22c55e] px-8 py-3 rounded-full text-white font-black uppercase tracking-[0.15em] text-[11px] flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-110 no-underline shadow-[0_0_30px_rgba(34,197,94,0.6)]"
+                            className="play-now-btn px-6 py-2 rounded-pill fw-bold d-flex align-items-center gap-2 transition-all no-underline"
                         >
-                            <i className="ti ti-player-play-filled text-sm"></i>
-                            <span>Play Now</span>
+                            <span className="fs-six">Play Now</span>
+                            <i className="ti ti-player-play-filled fs-five"></i>
                         </Link>
-                    </div>
-                )}
+                    ) : (
+                        <span className="locked-msg glass-morphism px-6 py-2 rounded-pill fw-bold tcn-1 opacity-50">Coming Soon</span>
+                    )}
+                </div>
             </div>
 
-            {/* Information Section */}
-            <div className="p-4 flex flex-col flex-grow relative bg-[#111319]">
-                <h3 className="text-white font-bold text-xl mb-1 tracking-tight group-hover:text-[#22c55e] transition-colors line-clamp-1">
-                    {title}
-                </h3>
+            {/* Content Area (Synchronized with Competition Grid) */}
+            <div className="content-area p-5 flex-grow-1 d-flex flex-column">
+                <Link href={detailUrl} className="no-underline">
+                    <h4 className="game-title tcn-1 mb-3 transition-all line-clamp-1">
+                        {title}
+                    </h4>
+                </Link>
                 
-                {/* Bottom Bar: Rating & Platform */}
-                <div className="flex items-center justify-between mb-5">
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1.5 text-slate-400">
-                             <i className={`ti ${platform.toLowerCase().includes('mob') ? 'ti-device-mobile' : 'ti-device-desktop'} text-[12px]`}></i>
-                             <span className="text-[9px] uppercase font-bold tracking-[0.15em]">{platform}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 pl-3 border-l border-white/10">
-                            <i className="ti ti-star-filled text-[#ffcc00] text-[10px]"></i>
-                            <span className="text-white text-[11px] font-bold">{rating}</span>
-                        </div>
+                {/* Middle Info: Platform & Rating */}
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="d-flex align-items-center gap-2 tcn-6 fs-xs">
+                         <i className={`ti ${platform.toLowerCase().includes('mob') ? 'ti-device-mobile' : 'ti-device-desktop'} opacity-50`}></i>
+                         <span className="uppercase tracking-wider">{platform}</span>
+                    </div>
+                    <div className="d-flex align-items-center gap-1.5 tcn-1 fs-xs border-l border-white/10 pl-4">
+                        <i className="ti ti-star-filled text-[#ffcc00]"></i>
+                        <span className="fw-bold">{rating}</span>
                     </div>
                 </div>
 
-                {/* Footer Interaction: Played Stats & Details Button */}
-                <div className="mt-auto flex items-center justify-between gap-3 pt-1">
-                    <Link 
-                        href={playDirectUrl}
-                        target={playUrl ? "_blank" : "_self"}
-                        className="flex-1 flex justify-center items-center gap-2 py-2.5 px-4 rounded-full no-underline transition-all hover:scale-[1.02] active:scale-95 bg-[#22c55e]/10 border border-[#22c55e]/30 hover:border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e] hover:text-white group/btn" 
-                    >
-                        <i className="ti ti-player-play-filled text-[10px] group-hover/btn:scale-110 transition-transform"></i>
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">
-                            Play Now
-                        </span>
-                    </Link>
-
-                    <Link 
-                        href={detailUrl}
-                        className="details-btn flex items-center gap-1.5 text-white/70 hover:text-white transition-colors no-underline text-[10px] font-bold uppercase tracking-widest shrink-0"
-                    >
-                        <span>Details</span>
-                        <i className="ti ti-arrow-right text-[12px]"></i>
+                {/* Footer Link */}
+                <div className="mt-auto pt-3 d-flex justify-content-between align-items-center">
+                    <div className="tcn-6 fs-xs opacity-50">
+                        {players || '10k+'} Players
+                    </div>
+                    <Link href={detailUrl} className="details-link tcn-1 fs-sm fw-bold d-flex align-items-center gap-1 transition-all no-underline">
+                        Details
+                        <i className="ti ti-chevron-right"></i>
                     </Link>
                 </div>
             </div>
 
             <style jsx>{`
+                .modern-game-card {
+                    border-radius: 20px;
+                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                }
+                .modern-game-card:hover {
+                    transform: translateY(-8px);
+                    border-color: rgba(34, 197, 94, 0.4);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(34, 197, 94, 0.15);
+                }
+
+                .aspect-poster {
+                    aspect-ratio: 4 / 5;
+                }
+
+                .poster-img {
+                    transform: scale(1.01);
+                }
+                .modern-game-card:hover .poster-img {
+                    transform: scale(1.1);
+                    filter: brightness(0.6);
+                }
+
+                .glass-morphism {
+                    background: rgba(0, 0, 0, 0.4);
+                    backdrop-filter: blur(8px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .hover-overlay {
+                    opacity: 0;
+                    background: rgba(0, 0, 0, 0.2);
+                    transition: all 0.4s ease;
+                }
+                .modern-game-card:hover .hover-overlay {
+                    opacity: 1;
+                }
+
+                .play-now-btn {
+                    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+                    color: white;
+                    transform: translateY(20px);
+                    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+                }
+                .modern-game-card:hover .play-now-btn {
+                    transform: translateY(0);
+                }
                 .play-now-btn:hover {
-                    box-shadow: 0 0 40px rgba(34, 197, 94, 0.7);
+                    box-shadow: 0 6px 25px rgba(34, 197, 94, 0.6);
+                    transform: scale(1.05);
                 }
-                .details-btn:hover i {
-                    transform: translateX(3px);
+
+                .game-title {
+                    font-weight: 800;
+                    line-height: 1.3;
+                    margin: 0;
                 }
-                .details-btn i {
-                    transition: transform 0.3s ease;
+                .modern-game-card:hover .game-title {
+                    color: #22c55e;
+                }
+
+                .details-link:hover {
+                    color: #22c55e;
+                    gap: 4px;
                 }
             `}</style>
         </div>
