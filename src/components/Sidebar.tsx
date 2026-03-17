@@ -63,9 +63,9 @@ export default function Sidebar() {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    margin-left: 50px;
+                    margin-left: 40px;
                     margin-top: 36px;
-                    padding: 60px 24px; /* Slightly reduced padding for better balance */
+                    padding: 60px 32px;
                     z-index: 1000;
                     position: relative;
                 }
@@ -83,10 +83,10 @@ export default function Sidebar() {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 108px !important; /* Increased from 96px */
-                    height: 108px !important;
-                    min-width: 108px !important;
-                    border-radius: 30px !important;
+                    width: 126px !important;
+                    height: 126px !important;
+                    min-width: 126px !important;
+                    border-radius: 40px !important;
                     position: relative;
                     border: 1px solid transparent !important;
                     background: transparent !important;
@@ -94,7 +94,7 @@ export default function Sidebar() {
                     overflow: hidden;
                 }
                 .menu-link i {
-                    font-size: 68px !important; /* Increased from 60px for even better visibility */
+                    font-size: 84px !important;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -117,11 +117,11 @@ export default function Sidebar() {
                 }
                 .active-neon-indicator {
                     position: absolute;
-                    left: -20px; /* Brought closer to match smaller height */
+                    left: -20px;
                     top: 50%;
                     transform: translateY(-50%);
-                    width: 4px; /* Thinner as requested */
-                    height: 48px; /* Shorter as requested */
+                    width: 5px;
+                    height: 60px;
                     background: linear-gradient(180deg, #ffb347 0%, #ff8c00 100%);
                     border-radius: 4px;
                     box-shadow: 0 0 15px #ff8c00, 0 0 5px #ff8c00;
@@ -151,12 +151,12 @@ export default function Sidebar() {
                         padding: 50px 20px;
                     }
                     .menu-link {
-                        width: 80px !important;
-                        height: 80px !important;
-                        min-width: 80px !important;
+                        width: 94px !important;
+                        height: 94px !important;
+                        min-width: 94px !important;
                     }
                     .menu-link i {
-                        font-size: 40px !important;
+                        font-size: 56px !important;
                     }
                     .sidebar-menu-items {
                         gap: 32px;
