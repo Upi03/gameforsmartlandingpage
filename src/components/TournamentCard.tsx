@@ -109,8 +109,8 @@ export default function TournamentCard({
                         </Link>
                         {status !== 'Popular' && status !== 'New' && (
                             status === 'Coming Soon' ? (
-                                <span className="py-2 px-3 tcn-1 d-flex align-items-center gap-2" style={{ backgroundColor: '#F6471C', border: '1px solid #F6471C', borderRadius: '20px' }}>
-                                    <span style={{ width: '8px', height: '8px', backgroundColor: '#fff', borderRadius: '50%' }}></span>
+                                <span className="py-2 px-3 tcn-1 d-flex align-items-center gap-2" style={{ backgroundColor: 'rgba(246, 71, 28, 0.1)', border: '1.5px solid #F6471C', borderRadius: '20px', boxShadow: '0 0 15px rgba(246, 71, 28, 0.3)' }}>
+                                    <span style={{ width: '8px', height: '8px', backgroundColor: '#F6471C', borderRadius: '50%', boxShadow: '0 0 5px #F6471C' }}></span>
                                     <span className="fw-bold fs-sm text-nowrap">Coming Soon</span>
                                 </span>
                             ) : (
@@ -159,7 +159,18 @@ export default function TournamentCard({
                 <div className="hr-line line3"></div>
                 <div className="card-more-info d-between align-items-center mt-6">
                     {isDetailed ? (
-                        <Link href={link || `/competitions/${slug || id}`} className="d-flex align-items-center justify-content-center py-2 px-6 rounded-pill bg-orange-gradient text-white fw-bold transition-all hover-scale neon-orange-glow" style={{ minWidth: '120px' }}>
+                        <Link 
+                            href={link || `/competitions/${slug || id}`} 
+                            className="daftar-btn d-flex align-items-center justify-content-center py-2 px-6 rounded-pill no-underline" 
+                            style={{ 
+                                backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                                color: '#ffffff', 
+                                border: '1.5px solid #f26c0d', 
+                                fontWeight: 'bold',
+                                boxShadow: '0 0 15px rgba(242, 108, 13, 0.3)',
+                                minWidth: '120px'
+                            }}
+                        >
                             <span className="fs-six">Daftar</span>
                         </Link>
                     ) : (
@@ -167,13 +178,19 @@ export default function TournamentCard({
                             href={playUrl || link || `/competitions/${slug || id}`} 
                             target={playUrl ? "_blank" : "_self"}
                             className="play-btn d-flex align-items-center gap-2 py-2 px-6 rounded-pill no-underline" 
-                            style={{ backgroundColor: 'rgba(242, 108, 13, 0.1)', border: '1px solid #f26c0d', color: '#f26c0d', fontWeight: 'bold' }}
+                            style={{ 
+                                backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                                border: '1px solid rgba(242, 108, 13, 0.5)', 
+                                color: '#ffffff', 
+                                fontWeight: 'bold',
+                                boxShadow: '0 0 15px rgba(242, 108, 13, 0.2)' 
+                            }}
                         >
                             <i className="ti ti-player-play-filled fs-six"></i>
                             <span className="fs-six text-nowrap uppercase tracking-widest">Play</span>
                         </Link>
                     )}
-                    <Link href={link || `/competitions/${slug || id}`} className="btn-detail d-flex align-items-center justify-content-center rounded-circle" style={{ width: '44px', height: '44px', border: '2px solid #f26c0d', color: '#f26c0d', boxShadow: '0 0 15px rgba(242, 108, 13, 0.3)' }} title="Lihat Deskripsi">
+                    <Link href={link || `/competitions/${slug || id}`} className="btn-detail d-flex align-items-center justify-content-center rounded-circle" style={{ width: '44px', height: '44px', border: '1px solid rgba(242, 108, 13, 0.5)', color: '#ffffff', boxShadow: '0 0 10px rgba(242, 108, 13, 0.1)' }} title="Lihat Deskripsi">
                         <i className="ti ti-arrow-right fs-2xl"></i>
                     </Link>
                 </div>
@@ -198,11 +215,21 @@ export default function TournamentCard({
                 .play-btn {
                     transition: all 0.3s ease;
                 }
-                .play-btn:hover {
-                    background-color: #f26c0d !important;
-                    color: #fff !important;
-                    box-shadow: 0 0 20px rgba(242, 108, 13, 0.4);
+                .play-btn:hover, .daftar-btn:hover {
+                    background-color: #ffffff !important;
+                    color: #000000 !important;
+                    box-shadow: 0 0 25px rgba(242, 108, 13, 0.6) !important;
+                    border-color: #f26c0d !important;
                     transform: translateY(-2px);
+                }
+                .btn-detail {
+                    transition: all 0.3s ease;
+                }
+                .btn-detail:hover {
+                    background-color: #ffffff !important;
+                    color: #000000 !important;
+                    box-shadow: 0 0 25px rgba(242, 108, 13, 0.6) !important;
+                    border-color: #f26c0d !important;
                 }
                 @keyframes tooltipFadeIn {
                     from { opacity: 0; transform: translateY(10px); }

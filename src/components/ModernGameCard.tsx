@@ -112,8 +112,8 @@ export default function ModernGameCard({
                 }
                 .modern-game-card:hover {
                     transform: translateY(-8px);
-                    border-color: rgba(242, 108, 13, 0.4);
-                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(242, 108, 13, 0.15);
+                    border-color: rgba(255, 255, 255, 0.2);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
                 }
 
                 .aspect-poster {
@@ -144,16 +144,20 @@ export default function ModernGameCard({
                 }
 
                 .play-now-btn {
-                    background: linear-gradient(90deg, #f26c0d 0%, #F6471C 100%);
-                    color: white;
+                    background: rgba(255, 255, 255, 0.05);
+                    color: #ffffff;
+                    border: 1.5px solid #f26c0d;
                     transform: translateY(20px);
-                    box-shadow: 0 4px 15px rgba(242, 108, 13, 0.4);
+                    box-shadow: 0 0 15px rgba(242, 108, 13, 0.3);
                 }
                 .modern-game-card:hover .play-now-btn {
                     transform: translateY(0);
                 }
                 .play-now-btn:hover {
-                    box-shadow: 0 6px 25px rgba(242, 108, 13, 0.6);
+                    background: #ffffff !important;
+                    color: #000000 !important;
+                    box-shadow: 0 0 25px rgba(242, 108, 13, 0.6) !important;
+                    border-color: #f26c0d !important;
                     transform: scale(1.05);
                 }
 
@@ -167,7 +171,7 @@ export default function ModernGameCard({
                 }
 
                 .details-link:hover {
-                    color: #f26c0d;
+                    color: #ffffff;
                     gap: 4px;
                 }
             `}</style>

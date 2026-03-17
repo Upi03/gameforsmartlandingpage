@@ -140,8 +140,8 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                         <div className="ratio ratio-16x9">
                                             <img src={displayImage} alt="Media Preview" className="w-100 h-100 object-fit-cover opacity-70 transition-all group-hover:opacity-50 group-hover:scale-105 duration-700" />
                                             <div className="absolute inset-0 d-flex align-items-center justify-content-center">
-                                                <div className="play-btn-outer w-24 h-24 rounded-full border-2 border-white/20 d-flex align-items-center justify-content-center backdrop-blur-sm group-hover:border-[#f26c0d] transition-all duration-500">
-                                                    <div className="play-btn w-16 h-16 rounded-full bg-[#f26c0d] text-white d-flex align-items-center justify-content-center shadow-2xl shadow-[#f26c0d]/50 transform group-hover:scale-110 transition-transform duration-500">
+                                                <div className="play-btn-outer w-24 h-24 rounded-full border-2 border-white/20 d-flex align-items-center justify-content-center backdrop-blur-sm group-hover:border-white transition-all duration-500">
+                                                    <div className="play-btn w-16 h-16 rounded-full bg-white text-black d-flex align-items-center justify-content-center shadow-2xl shadow-white/30 transform group-hover:scale-110 transition-transform duration-500">
                                                         <i className="ti ti-player-play-filled fs-1"></i>
                                                     </div>
                                                 </div>
@@ -245,7 +245,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                     Kompetisi Terkait
                                                 </h3>
                                             </div>
-                                            <Link href="/competitions" className="bg-white/5 text-white px-6 py-3 rounded-pill fw-black no-underline hover:bg-[#f26c0d] hover:text-white transition-all text-xs tracking-[0.2em] border border-white/10 uppercase">
+                                            <Link href="/competitions" className="bg-white/5 text-white px-6 py-3 rounded-pill fw-black no-underline hover:bg-white hover:text-black transition-all text-xs tracking-[0.2em] border border-white/10 uppercase shadow-lg shadow-white/5">
                                                 Explore All <i className="ti ti-arrow-right ms-2"></i>
                                             </Link>
                                         </div>
@@ -277,7 +277,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                     Game Populer
                                                 </h3>
                                             </div>
-                                            <Link href="/games" className="bg-white/5 text-white px-6 py-3 rounded-pill fw-black no-underline hover:bg-[#f26c0d] hover:text-white transition-all text-xs tracking-[0.2em] border border-white/10 uppercase">
+                                            <Link href="/games" className="bg-white/5 text-white px-6 py-3 rounded-pill fw-black no-underline hover:bg-white hover:text-black transition-all text-xs tracking-[0.2em] border border-white/10 uppercase shadow-lg shadow-white/5">
                                                 Play Now <i className="ti ti-arrow-right ms-2"></i>
                                             </Link>
                                         </div>
@@ -326,7 +326,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                 <div className="d-flex flex-column gap-4 mb-10">
                                                     <Link
                                                         href={`/competitions/${tournament.slug}/register`}
-                                                        className="w-100 py-5 bg-orange-gradient text-white font-black d-flex align-items-center justify-content-center no-underline uppercase text-sm tracking-[0.2em] transition-all shadow-2xl shadow-[#f26c0d]/40 hover-lift rounded-pill border-0"
+                                                        className="w-100 py-5 bg-[#111319] text-white font-black d-flex align-items-center justify-content-center no-underline uppercase text-sm tracking-[0.2em] transition-all shadow-[0_0_15px_rgba(242,108,13,0.3)] hover:shadow-[0_0_25px_rgba(242,108,13,0.6)] hover:bg-white hover:text-black hover-lift rounded-pill border-[1.5px] border-[#f26c0d]"
                                                     >
                                                         <i className="ti ti-user-plus me-4 fs-3"></i>
                                                         <span>DAFTAR SEKARANG</span>
@@ -460,7 +460,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
 
                 .hover-lift:hover {
                     transform: translateY(-8px) scale(1.03);
-                    box-shadow: 0 25px 50px rgba(246, 71, 28, 0.5);
+                    box-shadow: 0 25px 50px rgba(255, 255, 255, 0.2);
                     filter: brightness(1.2);
                 }
 

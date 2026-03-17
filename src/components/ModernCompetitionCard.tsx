@@ -149,16 +149,20 @@ export default function ModernCompetitionCard({
                 }
 
                 .register-btn {
-                    background: linear-gradient(90deg, #F6471C 0%, #ff7300 100%);
-                    color: white;
-                    transform: translateY(20px);
-                    box-shadow: 0 4px 15px rgba(246, 71, 28, 0.4);
+                    background: rgba(255, 255, 255, 0.05);
+                    color: #ffffff;
+                    border: 1.5px solid #f26c0d;
+                    transform: translateY(10px);
+                    box-shadow: 0 0 15px rgba(242, 108, 13, 0.3);
                 }
                 .modern-competition-card:hover .register-btn {
                     transform: translateY(0);
                 }
                 .register-btn:hover {
-                    box-shadow: 0 6px 25px rgba(246, 71, 28, 0.6);
+                    background: #ffffff !important;
+                    color: #000000 !important;
+                    box-shadow: 0 0 25px rgba(242, 108, 13, 0.6) !important;
+                    border-color: #f26c0d !important;
                     transform: scale(1.05);
                 }
 
@@ -184,7 +188,7 @@ export default function ModernCompetitionCard({
                 }
 
                 .details-link:hover {
-                    color: #F6471C;
+                    color: #ffffff;
                     gap: 4px;
                 }
             `}</style>

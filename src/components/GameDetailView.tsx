@@ -103,7 +103,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                         <Link 
                                             href={game.playUrl || '#'} 
                                             target="_blank"
-                                            className="bg-orange-gradient px-10 py-4 rounded-pill text-white fw-black text-uppercase tracking-[0.2em] text-decoration-none shadow-[0_15px_30px_rgba(242,108,13,0.3)] hover:scale-105 active:scale-95 transition-all text-sm d-flex align-items-center gap-3 group border-0"
+                                            className="bg-[#080a0f] px-10 py-4 rounded-pill text-white fw-black text-uppercase tracking-[0.2em] text-decoration-none shadow-[0_0_15px_rgba(242,108,13,0.3)] hover:shadow-[0_0_25px_rgba(242,108,13,0.6)] hover:bg-white hover:text-black hover:scale-105 active:scale-95 transition-all text-sm d-flex align-items-center gap-3 group border-[1.5px] border-[#f26c0d]"
                                         >
                                             <i className="ti ti-player-play-filled fs-4"></i>
                                             Start Game
@@ -321,7 +321,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                     border-radius: 10px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: #f26c0d;
+                    background: #ffffff;
                     border-radius: 10px;
                 }
             `}</style>
