@@ -50,7 +50,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                     <Breadcrumbs />
                                     
                                     <div className="d-flex align-items-center gap-3 mb-6 mt-6">
-                                        <span className="bg-[#22c55e] text-white text-[10px] font-black px-4 py-1.5 rounded-pill uppercase tracking-[0.2em] shadow-lg shadow-[#22c55e]/30">
+                                        <span className="bg-orange-gradient text-white text-[10px] font-black px-4 py-1.5 rounded-pill uppercase tracking-[0.2em] shadow-lg shadow-[#f26c0d]/30">
                                             {game.genre}
                                         </span>
                                     </div>
@@ -88,7 +88,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
 
                                         {/* Players */}
                                         <div className="d-flex align-items-center gap-3">
-                                            <div className="w-12 h-12 rounded-circle bg-[#22c55e]/20 backdrop-blur-md border border-[#22c55e]/30 d-flex align-items-center justify-content-center text-[#22c55e] shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+                                            <div className="w-12 h-12 rounded-circle bg-[#f26c0d]/20 backdrop-blur-md border border-[#f26c0d]/30 d-flex align-items-center justify-content-center text-[#f26c0d] shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
                                                 <i className="ti ti-users fs-4"></i>
                                             </div>
                                             <div className="d-flex flex-column">
@@ -131,9 +131,9 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                 <div className="col-12 col-lg-7">
                                     {/* SCREENSHOTS GALLERY */}
                                     <div className="mb-12">
-                                        <h3 className="fs-three text-white font-black uppercase tracking-tighter mb-8 flex items-center gap-4 px-2">
-                                            <div className="w-2 h-10 bg-[#22c55e] rounded-full"></div>
-                                            Visual Captures
+                                        <h3 className="fs-three text-white font-black uppercase tracking-tighter mb-8 flex items-stretch gap-4 px-2">
+                                            <div className="w-1.5 bg-orange-gradient rounded-full shadow-[0_0_15px_rgba(246,71,28,0.4)]"></div>
+                                            <span>Visual Captures</span>
                                         </h3>
                                         <div className="rounded-[32px] overflow-hidden border border-white/5 mb-6 group relative shadow-2xl">
                                             <img 
@@ -158,9 +158,9 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
 
                                     <div className="bg-[#111319] border border-white/5 p-10 rounded-[32px] shadow-2xl mb-12 relative overflow-hidden group">
                                         <div className="absolute top-0 right-0 w-64 h-64 bg-[#f26c0d]/5 rounded-full blur-[100px] pointer-events-none"></div>
-                                        <h3 className="fs-three text-white font-black uppercase tracking-tighter mb-8 flex items-center gap-4">
-                                            <div className="w-2 h-10 bg-orange-gradient rounded-full"></div>
-                                            Explore Universe
+                                        <h3 className="fs-three text-white font-black uppercase tracking-tighter mb-8 flex items-stretch gap-4">
+                                            <div className="w-1.5 bg-orange-gradient rounded-full shadow-[0_0_15px_rgba(246,71,28,0.4)]"></div>
+                                            <span>Explore Universe</span>
                                         </h3>
                                         <div className="text-slate-400 fs-lg leading-relaxed space-y-6">
                                             {game.description.split('\n\n').map((para, i) => (
@@ -195,7 +195,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                     <div className="sticky-top" style={{ top: '120px', zIndex: 10 }}>
                                         {/* DETAIL INFO CARD */}
                                         <div className="bg-[#111319] border border-white/10 rounded-[32px] p-10 shadow-2xl overflow-hidden relative mb-8">
-                                            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#22c55e]/5 rounded-full blur-[100px] pointer-events-none"></div>
+                                            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#f26c0d]/5 rounded-full blur-[100px] pointer-events-none"></div>
                                             
                                             <h4 className="text-white font-black uppercase tracking-[0.3em] text-[12px] mb-10 pb-4 border-b border-white/10">Technical Specifications</h4>
 

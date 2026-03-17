@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { TournamentInfo, allItemsData } from '@/data/allItemsData';
+import { tournamentsData } from '@/data/tournamentsData';
 import ModernCompetitionCard from '@/components/ModernCompetitionCard';
 import ModernGameCard from '@/components/ModernGameCard';
 
@@ -20,9 +21,11 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-    // Filter related competitions and games
-    const relatedCompetitions = allItemsData
-        .filter(item => item.type === 'tournament' && item.id !== tournament.id)
+    // Use tournamentsData for related competitions to get better badge info (SD, SMP, etc.)
+    const relatedCompetitionsSource = tournamentsData.length > 0 ? tournamentsData : allItemsData.filter(item => item.type === 'tournament');
+    
+    const relatedCompetitions = relatedCompetitionsSource
+        .filter(item => item.id !== tournament.id)
         .slice(0, 3);
     
     const relatedGames = allItemsData
@@ -112,9 +115,9 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                 <span className="fs-5 fw-bold leading-none">{tournament.date || 'TBA'}</span>
                                             </div>
                                         </div>
-                                        <div className="d-flex align-items-center gap-3 transition-all hover:text-[#22c55e] group cursor-default">
-                                            <div className="w-10 h-10 rounded-circle bg-white/5 d-flex align-items-center justify-content-center group-hover:bg-[#22c55e]/20 transition-all">
-                                                <i className="ti ti-world fs-4 text-[#22c55e]"></i>
+                                        <div className="d-flex align-items-center gap-3 transition-all hover:text-[#f26c0d] group cursor-default">
+                                            <div className="w-10 h-10 rounded-circle bg-white/5 d-flex align-items-center justify-content-center group-hover:bg-[#f26c0d]/20 transition-all">
+                                                <i className="ti ti-world fs-4 text-[#f26c0d]"></i>
                                             </div>
                                             <div className="d-flex flex-column">
                                                 <span className="text-[9px] uppercase font-black text-slate-500 tracking-widest">Platform</span>
@@ -157,11 +160,11 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                 <span className="text-[10px] text-slate-500 font-black tracking-[0.3em] uppercase d-block mb-3">Grand Prize Pool</span>
                                                 <div className="d-flex align-items-end gap-3 flex-wrap">
                                                     <h2 className="display-four fw-black text-[#ffcc00] m-0 leading-none drop-shadow-[0_0_15px_rgba(255,204,0,0.3)]">{tournament.prizeMoney}</h2>
-                                                    <span className="bg-[#22c55e]/10 text-[#22c55e] px-3 py-1.5 rounded-pill text-[10px] font-black mb-1 tracking-widest shadow-[0_0_20px_rgba(34,197,94,0.3)] border border-[#22c55e]/20">BOOSTED</span>
+                                                    <span className="bg-[#f26c0d]/10 text-[#f26c0d] px-3 py-1.5 rounded-pill text-[10px] font-black mb-1 tracking-widest shadow-[0_0_20px_rgba(242,108,13,0.3)] border border-[#f26c0d]/20">BOOSTED</span>
                                                 </div>
                                                 <div className="mt-6 pt-6 border-top border-white/5">
                                                     <div className="text-slate-400 fs-sm m-0 d-flex align-items-center gap-3">
-                                                        <div className="w-8 h-8 rounded-circle bg-[#22c55e]/10 d-flex align-items-center justify-content-center text-[#22c55e]">
+                                                        <div className="w-8 h-8 rounded-circle bg-[#f26c0d]/10 d-flex align-items-center justify-content-center text-[#f26c0d]">
                                                             <i className="ti ti-certificate fs-5"></i>
                                                         </div>
                                                         <span className="font-bold">E-Certificate & Professional Medal</span>
@@ -196,9 +199,9 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                     {/* Description Section */}
                                     <div className="bg-[#161921] border border-white/5 p-10 rounded-5 shadow-xl mb-12 relative overflow-hidden group">
                                         <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#ffcc00]/5 rounded-full blur-3xl group-hover:bg-[#ffcc00]/10 transition-all"></div>
-                                        <h3 className="fs-four fw-black mb-8 d-flex align-items-center gap-4 text-uppercase tracking-tighter">
-                                            <div className="w-2 h-10 bg-orange-gradient rounded-full shadow-[0_0_20px_rgba(246,71,28,0.5)]"></div>
-                                            Deskripsi Event
+                                        <h3 className="fs-four fw-black mb-8 d-flex align-items-stretch gap-4 text-uppercase tracking-tighter">
+                                            <div className="w-1.5 bg-orange-gradient rounded-full shadow-[0_0_15px_rgba(246,71,28,0.5)]"></div>
+                                            <span>Deskripsi Event</span>
                                         </h3>
                                         <div className="text-slate-300 fs-lg leading-[1.8] description-text font-medium italic opacity-90">
                                             {tournament.description.split('\n\n').map((para, i) => (
@@ -209,8 +212,8 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
 
                                     {/* Rules Section with Checklist Badge */}
                                     <div className="bg-[#161921] border border-white/5 p-10 rounded-5 shadow-xl mb-16">
-                                        <h3 className="fs-four fw-black mb-10 text-[#22c55e] text-uppercase tracking-tighter d-flex align-items-center gap-4">
-                                            <i className="ti ti-shield-check fs-2 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]"></i>
+                                        <h3 className="fs-four fw-black mb-10 text-[#f26c0d] text-uppercase tracking-tighter d-flex align-items-center gap-4">
+                                            <i className="ti ti-shield-check fs-2 drop-shadow-[0_0_10px_rgba(242,108,13,0.5)]"></i>
                                             Syarat & Ketentuan Khusus
                                         </h3>
                                         <div className="row g-5">
@@ -220,8 +223,8 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                 "Wajib menggunakan koneksi internet yang stabil."
                                             ]).map((rule, index) => (
                                                 <div key={index} className="col-12">
-                                                    <div className="d-flex align-items-center gap-5 p-6 rounded-5 border border-white/5 bg-black/30 transition-all hover:bg-white/5 group hover:border-[#22c55e]/30 shadow-sm">
-                                                        <div className="bg-[#22c55e] text-white flex items-center justify-center rounded-circle w-12 h-12 flex-shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(34,197,94,0.4)]">
+                                                    <div className="d-flex align-items-center gap-5 p-6 rounded-5 border border-white/5 bg-black/30 transition-all hover:bg-white/5 group hover:border-[#f26c0d]/30 shadow-sm">
+                                                        <div className="bg-[#f26c0d] text-white flex items-center justify-center rounded-circle w-12 h-12 flex-shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(242,108,13,0.4)]">
                                                             <i className="ti ti-check fs-4"></i>
                                                         </div>
                                                         <span className="text-slate-200 fs-5 fw-bold tracking-tight">{rule}</span>
@@ -247,7 +250,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                             </Link>
                                         </div>
                                         <div className="row g-8">
-                                            {relatedCompetitions.map((comp) => (
+                                            {relatedCompetitions.map((comp: any) => (
                                                 <div key={comp.id} className="col-md-4">
                                                     <ModernCompetitionCard 
                                                         id={comp.id}
@@ -267,14 +270,14 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                     <div className="animate-slide-up pb-20">
                                         <div className="d-flex align-items-center justify-content-between mb-10">
                                             <div className="d-flex align-items-center gap-4">
-                                                <div className="w-12 h-12 rounded-circle bg-[#22c55e]/10 d-flex align-items-center justify-content-center text-[#22c55e] shadow-lg shadow-[#22c55e]/20">
+                                                <div className="w-12 h-12 rounded-circle bg-[#f26c0d]/10 d-flex align-items-center justify-content-center text-[#f26c0d] shadow-lg shadow-[#f26c0d]/20">
                                                     <i className="ti ti-device-gamepad-2 fs-3"></i>
                                                 </div>
                                                 <h3 className="fs-three fw-black m-0 text-uppercase tracking-tighter text-white">
                                                     Game Populer
                                                 </h3>
                                             </div>
-                                            <Link href="/games" className="bg-white/5 text-white px-6 py-3 rounded-pill fw-black no-underline hover:bg-[#22c55e] hover:text-white transition-all text-xs tracking-[0.2em] border border-white/10 uppercase">
+                                            <Link href="/games" className="bg-white/5 text-white px-6 py-3 rounded-pill fw-black no-underline hover:bg-[#f26c0d] hover:text-white transition-all text-xs tracking-[0.2em] border border-white/10 uppercase">
                                                 Play Now <i className="ti ti-arrow-right ms-2"></i>
                                             </Link>
                                         </div>
@@ -303,8 +306,8 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                 <div className="col-12 col-lg-4 animate-slide-right">
                                     <div className="sticky-top" style={{ top: '140px', zIndex: 10 }}>
                                         <div className="bg-[#1a1c24] border border-white/10 rounded-5 overflow-hidden shadow-2xl glass-morphism relative">
-                                            <div className="absolute top-0 right-0 w-40 h-40 bg-[#22c55e]/5 rounded-full blur-3xl pointer-events-none"></div>
-                                            <div className="bg-[#22c55e] p-5 text-center shadow-[0_5px_20px_rgba(34,197,94,0.4)]">
+                                            <div className="absolute top-0 right-0 w-40 h-40 bg-[#f26c0d]/5 rounded-full blur-3xl pointer-events-none"></div>
+                                            <div className="bg-[#f26c0d] p-5 text-center shadow-[0_5px_20px_rgba(242,108,13,0.4)]">
                                                 <span className="text-xs font-black text-white uppercase tracking-[0.25em] d-flex align-items-center justify-content-center gap-3">
                                                     <span className="pulse-dot"></span>
                                                     REGISTRATION OPEN
@@ -317,7 +320,7 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                     <h2 className="text-5xl font-black text-white tracking-tighter m-0 drop-shadow-2xl">
                                                         {tournament.ticketFee && tournament.ticketFee !== 'Gratis' ? tournament.ticketFee : 'FREE'}
                                                     </h2>
-                                                    <span className="text-[10px] text-[#22c55e] uppercase font-black mt-2 d-block tracking-[0.3em] bg-[#22c55e]/10 inline-block px-3 py-1 rounded-pill">EARLY BIRD</span>
+                                                    <span className="text-[10px] text-[#f26c0d] uppercase font-black mt-2 d-block tracking-[0.3em] bg-[#f26c0d]/10 inline-block px-3 py-1 rounded-pill">EARLY BIRD</span>
                                                 </div>
 
                                                 <div className="d-flex flex-column gap-4 mb-10">
@@ -358,10 +361,10 @@ export default function CompetitionDetailView({ tournament }: CompetitionDetailV
                                                             <span className="text-[10px] text-white font-black tracking-[0.2em] uppercase">REGISTRATION QUOTA</span>
                                                             <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{currentRegistered} / {maxQuota} USERS</span>
                                                         </div>
-                                                        <span className="text-[#22c55e] font-black text-2xl leading-none drop-shadow-[0_0_10px_rgba(34,197,94,0.3)]">{progressPercent}%</span>
+                                                        <span className="text-[#f26c0d] font-black text-2xl leading-none drop-shadow-[0_0_10px_rgba(242,108,13,0.3)]">{progressPercent}%</span>
                                                     </div>
                                                     <div className="w-100 bg-white/5 h-3 rounded-pill overflow-hidden border border-white/10 shadow-inner">
-                                                        <div className="bg-[#22c55e] h-full shadow-[0_0_25px_rgba(34,197,94,0.6)] transition-all duration-1500 ease-out" style={{ width: `${progressPercent}%` }}></div>
+                                                        <div className="bg-[#f26c0d] h-full shadow-[0_0_25px_rgba(242,108,13,0.6)] transition-all duration-1500 ease-out" style={{ width: `${progressPercent}%` }}></div>
                                                     </div>
                                                     <div className="mt-6 bg-[#f26c0d]/10 border border-[#f26c0d]/30 p-5 rounded-4 d-flex align-items-center gap-4 group hover:bg-[#f26c0d]/20 transition-all">
                                                         <i className="ti ti-bolt text-[#f26c0d] fs-3 animate-bounce shadow-[0_0_10px_rgba(242,108,13,0.5)]"></i>

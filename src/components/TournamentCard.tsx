@@ -103,7 +103,7 @@ export default function TournamentCard({
                 <div className="tournament-info mb-5">
                     <div className="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-1">
                         <Link href={link || `/competitions/${slug || id}`} className="d-block no-underline">
-                            <h4 className="tournament-title tcn-1 mb-0 fs-five transition-all hover:text-[#72ff00]">
+                            <h4 className="tournament-title tcn-1 mb-0 fs-five transition-all hover:text-[#f26c0d]">
                                 {title}
                             </h4>
                         </Link>
@@ -114,8 +114,8 @@ export default function TournamentCard({
                                     <span className="fw-bold fs-sm text-nowrap">Coming Soon</span>
                                 </span>
                             ) : (
-                                <span className="py-2 px-3 tcn-1 d-flex align-items-center gap-2" style={{ backgroundColor: 'rgba(114, 255, 0, 0.1)', border: '1px solid #72ff00', borderRadius: '20px' }}>
-                                    <span style={{ width: '8px', height: '8px', backgroundColor: '#72ff00', borderRadius: '50%' }}></span>
+                                <span className="py-2 px-3 tcn-1 d-flex align-items-center gap-2" style={{ backgroundColor: 'rgba(242, 108, 13, 0.1)', border: '1px solid #f26c0d', borderRadius: '20px' }}>
+                                    <span style={{ width: '8px', height: '8px', backgroundColor: '#f26c0d', borderRadius: '50%' }}></span>
                                     <span className="fs-sm text-nowrap">{status || 'Playing'}</span>
                                 </span>
                             )
@@ -144,7 +144,7 @@ export default function TournamentCard({
                     </div>
                 ) : (
                     <div className="card-info d-flex align-items-center gap-3 flex-wrap my-5">
-                        <div className="platform-info bgn-3 d-flex align-items-center gap-3 py-2 px-3 h-100" style={{ border: '1px solid rgba(114, 255, 0, 0.4)', borderRadius: '12px', boxShadow: '0 0 10px rgba(114, 255, 0, 0.2)' }}>
+                        <div className="platform-info bgn-3 d-flex align-items-center gap-3 py-2 px-3 h-100" style={{ border: '1px solid rgba(242, 108, 13, 0.4)', borderRadius: '12px', boxShadow: '0 0 10px rgba(242, 108, 13, 0.2)' }}>
                             <div className="d-flex align-items-center gap-2">
                                 <i className="ti ti-device-gamepad-2 fs-base tcn-1"></i>
                                 <span className="tcn-1 fs-sm">{platform}</span>
@@ -167,13 +167,13 @@ export default function TournamentCard({
                             href={playUrl || link || `/competitions/${slug || id}`} 
                             target={playUrl ? "_blank" : "_self"}
                             className="play-btn d-flex align-items-center gap-2 py-2 px-6 rounded-pill no-underline" 
-                            style={{ backgroundColor: 'rgba(114, 255, 0, 0.1)', border: '1px solid #72ff00', color: '#72ff00', fontWeight: 'bold' }}
+                            style={{ backgroundColor: 'rgba(242, 108, 13, 0.1)', border: '1px solid #f26c0d', color: '#f26c0d', fontWeight: 'bold' }}
                         >
                             <i className="ti ti-player-play-filled fs-six"></i>
                             <span className="fs-six text-nowrap uppercase tracking-widest">Play</span>
                         </Link>
                     )}
-                    <Link href={link || `/competitions/${slug || id}`} className="btn-detail d-flex align-items-center justify-content-center rounded-circle" style={{ width: '44px', height: '44px', border: '2px solid #72ff00', color: '#72ff00', boxShadow: '0 0 15px rgba(114, 255, 0, 0.3)' }} title="Lihat Deskripsi">
+                    <Link href={link || `/competitions/${slug || id}`} className="btn-detail d-flex align-items-center justify-content-center rounded-circle" style={{ width: '44px', height: '44px', border: '2px solid #f26c0d', color: '#f26c0d', boxShadow: '0 0 15px rgba(242, 108, 13, 0.3)' }} title="Lihat Deskripsi">
                         <i className="ti ti-arrow-right fs-2xl"></i>
                     </Link>
                 </div>
@@ -199,9 +199,9 @@ export default function TournamentCard({
                     transition: all 0.3s ease;
                 }
                 .play-btn:hover {
-                    background-color: #72ff00 !important;
-                    color: #000 !important;
-                    box-shadow: 0 0 20px rgba(114, 255, 0, 0.4);
+                    background-color: #f26c0d !important;
+                    color: #fff !important;
+                    box-shadow: 0 0 20px rgba(242, 108, 13, 0.4);
                     transform: translateY(-2px);
                 }
                 @keyframes tooltipFadeIn {

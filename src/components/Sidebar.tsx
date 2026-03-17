@@ -58,67 +58,73 @@ export default function Sidebar() {
                 .sidebar-menu-capsule {
                     background: linear-gradient(180deg, #1f2128 0%, #111319 100%);
                     border-radius: 140px;
-                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
                     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 2px 10px rgba(255,255,255,0.03);
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    margin-left: 50px; /* Jarak lebih jauh agar layout jumbo terlihat lega */
+                    margin-left: 50px;
                     margin-top: 36px;
-                    padding: 70px 32px; /* Layout diperbesar secara signifikan */
+                    padding: 60px 24px; /* Slightly reduced padding for better balance */
                     z-index: 1000;
                     position: relative;
                 }
                 .sidebar-menu-items {
                     display: flex;
                     flex-direction: column;
-                    gap: 54px; /* Jarak antar icon jumbo agar tidak sesak */
+                    gap: 42px; /* Standardized gap for consistent spacing */
                     width: 100%;
                 }
                 .position-relative {
                     position: relative;
                 }
                 .menu-link {
-                    color: rgba(255, 255, 255, 0.4);
+                    color: rgba(255, 255, 255, 0.35);
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 110px !important;
-                    height: 110px !important;
-                    min-width: 110px !important;
-                    border-radius: 30px !important; /* Proporsi box jumbo yang modern */
+                    width: 108px !important; /* Increased from 96px */
+                    height: 108px !important;
+                    min-width: 108px !important;
+                    border-radius: 30px !important;
                     position: relative;
-                    border: none !important;
+                    border: 1px solid transparent !important;
                     background: transparent !important;
                     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    overflow: hidden;
                 }
                 .menu-link i {
-                    font-size: 64px !important; /* Icon Raksasa sesuai request "sama-sama besar" */
+                    font-size: 68px !important; /* Increased from 60px for even better visibility */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
                     -webkit-text-stroke: 1.8px currentColor;
                     transition: all 0.3s ease;
                 }
                 
                 /* Active State */
                 .active-menu {
-                    background: rgba(255, 140, 0, 0.15) !important;
+                    background: rgba(255, 140, 0, 0.12) !important;
                     color: #ff8c00 !important;
-                    box-shadow: 0 0 35px rgba(255, 140, 0, 0.15) inset;
-                    border: 1px solid rgba(255, 140, 0, 0.2) !important;
+                    box-shadow: 0 0 30px rgba(255, 140, 0, 0.1) inset;
+                    border: 1px solid rgba(255, 140, 0, 0.25) !important;
                 }
                 .active-menu i {
                     color: #ff8c00 !important;
-                    filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.9));
+                    filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.8));
                 }
                 .active-neon-indicator {
                     position: absolute;
-                    left: -32px;
+                    left: -20px; /* Brought closer to match smaller height */
                     top: 50%;
                     transform: translateY(-50%);
-                    width: 8px;
-                    height: 64px;
+                    width: 4px; /* Thinner as requested */
+                    height: 48px; /* Shorter as requested */
                     background: linear-gradient(180deg, #ffb347 0%, #ff8c00 100%);
                     border-radius: 4px;
-                    box-shadow: 0 0 18px #ff8c00, 0 0 6px #ff8c00;
+                    box-shadow: 0 0 15px #ff8c00, 0 0 5px #ff8c00;
                     animation: pulse-neon 2s infinite alternate;
                     z-index: 5;
                 }
@@ -130,24 +136,44 @@ export default function Sidebar() {
                 /* Hover State */
                 .menu-link:hover:not(.active-menu) {
                     color: #fff !important;
-                    background: rgba(255, 255, 255, 0.05) !important;
-                    transform: scale(1.1);
+                    background: rgba(255, 255, 255, 0.04) !important;
+                    border-color: rgba(255, 255, 255, 0.1) !important;
+                    transform: translateY(-2px);
                 }
                 .menu-link:hover:not(.active-menu) i {
-                    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
                 }
 
                 /* Responsive */
+                @media (max-width: 1400px) {
+                    .sidebar-menu-capsule {
+                        margin-left: 30px;
+                        padding: 50px 20px;
+                    }
+                    .menu-link {
+                        width: 80px !important;
+                        height: 80px !important;
+                        min-width: 80px !important;
+                    }
+                    .menu-link i {
+                        font-size: 40px !important;
+                    }
+                    .sidebar-menu-items {
+                        gap: 32px;
+                    }
+                }
+
                 @media (max-width: 768px) {
                     .sidebar-menu-capsule {
                         margin-left: 10px;
                         margin-top: 10px;
-                        height: 90vh;
+                        height: auto;
+                        min-height: auto;
                         border-radius: 50px;
                         padding: 24px 12px;
                     }
                     .sidebar-menu-items {
-                        gap: 24px;
+                        gap: 20px;
                     }
                     .menu-link {
                         width: 48px !important;

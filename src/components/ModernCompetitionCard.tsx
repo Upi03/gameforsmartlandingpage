@@ -30,13 +30,13 @@ export default function ModernCompetitionCard({
         switch (status.toLowerCase()) {
             case 'active':
             case 'playing':
-                return { bg: 'rgba(114, 255, 0, 0.1)', border: '#72ff00', color: '#72ff00', label: 'Active' };
+                return { bg: 'rgba(242, 108, 13, 0.1)', border: '#f26c0d', color: '#f26c0d', label: 'Active' };
             case 'upcoming':
                 return { bg: 'rgba(255, 122, 0, 0.1)', border: '#ff7a00', color: '#ff7a00', label: 'Upcoming' };
             case 'finished':
                 return { bg: 'rgba(255, 255, 255, 0.05)', border: 'rgba(255,255,255,0.4)', color: '#a0aec0', label: 'Finished' };
             default:
-                return { bg: 'rgba(114, 255, 0, 0.1)', border: '#72ff00', color: '#72ff00', label: status };
+                return { bg: 'rgba(242, 108, 13, 0.1)', border: '#f26c0d', color: '#f26c0d', label: status };
         }
     };
 
@@ -72,7 +72,7 @@ export default function ModernCompetitionCard({
                         href={linkUrl} 
                         className="register-btn px-6 py-2 rounded-pill fw-bold d-flex align-items-center gap-2 transition-all no-underline"
                     >
-                        <span className="fs-six">Daftar Sekarang</span>
+                        <span className="fs-six">Detail</span>
                         <i className="ti ti-arrow-right fs-five"></i>
                     </Link>
                 </div>
