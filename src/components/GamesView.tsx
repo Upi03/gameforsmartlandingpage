@@ -42,7 +42,7 @@ export default function GamesView() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent d-flex align-items-end p-8">
                                     <div className="banner-content">
                                         <h1 className="display-four tcn-1 fw-black text-uppercase mb-2">
-                                            Ultimate <span className="text-orange-gradient">Experiences</span>
+                                            Explore <span className="text-orange-gradient">Games</span>
                                         </h1>
                                         <p className="tcn-6 fs-lg max-w-600 m-0">
                                             Jelajahi perpustakaan game terbaik kami. Temukan petualangan favoritmu dan mainkan secara instan sekarang juga!
