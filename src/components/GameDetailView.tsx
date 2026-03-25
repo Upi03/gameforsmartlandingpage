@@ -15,7 +15,7 @@ interface GameDetailViewProps {
 
 const getThemeConfig = (genre: string) => {
     const g = (genre || '').toLowerCase();
-    
+
     if (g.includes('action') || g.includes('cyberpunk') || g.includes('shooter')) {
         return {
             primary: '#00f2ff',
@@ -26,7 +26,7 @@ const getThemeConfig = (genre: string) => {
             textAccent: 'text-[#00f2ff]'
         };
     }
-    
+
     if (g.includes('adventure') || g.includes('fantasy') || g.includes('rpg')) {
         return {
             primary: '#e2b15a',
@@ -81,15 +81,15 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
         .slice(0, 6);
 
     const screenshots = game.screenshots || [game.image];
-    
+
     // Auto-slide screenshots every 5 seconds
     useEffect(() => {
         if (screenshots.length <= 1) return;
-        
+
         const interval = setInterval(() => {
             setActiveScreenshot((prev) => (prev + 1) % screenshots.length);
         }, 5000);
-        
+
         return () => clearInterval(interval);
     }, [screenshots.length]);
 
@@ -100,7 +100,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                 <Sidebar />
                 <article className="main-content mt-0 p-0 flex-grow-1 animate-fade-in" style={{ minWidth: 0 }}>
                     <div className="w-100 m-0 p-0 overflow-x-hidden">
-                        
+
                         {/* SECTION 1: HEADER / HERO */}
                         <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden bg-black mt-20">
                             {/* Banner Background */}
@@ -137,18 +137,18 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                         {/* SECTION 2: MAIN GRID LAYOUT */}
                         <div className="container-fluid px-lg-15 px-md-10 px-6 py-20">
                             <div className="row g-12">
-                                
+
                                 {/* LEFT COLUMN: MAIN CONTENT (col-lg-8) */}
                                 <div className="col-12 col-lg-8">
                                     {/* VIDEO PREVIEW */}
                                     <div className="mb-16">
                                         <h4 className="text-white font-black uppercase tracking-[0.4em] text-[11px] mb-8 flex items-center gap-4">
                                             <div className="w-10 h-px bg-white/20"></div>
-                                            Video Briefing
+                                            Video Preview
                                         </h4>
                                         <div className="rounded-[40px] overflow-hidden border border-white/10 shadow-3xl aspect-video bg-black relative group">
-                                            <iframe 
-                                                src={game.videoUrl || "https://www.youtube.com/embed/_FCYtKCGMjk?autoplay=1&mute=1&loop=1&playlist=_FCYtKCGMjk"} 
+                                            <iframe
+                                                src={game.videoUrl || "https://www.youtube.com/embed/_FCYtKCGMjk?autoplay=1&mute=1&loop=1&playlist=_FCYtKCGMjk"}
                                                 className="w-full h-full border-0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                 allowFullScreen
@@ -181,8 +181,8 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                         </div>
                                         <div className="flex gap-4 overflow-x-auto pb-4 scroll-hide">
                                             {screenshots.map((src, idx) => (
-                                                <button 
-                                                    key={idx} 
+                                                <button
+                                                    key={idx}
                                                     onClick={() => setActiveScreenshot(idx)}
                                                     className={`relative flex-shrink-0 w-44 aspect-video rounded-2xl overflow-hidden border-2 transition-all ${activeScreenshot === idx ? 'scale-105 shadow-2xl z-10' : 'opacity-40 hover:opacity-100'}`}
                                                     style={{ borderColor: activeScreenshot === idx ? theme.primary : 'transparent' }}
@@ -198,7 +198,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                 <div className="col-12 col-lg-4">
                                     <div className="sticky-top" style={{ top: '120px' }}>
                                         {/* SIDEBAR CARD */}
-                                        <div 
+                                        <div
                                             className="rounded-[44px] border border-white/10 shadow-3xl overflow-hidden mb-8"
                                             style={{ background: theme.cardBg }}
                                         >
@@ -243,8 +243,8 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                                 </div>
 
                                                 {/* BIG PLAY NOW BUTTON */}
-                                                <Link 
-                                                    href={game.playUrl || '#'} 
+                                                <Link
+                                                    href={game.playUrl || '#'}
                                                     target="_blank"
                                                     className="w-full py-6 rounded-[24px] text-white font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all hover:scale-[1.03] active:scale-95 shadow-2xl no-underline text-lg group"
                                                     style={{ background: theme.accent, boxShadow: `0 20px 50px -10px ${theme.glow}` }}
@@ -280,7 +280,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                                 {game.features?.map((feature, idx) => (
                                     <div key={idx} className="group p-10 rounded-[40px] bg-white/5 border border-white/5 hover:border-white/10 transition-all shadow-xl">
-                                        <div 
+                                        <div
                                             className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform shadow-3xl"
                                             style={{ background: theme.accent }}
                                         >
@@ -290,7 +290,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                                         <p className="text-slate-500 text-sm leading-relaxed mb-0">{feature.description}</p>
                                     </div>
                                 ))}
-                                
+
                                 {/* Fallback/Extra Specs cards if no features */}
                                 {!game.features && (
                                     <>
@@ -335,7 +335,7 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
 
             {/* VIDEO MODAL */}
             {isVideoModalOpen && (
-                <div 
+                <div
                     className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-2xl animate-fade-in p-6"
                     onClick={() => setIsVideoModalOpen(false)}
                 >
@@ -343,8 +343,8 @@ export default function GameDetailView({ game }: GameDetailViewProps) {
                         <i className="ti ti-x text-5xl"></i>
                     </button>
                     <div className="w-full max-w-5xl aspect-video rounded-[40px] overflow-hidden border border-white/10 shadow-2xl animate-zoom-in" onClick={e => e.stopPropagation()}>
-                        <iframe 
-                            src={game.videoUrl || "https://www.youtube.com/embed/_FCYtKCGMjk"} 
+                        <iframe
+                            src={game.videoUrl || "https://www.youtube.com/embed/_FCYtKCGMjk"}
                             className="w-full h-full"
                             allowFullScreen
                             allow="autoplay"
